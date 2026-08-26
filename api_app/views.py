@@ -62,9 +62,15 @@ def edit(req):
     print(dict)
     rid=dict['id']
     s=Student.objects.get(id=rid)
-    stu=StudentSerializer(s,dict)
+    stu=StudentSerializer(s, data=dict)
     if stu.is_valid():
         stu.save()
         d={'res':'record updated successfully'}
         json_res=json.dumps(d)
-        return HttpResponse(json_res,content_type='appliction/json')
+        return HttpResponse(json_res,content_type='application/json')
+    else:
+        return HttpResponse(
+            json.dumps(stu.errors),
+            content_type='application/json',
+            status=400
+        )

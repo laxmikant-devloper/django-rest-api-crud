@@ -31,8 +31,8 @@ import json
 
 #edit recrod
 
-URL='http://localhost:8000/edit'
-data={'id':3,'name':'laxmi kant','rno':102,'per':79}
-jdata=json.dumps(data)
-res=requests.put(URL,data=jdata)
-print(res.json())
+# URL='http://localhost:8000/edit'
+# data={'id':3,'name':'laxmi kant','rno':102,'per':79}
+# jdata=json.dumps(data)
+# res=requests.put(URL,data=jdata)
+# print(res.json())
