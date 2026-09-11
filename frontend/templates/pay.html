@@ -1,0 +1,859 @@
+{% extends "base.html" %}
+
+{% block title %}Payment{% endblock %}
+{% block extra_css %}
+<style>
+/* ==============================
+   PAYMENT MOBILE RESPONSIVE
+================================ */
+
+@media (max-width: 600px) {
+
+    /* Checkout main layout */
+    .card > div[style*="grid-template-columns"] {
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
+        padding: 12px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Left + right sections */
+    .card > div[style*="grid-template-columns"] > div {
+        width: 100% !important;
+        min-width: 0 !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Delivery address + payment box */
+    .card > div[style*="grid-template-columns"] > div > div {
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Order summary */
+    .card > div[style*="grid-template-columns"] > div:last-child {
+        width: 100% !important;
+        min-width: 0 !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Long address/name */
+    #savedAddressContainer {
+        width: 100% !important;
+        min-width: 0 !important;
+        overflow-wrap: anywhere !important;
+        word-break: break-word !important;
+    }
+
+    /* Grand total */
+    #paymentTotal {
+        white-space: nowrap !important;
+        font-size: 18px !important;
+    }
+
+    /* Payment item names */
+    #paymentSummary > div {
+        width: 100% !important;
+        min-width: 0 !important;
+        flex-wrap: wrap !important;
+    }
+
+    /* Pay button */
+    #payNowBtn {
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+}
+</style>
+{% endblock %}
+{% block content %}
+
+<section class="card">
+
+    <div class="section-title">
+        <h2>Checkout & Payment</h2>
+    </div>
+
+        <div style="
+            display:grid;
+            grid-template-columns:1fr 380px;
+            gap:30px;
+            padding:20px;
+        ">
+
+            <!-- LEFT SIDE -->
+
+            <div>
+
+            <!-- DELIVERY ADDRESS -->
+
+    <div style="
+        border:1px solid #ddd;
+        border-radius:10px;
+        padding:20px;
+        margin-bottom:25px;
+    ">
+
+        <h3 style="margin-bottom: 15px;" >
+            📍 Delivery Address
+        </h3>
+
+        <div id="savedAddressContainer">
+            <p style="color:#777;">
+                Loading saved address...
+            </p>
+        </div>
+
+    </div>   
+
+
+            <!-- PAYMENT METHODS -->
+
+            <div style="
+                border:1px solid #ddd;
+                border-radius:10px;
+                padding:20px;
+            ">
+
+                <h3 style="margin-bottom: 15px;">
+                    💳 Select Payment Method
+                </h3>
+
+
+                <label style="
+                    display:block;
+                    border:1px solid #ddd;
+                    border-radius:8px;
+                    padding:15px;
+                    margin-bottom:12px;
+                    cursor:pointer;
+                ">
+
+                    <input
+                        type="radio"
+                        name="payment_method"
+                        value="upi"
+                        checked
+                    >
+
+                    &nbsp; 💳 UPI
+
+                </label>
+
+
+                <label style="
+                    display:block;
+                    border:1px solid #ddd;
+                    border-radius:8px;
+                    padding:15px;
+                    margin-bottom:12px;
+                    cursor:pointer;
+                ">
+
+                    <input
+                        type="radio"
+                        name="payment_method"
+                        value="card"
+                    >
+
+                    &nbsp; 💳 Credit / Debit Card
+
+                </label>
+
+
+                <label style="
+                    display:block;
+                    border:1px solid #ddd;
+                    border-radius:8px;
+                    padding:15px;
+                    cursor:pointer;
+                ">
+
+                    <input
+                        type="radio"
+                        name="payment_method"
+                        value="cod"
+                    >
+
+                    &nbsp; 💵 Cash on Delivery
+
+                </label>
+
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT SIDE -->
+
+        <div style="
+            border:1px solid #ddd;
+            border-radius:10px;
+            padding:20px;
+            height:max-content;
+        ">
+
+            <h3 style="margin-top:0;">
+                🛒 Order Summary
+            </h3>
+
+            <div id="paymentSummary">
+                Loading...
+            </div>
+
+            <hr style="margin:20px 0;">
+
+            <div style="
+                display:flex;
+                justify-content:space-between;
+                font-size:20px;
+                font-weight:bold;
+            ">
+
+                <span>
+                    Grand Total
+                </span>
+
+                <span
+                    id="paymentTotal"
+                    style="color:#16852a;"
+                >
+                    ₹0.00
+                </span>
+
+            </div>
+
+
+            <button
+                id="payNowBtn"
+                style="
+                    width:100%;
+                    margin-top:25px;
+                    padding:15px;
+                    background:#08a52b;
+                    color:white;
+                    border:none;
+                    border-radius:7px;
+                    font-size:17px;
+                    font-weight:600;
+                    cursor:pointer;
+                "
+            >
+                🔒 Pay Now
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
+
+
+{% block extra_js %}
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+
+function loadPaymentCart() {
+
+    fetch("/cart/", {
+        method: "GET",
+        credentials: "same-origin"
+    })
+
+    .then(response => {
+
+        if (!response.ok) {
+            throw new Error("Cart request failed");
+        }
+
+        return response.json();
+
+    })
+
+    .then(data => {
+
+        console.log("PAYMENT CART:", data);
+
+        const summary =
+            document.getElementById("paymentSummary");
+
+        const total =
+            document.getElementById("paymentTotal");
+
+
+        if (!data.success || !data.items || data.items.length === 0) {
+
+            summary.innerHTML = `
+                <p>Your cart is empty.</p>
+            `;
+
+            total.innerText = "₹0.00";
+
+            return;
+        }
+
+
+        let html = "";
+
+
+        data.items.forEach(item => {
+
+            html += `
+
+                <div style="
+                    display:flex;
+                    justify-content:space-between;
+                    margin-bottom:12px;
+                    gap:10px;
+                ">
+
+                    <span>
+                        ${item.name} × ${item.quantity}
+                    </span>
+
+                    <strong>
+                        ₹${item.total}
+                    </strong>
+
+                </div>
+
+            `;
+
+        });
+
+
+        summary.innerHTML = html;
+
+        total.innerText = "₹" + data.total;
+
+    })
+
+    .catch(error => {
+
+        console.error("Payment cart error:", error);
+
+        document.getElementById("paymentSummary").innerHTML =
+            "<p>Unable to load order.</p>";
+
+    });
+}
+
+
+loadPaymentCart();
+
+/* pay*/
+
+
+document.getElementById("payNowBtn").addEventListener("click", function () {
+
+     if (!selectedAddress) {
+            alert("Please select a delivery address.");
+            return;
+        }
+
+     const fullName = selectedAddress.full_name;
+     const mobile = selectedAddress.mobile;
+    const pincode = selectedAddress.pincode;
+    const city = selectedAddress.city;
+    const state = selectedAddress.state;
+    const address = selectedAddress.address;
+
+    const paymentMethodElement =
+        document.querySelector('input[name="payment_method"]:checked');
+
+    if (!fullName || !mobile || !pincode || !city || !state || !address) {
+        alert("Please fill complete delivery address.");
+        return;
+    }
+
+    if (!paymentMethodElement) {
+        alert("Please select a payment method.");
+        return;
+    }
+
+    const paymentMethod = paymentMethodElement.value;
+
+    const csrfElement =
+        document.querySelector('[name=csrfmiddlewaretoken]');
+
+    if (!csrfElement) {
+        alert("CSRF token not found.");
+        return;
+    }
+
+    const button = document.getElementById("payNowBtn");
+
+    button.disabled = true;
+    button.innerText = "Creating Order...";
+
+    fetch("/create-order/", {
+        method: "POST",
+        credentials: "same-origin",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": csrfElement.value
+        },
+        body: JSON.stringify({
+            full_name: fullName,
+            mobile: mobile,
+            pincode: pincode,
+            city: city,
+            state: state,
+            address: address,
+            payment_method: paymentMethod
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+
+        console.log("RAZORPAY ORDER:", data);
+
+        if (!data.success) {
+            alert(data.message || "Unable to create order.");
+            button.disabled = false;
+            button.innerText = "🔒 Pay Now";
+            return;
+        }
+
+        // Razorpay Checkout
+        const options = {
+
+            key: data.key_id,
+
+            amount: data.razorpay_amount,
+
+            currency: "INR",
+
+            name: "My Store",
+
+            description: "Order #" + data.order_id,
+
+            order_id: data.razorpay_order_id,
+
+            prefill: {
+                name: fullName,
+                contact: mobile
+            },
+
+            notes: {
+                address: address
+            },
+
+          handler: function (response) {
+
+            console.log("RAZORPAY PAYMENT:", response);
+
+            button.innerText = "Verifying Payment...";
+
+            fetch("/verify-payment/", {
+                method: "POST",
+                credentials: "same-origin",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": csrfElement.value
+                },
+                body: JSON.stringify({
+
+                    order_id: data.order_id,
+
+                    razorpay_payment_id:
+                        response.razorpay_payment_id,
+
+                    razorpay_order_id:
+                        response.razorpay_order_id,
+
+                    razorpay_signature:
+                        response.razorpay_signature
+                })
+            })
+            .then(response => response.json())
+            .then(result => {
+
+                console.log("PAYMENT VERIFICATION:", result);
+
+                if (result.success) {
+
+                    alert(
+                        "Payment Successful!\n\n" +
+                        "Order ID: #" + result.order_id +
+                        "\nPayment ID: " + result.payment_id +
+                        "\nStatus: " + result.payment_status
+                    );
+
+                    window.location.href = "/dashboard/order/";
+
+                } else {
+
+                    alert(
+                        result.message ||
+                        "Payment verification failed."
+                    );
+
+                    button.disabled = false;
+                    button.innerText = "🔒 Pay Now";
+                }
+            })
+            .catch(error => {
+
+                console.error(
+                    "Payment Verification Error:",
+                    error
+                );
+
+                alert("Payment verification failed.");
+
+                button.disabled = false;
+                button.innerText = "🔒 Pay Now";
+            });
+        },
+
+            modal: {
+                ondismiss: function () {
+                    button.disabled = false;
+                    button.innerText = "🔒 Pay Now";
+                }
+            }
+        };
+
+        const razorpay = new Razorpay(options);
+
+        razorpay.open();
+
+    })
+    .catch(error => {
+
+        console.error("Create Order Error:", error);
+
+        alert("Unable to create Razorpay order.");
+
+        button.disabled = false;
+        button.innerText = "🔒 Pay Now";
+    });
+});
+
+
+let selectedAddress = null;
+
+
+/* =========================
+   LOAD SAVED ADDRESSES
+========================= */
+
+function loadSavedAddresses() {
+
+    fetch("/addresses/", {
+        method: "GET",
+        credentials: "same-origin"
+    })
+
+    .then(response => response.json())
+
+    .then(data => {
+
+        console.log("PAYMENT ADDRESSES:", data);
+
+        const container =
+            document.getElementById("savedAddressContainer");
+
+        if (!data.success) {
+            container.innerHTML = `
+                <p style="color:red;">
+                    Unable to load address.
+                </p>
+            `;
+            return;
+        }
+
+        if (!data.addresses || data.addresses.length === 0) {
+
+            container.innerHTML = `
+                <div style="
+                    padding:15px;
+                    background:#fff8e1;
+                    border:1px solid #ddd;
+                    border-radius:8px;
+                ">
+                    <strong>📍 No saved address</strong>
+                    <p style="margin:8px 0;">
+                        Please add an address first.
+                    </p>
+
+                    <button
+                        onclick="window.location.href='/dashboard/address/'"
+                        style="
+                            padding:10px 18px;
+                            background:#08a52b;
+                            color:white;
+                            border:none;
+                            border-radius:6px;
+                            cursor:pointer;
+                        "
+                    >
+                        ➕ Add Address
+                    </button>
+                </div>
+            `;
+
+            return;
+        }
+
+
+        /* =========================
+           FIND DEFAULT ADDRESS
+        ========================= */
+
+        let defaultAddress =
+            data.addresses.find(
+                address => address.is_default === true
+            );
+
+        /* Agar default nahi hai to first address */
+        if (!defaultAddress) {
+            defaultAddress = data.addresses[0];
+        }
+
+        selectedAddress = defaultAddress;
+
+
+        /* =========================
+           SHOW SELECTED ADDRESS
+        ========================= */
+
+        showSelectedAddress();
+
+    })
+
+    .catch(error => {
+
+        console.error(
+            "Saved address error:",
+            error
+        );
+
+        document.getElementById(
+            "savedAddressContainer"
+        ).innerHTML = `
+            <p style="color:red;">
+                Unable to load saved address.
+            </p>
+        `;
+    });
+}
+
+
+/* =========================
+   SHOW SELECTED ADDRESS
+========================= */
+
+function showSelectedAddress() {
+
+    const container =
+        document.getElementById(
+            "savedAddressContainer"
+        );
+
+    if (!selectedAddress) {
+        return;
+    }
+
+    container.innerHTML = `
+
+        <div style="
+            border:2px solid #08a52b;
+            border-radius:10px;
+            padding:18px;
+            background:#f8fff9;
+        ">
+
+            <div style="
+                display:flex;
+                justify-content:space-between;
+                align-items:center;
+                margin-bottom:12px;
+            ">
+
+                <strong style="font-size:17px;">
+                    ${selectedAddress.full_name}
+                </strong>
+
+                ${
+                    selectedAddress.is_default
+                    ? `
+                        <span style="
+                            background:#08a52b;
+                            color:white;
+                            padding:5px 10px;
+                            border-radius:15px;
+                            font-size:12px;
+                        ">
+                            ⭐ Default
+                        </span>
+                    `
+                    : ""
+                }
+
+            </div>
+
+
+            <div style="
+                line-height:1.7;
+                color:#444;
+            ">
+
+                📱 ${selectedAddress.mobile}<br>
+
+                🏠 ${selectedAddress.address}<br>
+
+                ${selectedAddress.city},
+                ${selectedAddress.state}
+                - ${selectedAddress.pincode}
+
+            </div>
+
+
+            <button
+                onclick="changeAddress()"
+                style="
+                    margin-top:15px;
+                    padding:9px 16px;
+                    background:white;
+                    color:#08a52b;
+                    border:1px solid #08a52b;
+                    border-radius:6px;
+                    cursor:pointer;
+                    font-weight:600;
+                "
+            >
+                🔄 Change Address
+            </button>
+
+        </div>
+
+    `;
+}
+
+
+/* =========================
+   CHANGE ADDRESS
+========================= */
+
+function changeAddress() {
+
+    fetch("/addresses/", {
+        method: "GET",
+        credentials: "same-origin"
+    })
+
+    .then(response => response.json())
+
+    .then(data => {
+
+        if (!data.success) {
+            return;
+        }
+
+        const container =
+            document.getElementById(
+                "savedAddressContainer"
+            );
+
+        let html = `
+
+            <div style="
+                display:flex;
+                flex-direction:column;
+                gap:12px;
+            ">
+
+        `;
+
+        data.addresses.forEach(address => {
+
+            html += `
+
+                <div
+                    onclick='selectAddress(${JSON.stringify(address)})'
+                    style="
+                        border:1px solid #ddd;
+                        border-radius:8px;
+                        padding:15px;
+                        cursor:pointer;
+                        background:white;
+                    "
+                >
+
+                    <strong>
+                        ${address.full_name}
+                    </strong>
+
+                    ${
+                        address.is_default
+                        ? `
+                            <span style="
+                                margin-left:8px;
+                                color:#08a52b;
+                                font-size:13px;
+                            ">
+                                ⭐ Default
+                            </span>
+                        `
+                        : ""
+                    }
+
+                    <div style="
+                        margin-top:6px;
+                        color:#555;
+                        line-height:1.6;
+                    ">
+
+                        📱 ${address.mobile}<br>
+
+                        ${address.address}<br>
+
+                        ${address.city},
+                        ${address.state}
+                        - ${address.pincode}
+
+                    </div>
+
+                </div>
+
+            `;
+
+        });
+
+        html += `</div>`;
+
+        container.innerHTML = html;
+
+    });
+}
+
+
+/* =========================
+   SELECT ADDRESS
+========================= */
+
+function selectAddress(address) {
+
+    selectedAddress = address;
+
+    showSelectedAddress();
+
+}
+
+
+/* =========================
+   LOAD ON PAGE
+========================= */
+
+loadSavedAddresses();
+
+
+</script>
+
+{% endblock %}

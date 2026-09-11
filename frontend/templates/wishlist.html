@@ -1,0 +1,477 @@
+{% extends "base.html" %}
+
+{% block title %}
+Wishlist
+{% endblock %}
+
+{% block content %}
+
+<style>
+    .wishlist-page {
+        padding: 20px;
+    }
+
+    .wishlist-card {
+        background: var(--card-bg, #fff);
+        border-radius: 18px;
+        padding: 25px;
+        box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+    }
+
+    .wishlist-card h2 {
+        margin: 0 0 25px;
+    }
+
+    .wishlist-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px;
+    }
+
+    .wishlist-item {
+        position: relative;
+        border: 1px solid #eee;
+        border-radius: 12px;
+        padding: 12px;
+        cursor: pointer;
+        background: #fff;
+        transition: 0.2s;
+    }
+
+    .wishlist-item:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    }
+
+    .wishlist-image {
+        width: 100%;
+        height: 180px;
+        border-radius: 10px;
+        background: #f7f7fa;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    .wishlist-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    .wishlist-item h3 {
+        font-size: 17px;
+        margin: 12px 0 7px;
+    }
+
+    .wishlist-price {
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    .remove-wishlist {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 35px;
+        height: 35px;
+        border: none;
+        border-radius: 50%;
+        background: white;
+        color: #e53935;
+        font-size: 22px;
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+        z-index: 2;
+    }
+
+    .wishlist-empty {
+        text-align: center;
+        padding: 60px 20px;
+        color: #777;
+    }
+
+    .wishlist-empty-icon {
+        font-size: 55px;
+        margin-bottom: 15px;
+    }
+
+    @media (max-width: 900px) {
+        .wishlist-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 600px) {
+        .wishlist-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<div class="wishlist-page">
+
+    <div class="wishlist-card">
+
+        <h2>My Wishlist ❤️</h2>
+
+        <div
+            id="wishlistContainer"
+            class="wishlist-grid">
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    loadWishlistProducts();
+
+});
+
+
+function loadWishlistProducts() {
+
+    const container =   document.getElementById("wishlistContainer");
+
+    if (!container) {
+        return;
+    }
+
+    fetch("/wishlist/", {
+        method: "GET",
+        credentials: "same-origin"
+    })
+
+    .then(response => {
+
+        if (response.status === 401) {
+            window.location.href = "/login/";
+            return null;
+        }
+
+        if (!response.ok) {
+            throw new Error(
+                "Wishlist request failed: " +
+                response.status
+            );
+        }
+
+        return response.json();
+
+    })
+
+    .then(data => {
+
+        if (!data) {
+            return;
+        }
+
+        // console.log(
+        //     "WISHLIST PRODUCTS:",
+        //     data
+        // );
+
+        if (
+            !data.success ||
+            !data.products ||
+            data.products.length === 0
+        ) {
+
+            container.innerHTML = `
+                <div class="wishlist-empty"
+                     style="grid-column:1/-1;">
+
+                    <div class="wishlist-empty-icon">
+                        ♡
+                    </div>
+
+                    <h3>Your Wishlist is Empty</h3>
+
+                    <p>
+                        Add products to your wishlist.
+                    </p>
+
+                </div>
+            `;
+
+            return;
+        }
+
+
+        container.innerHTML = "";
+
+
+        data.products.forEach(product => {
+
+            const item =
+                document.createElement("div");
+
+            item.className =
+                "wishlist-item";
+
+
+            let imageHTML = "";
+
+            if (product.image) {
+
+                imageHTML = `
+                    <img
+                        src="${product.image}"
+                        alt="${escapeHTML(product.name)}"
+                    >
+                `;
+
+            } else {
+
+                imageHTML = `
+                    <span style="font-size:50px;">
+                        🛍️
+                    </span>
+                `;
+
+            }
+
+
+            item.innerHTML = `
+
+                <button
+                    class="remove-wishlist"
+                    title="Remove from wishlist">
+                    ♥
+                </button>
+
+                <div class="wishlist-image">
+                    ${imageHTML}
+                </div>
+
+                <h3>
+                    ${escapeHTML(product.name)}
+                </h3>
+
+                <div class="wishlist-price">
+                    ₹${product.price}
+                </div>
+
+                <div style="
+                    color:#777;
+                    font-size:13px;
+                    margin-top:5px;
+                ">
+                    ${escapeHTML(product.category)}
+                </div>
+
+            `;
+
+
+            /* PRODUCT CLICK */
+
+            item.addEventListener(
+                "click",
+                function (event) {
+
+                    if (
+                        event.target.closest(
+                            ".remove-wishlist"
+                        )
+                    ) {
+                        return;
+                    }
+
+                    window.location.href =
+                        `/product/${product.id}/`;
+
+                }
+            );
+
+
+            /* REMOVE WISHLIST */
+
+            const removeButton =
+                item.querySelector(
+                    ".remove-wishlist"
+                );
+
+
+            removeButton.addEventListener(
+                "click",
+                function () {
+
+                    removeFromWishlist(
+                        product.id,
+                        item
+                    );
+
+                }
+            );
+
+
+            container.appendChild(item);
+
+        });
+
+    })
+
+    .catch(error => {
+
+        console.error(
+            "Wishlist error:",
+            error
+        );
+
+        container.innerHTML = `
+            <div class="wishlist-empty"
+                 style="grid-column:1/-1;">
+
+                <h3>
+                    Unable to load wishlist.
+                </h3>
+
+            </div>
+        `;
+
+    });
+
+}
+
+
+function removeFromWishlist(
+    productId,
+    item
+) {
+
+    const csrfElement =
+        document.querySelector(
+            '[name=csrfmiddlewaretoken]'
+        );
+
+
+    if (!csrfElement) {
+
+        console.error(
+            "CSRF token not found"
+        );
+
+        return;
+    }
+
+
+    fetch("/wishlist-toggle/", {
+
+        method: "POST",
+
+        credentials: "same-origin",
+
+        headers: {
+
+            "Content-Type":
+                "application/json",
+
+            "X-CSRFToken":
+                csrfElement.value
+
+        },
+
+        body: JSON.stringify({
+
+            product_id:
+                productId
+
+        })
+
+    })
+
+    .then(response =>
+        response.json()
+    )
+
+    .then(data => {
+
+        // console.log(
+        //     "REMOVE WISHLIST:",
+        //     data
+        // );
+
+
+        if (data.success) {
+
+            item.remove();
+
+            loadWishlistCount();
+
+
+            const container =
+                document.getElementById(
+                    "wishlistContainer"
+                );
+
+
+            if (
+                container &&
+                container.children.length === 0
+            ) {
+
+                container.innerHTML = `
+                    <div class="wishlist-empty"
+                         style="grid-column:1/-1;">
+
+                        <div class="wishlist-empty-icon">
+                            ♡
+                        </div>
+
+                        <h3>
+                            Your Wishlist is Empty
+                        </h3>
+
+                        <p>
+                            Add products to your wishlist.
+                        </p>
+
+                    </div>
+                `;
+
+            }
+
+        } else {
+
+            alert(
+                data.message ||
+                "Unable to remove."
+            );
+
+        }
+
+    })
+
+    .catch(error => {
+
+        console.error(
+            "Remove wishlist error:",
+            error
+        );
+
+    });
+
+}
+
+
+function escapeHTML(text) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        text ?? "";
+
+    return div.innerHTML;
+
+}
+
+</script>
+
+{% endblock %}

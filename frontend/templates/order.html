@@ -1,0 +1,1692 @@
+{% extends "base.html" %}
+
+{% block title %}My Orders{% endblock %}
+
+{% block content %}
+
+{% csrf_token %}
+
+<!-- <style>
+    .orders-page {
+        width: 100%;
+    }
+
+    .orders-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .orders-header h2 {
+        margin: 0;
+        font-size: 24px;
+        color: #222;
+    }
+
+    .orders-header p {
+        margin: 5px 0 0;
+        color: #777;
+        font-size: 14px;
+    }
+
+    .order-card {
+        background: #fff;
+        border: 1px solid #e6e6e6;
+        border-radius: 14px;
+        margin-bottom: 20px;
+        overflow: hidden;
+        box-shadow: 0 3px 12px rgba(0,0,0,.04);
+    }
+
+    .order-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 18px 20px;
+        background: #fafafa;
+        border-bottom: 1px solid #eee;
+    }
+
+    .order-id {
+        font-size: 17px;
+        font-weight: 700;
+        color: #222;
+    }
+
+    .order-date {
+        margin-top: 5px;
+        color: #777;
+        font-size: 13px;
+    }
+
+    .status-badge {
+            padding: 13px 20px;
+    border-radius: 14px;
+    font-size: 17px;
+    font-weight: 700;
+    text-transform: capitalize;
+    background: #e8f7ed;
+    color: #16852a;
+    }
+
+    .order-body {
+        padding: 20px;
+    }
+
+    .order-section {
+        margin-bottom: 22px;
+    }
+
+    .order-section-title {
+        font-size: 14px;
+        font-weight: 700;
+        color: #222;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .address-box {
+        background: #f7f8f8;
+        border-radius: 10px;
+        padding: 14px 16px;
+        line-height: 1.7;
+        color: #555;
+        font-size: 14px;
+    }
+
+    .address-name {
+        font-weight: 700;
+        color: #222;
+    }
+
+    .products-list {
+        border: 1px solid #eee;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .order-product {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 14px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .order-product:last-child {
+        border-bottom: none;
+    }
+
+    .product-image {
+        width: 72px;
+        height: 72px;
+        border-radius: 9px;
+        object-fit: cover;
+        border: 1px solid #eee;
+        flex-shrink: 0;
+    }
+
+    .product-placeholder {
+        width: 72px;
+        height: 72px;
+        border-radius: 9px;
+        background: #f2f2f2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        flex-shrink: 0;
+    }
+
+    .product-info {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .product-name {
+        font-weight: 700;
+        color: #222;
+        margin-bottom: 6px;
+    }
+
+    .product-price {
+        color: #777;
+        font-size: 13px;
+    }
+
+    .product-total {
+        font-weight: 700;
+        color: #222;
+        white-space: nowrap;
+    }
+
+    .order-bottom {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 20px;
+        padding-top: 18px;
+        border-top: 1px solid #eee;
+    }
+
+    .payment-info {
+        font-size: 13px;
+        color: #666;
+        line-height: 1.8;
+    }
+
+    .payment-info strong {
+        color: #222;
+    }
+
+    .payment-paid {
+        color: #16852a !important;
+    }
+
+    .payment-id {
+        font-size: 12px;
+        color: #888;
+        word-break: break-all;
+    }
+
+    .grand-total {
+        text-align: right;
+    }
+
+    .grand-total-label {
+        font-size: 13px;
+        color: #777;
+        margin-bottom: 4px;
+    }
+
+    .grand-total-value {
+        font-size: 24px;
+        font-weight: 800;
+        color: #16852a;
+    }
+
+    .empty-orders {
+        background: #fff;
+        border: 1px solid #e6e6e6;
+        border-radius: 14px;
+        text-align: center;
+        padding: 65px 20px;
+    }
+
+    .empty-icon {
+        width: 75px;
+        height: 75px;
+        margin: 0 auto 15px;
+        border-radius: 50%;
+        background: #f1f8f3;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 34px;
+    }
+
+    .empty-orders h3 {
+        margin: 0 0 7px;
+        color: #222;
+    }
+
+    .empty-orders p {
+        color: #777;
+        margin: 0;
+    }
+
+    .shop-btn {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 11px 22px;
+        background: #16852a;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: 600;
+    }
+
+    .shop-btn:hover {
+        opacity: .9;
+    }
+
+    @media (max-width: 700px) {
+
+        .orders-header h2 {
+            font-size: 20px;
+        }
+
+        .order-top {
+            padding: 15px;
+            gap: 10px;
+        }
+
+        .order-body {
+            padding: 15px;
+        }
+
+        .order-bottom {
+            grid-template-columns: 1fr;
+        }
+
+        .grand-total {
+            text-align: left;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+        }
+
+        .product-total {
+            font-size: 13px;
+        }
+
+        .product-image,
+        .product-placeholder {
+            width: 60px;
+            height: 60px;
+        }
+
+    }
+
+
+.order-tracking {
+    margin-top: 20px;
+    padding: 18px;
+    background: #f8faf8;
+    border: 1px solid #e5ebe6;
+    border-radius: 10px;
+}
+
+.tracking-title {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 18px;
+    color: #222;
+}
+
+.tracking {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+
+.tracking::before {
+    content: "";
+    position: absolute;
+    top: 15px;
+    left: 7%;
+    right: 7%;
+    height: 3px;
+    background: #ddd;
+    z-index: 0;
+}
+
+.tracking-step {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    flex: 1;
+}
+
+.tracking-dot {
+    width: 30px;
+    height: 30px;
+    margin: 0 auto 8px;
+    border-radius: 50%;
+    background: #ddd;
+    color: #777;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.tracking-step.active .tracking-dot {
+    background: #16852a;
+    color: white;
+}
+
+.tracking-step.active .tracking-label {
+    color: #16852a;
+    font-weight: 700;
+}
+
+.tracking-label {
+    font-size: 11px;
+    color: #777;
+}
+
+@media (max-width: 700px) {
+
+    .tracking-label {
+        font-size: 9px;
+    }
+
+    .tracking-step {
+        min-width: 55px;
+    }
+}
+
+.invoice-btn {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 9px 14px;
+    background: #16852a;
+    color: white;
+    text-decoration: none;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.invoice-btn:hover {
+    opacity: 0.9;
+}
+
+
+.cancel-btn {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 9px 14px;
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.cancel-btn:hover {
+    opacity: 0.9;
+}
+
+
+
+
+</style> -->
+
+<style>
+    /* =====================================
+   ORDERS PAGE - MODERN UI
+===================================== */
+
+.orders-page {
+    width: 100%;
+}
+
+.orders-header {
+    margin-bottom: 24px;
+}
+
+.orders-header h2 {
+    margin-top: 10px;
+    font-size: 26px;
+    font-weight: 750;
+    color: #222;
+}
+
+.orders-header p {
+    margin: 7px 0 0;
+    color: #777;
+    font-size: 14px;
+}
+
+
+/* =====================================
+   ORDER CARD
+===================================== */
+
+.order-card {
+    background: #fff;
+    border: 1px solid #e5e9ef;
+    border-radius: 16px;
+    margin-bottom: 18px;
+    overflow: hidden;
+    box-shadow: 0 4px 18px rgba(0,0,0,.05);
+    transition: .2s ease;
+}
+
+.order-card:hover {
+    box-shadow: 0 8px 25px rgba(0,0,0,.08);
+}
+
+
+/* =====================================
+   ORDER HEADER
+===================================== */
+
+.order-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 18px;
+
+    padding: 18px 20px;
+
+    background: #fbfcfe;
+
+    border-bottom: 1px solid #edf0f4;
+
+    cursor: pointer;
+}
+
+.order-summary-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 0;
+}
+
+.order-main-image,
+.order-main-placeholder {
+    width: 58px;
+    height: 58px;
+
+    border-radius: 11px;
+
+    flex-shrink: 0;
+}
+
+.order-main-image {
+    object-fit: cover;
+    border: 1px solid #e5e8ed;
+}
+
+.order-main-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #f2f4f7;
+
+    font-size: 26px;
+}
+
+.order-summary-info {
+    min-width: 0;
+}
+
+.order-product-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: #222;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.order-number {
+    margin-top: 5px;
+    font-size: 13px;
+    color: #555;
+}
+
+.order-date {
+    margin-top: 3px;
+    font-size: 12px;
+    color: #888;
+}
+
+
+/* =====================================
+   STATUS
+===================================== */
+
+.status-badge {
+    padding: 8px 14px;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    text-transform: capitalize;
+
+    background: #eaf7ee;
+    color: #16852a;
+
+    white-space: nowrap;
+}
+
+
+/* =====================================
+   ORDER DETAILS
+===================================== */
+
+.order-body {
+    padding: 22px;
+}
+
+.order-section {
+    margin-bottom: 22px;
+}
+
+.order-section-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    margin-bottom: 10px;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    color: #222;
+}
+
+
+/* =====================================
+   TRACKING
+===================================== */
+
+.order-tracking {
+    padding: 18px;
+
+    background: #f8faf9;
+
+    border: 1px solid #e5ebe7;
+
+    border-radius: 12px;
+
+    margin-bottom: 22px;
+}
+
+.tracking-title {
+    margin-bottom: 20px;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    color: #222;
+}
+
+.tracking {
+    display: flex;
+    justify-content: space-between;
+
+    position: relative;
+}
+
+.tracking::before {
+    content: "";
+
+    position: absolute;
+
+    top: 15px;
+
+    left: 8%;
+    right: 8%;
+
+    height: 3px;
+
+    background: #ddd;
+
+    z-index: 0;
+}
+
+.tracking-step {
+    position: relative;
+
+    z-index: 1;
+
+    flex: 1;
+
+    text-align: center;
+}
+
+.tracking-dot {
+    width: 30px;
+    height: 30px;
+
+    margin: 0 auto 8px;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #ddd;
+
+    color: #777;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.tracking-step.active .tracking-dot {
+    background: #16852a;
+    color: #fff;
+}
+
+.tracking-step.active .tracking-label {
+    color: #16852a;
+    font-weight: 700;
+}
+
+.tracking-label {
+    font-size: 11px;
+    color: #777;
+}
+
+
+/* =====================================
+   ADDRESS
+===================================== */
+
+.address-box {
+    background: #f8f9fb;
+
+    border: 1px solid #edf0f4;
+
+    border-radius: 11px;
+
+    padding: 14px 16px;
+
+    line-height: 1.7;
+
+    color: #555;
+
+    font-size: 14px;
+}
+
+.address-name {
+    font-weight: 700;
+    color: #222;
+
+    margin-bottom: 3px;
+}
+
+
+/* =====================================
+   PRODUCTS
+===================================== */
+
+.products-list {
+    border: 1px solid #e8ebef;
+
+    border-radius: 11px;
+
+    overflow: hidden;
+
+    background: #fff;
+}
+
+.order-product {
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 14px;
+
+    border-bottom: 1px solid #edf0f3;
+}
+
+.order-product:last-child {
+    border-bottom: none;
+}
+
+.product-image,
+.product-placeholder {
+    width: 68px;
+    height: 68px;
+
+    border-radius: 10px;
+
+    flex-shrink: 0;
+}
+
+.product-image {
+    object-fit: cover;
+
+    border: 1px solid #e7e9ed;
+}
+
+.product-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #f2f4f7;
+
+    font-size: 27px;
+}
+
+.product-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.product-name {
+    font-size: 14px;
+
+    font-weight: 700;
+
+    color: #222;
+
+    margin-bottom: 5px;
+}
+
+.product-price {
+    font-size: 13px;
+
+    color: #777;
+}
+
+.product-total {
+    font-size: 14px;
+
+    font-weight: 700;
+
+    color: #222;
+
+    white-space: nowrap;
+}
+
+
+/* =====================================
+   PAYMENT + TOTAL
+===================================== */
+
+.order-bottom {
+    display: grid;
+
+    grid-template-columns: 1fr auto;
+
+    gap: 25px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid #edf0f3;
+}
+
+.payment-info {
+    font-size: 13px;
+
+    color: #666;
+
+    line-height: 1.9;
+}
+
+.payment-info strong {
+    color: #222;
+}
+
+.payment-paid {
+    color: #16852a !important;
+}
+
+.payment-id {
+    font-size: 12px;
+
+    color: #888;
+
+    word-break: break-all;
+}
+
+.grand-total {
+    text-align: right;
+}
+
+.grand-total-label {
+    font-size: 13px;
+
+    color: #777;
+
+    margin-bottom: 3px;
+}
+
+.grand-total-value {
+    font-size: 25px;
+
+    font-weight: 800;
+
+    color: #16852a;
+}
+
+
+/* =====================================
+   BUTTONS
+===================================== */
+
+.invoice-btn,
+.cancel-btn {
+    display: inline-block;
+
+    margin-top: 12px;
+
+    padding: 9px 14px;
+
+    border-radius: 8px;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    text-decoration: none;
+}
+
+.invoice-btn {
+    background: #16852a;
+    color: #fff;
+}
+
+.cancel-btn {
+    background: #dc3545;
+    color: #fff;
+    border: none;
+}
+
+.invoice-btn:hover,
+.cancel-btn:hover {
+    opacity: .88;
+}
+
+
+/* =====================================
+   EMPTY ORDERS
+===================================== */
+
+.empty-orders {
+    background: #fff;
+
+    border: 1px solid #e5e9ef;
+
+    border-radius: 16px;
+
+    text-align: center;
+
+    padding: 65px 20px;
+
+    box-shadow: 0 4px 18px rgba(0,0,0,.04);
+}
+
+.empty-icon {
+    width: 75px;
+    height: 75px;
+
+    margin: 0 auto 16px;
+
+    border-radius: 50%;
+
+    background: #f1f8f3;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 34px;
+}
+
+.empty-orders h3 {
+    margin: 0 0 7px;
+
+    color: #222;
+}
+
+.empty-orders p {
+    margin: 0;
+
+    color: #777;
+}
+
+.shop-btn {
+    display: inline-block;
+
+    margin-top: 20px;
+
+    padding: 11px 22px;
+
+    background: #16852a;
+
+    color: #fff;
+
+    text-decoration: none;
+
+    border-radius: 8px;
+
+    font-weight: 600;
+}
+
+
+/* =====================================
+   MOBILE
+===================================== */
+
+@media (max-width: 700px) {
+
+    .orders-header h2 {
+        font-size: 21px;
+    }
+
+    .order-top {
+        padding: 15px;
+
+        align-items: flex-start;
+    }
+
+    .order-product-name {
+        max-width: 170px;
+    }
+
+    .status-badge {
+        font-size: 11px;
+        padding: 7px 10px;
+    }
+
+    .order-body {
+        padding: 15px;
+    }
+
+    .order-bottom {
+        grid-template-columns: 1fr;
+    }
+
+    .grand-total {
+        text-align: left;
+
+        padding-top: 15px;
+
+        border-top: 1px solid #edf0f3;
+    }
+
+    .tracking-label {
+        font-size: 9px;
+    }
+
+    .tracking-step {
+        min-width: 55px;
+    }
+
+    .product-image,
+    .product-placeholder {
+        width: 58px;
+        height: 58px;
+    }
+
+}
+
+
+/* =====================================
+   DARK MODE
+===================================== */
+
+body.dark-mode .order-card,
+body.dark-mode .empty-orders,
+body.dark-mode .products-list {
+    background: #1e1e1e;
+    border-color: #333;
+}
+
+body.dark-mode .order-top {
+    background: #242424;
+    border-color: #333;
+}
+
+body.dark-mode .order-product {
+    border-color: #333;
+}
+
+body.dark-mode .orders-header h2,
+body.dark-mode .order-product-name,
+body.dark-mode .order-number,
+body.dark-mode .order-section-title,
+body.dark-mode .tracking-title,
+body.dark-mode .address-name,
+body.dark-mode .product-name,
+body.dark-mode .product-total,
+body.dark-mode .payment-info strong,
+body.dark-mode .empty-orders h3 {
+    color: #fff;
+}
+
+body.dark-mode .orders-header p,
+body.dark-mode .order-date,
+body.dark-mode .product-price,
+body.dark-mode .payment-info,
+body.dark-mode .grand-total-label,
+body.dark-mode .empty-orders p,
+body.dark-mode .tracking-label {
+    color: #aaa;
+}
+
+body.dark-mode .order-tracking,
+body.dark-mode .address-box {
+    background: #252525;
+    border-color: #3a3a3a;
+}
+
+body.dark-mode .products-list {
+    background: #1e1e1e;
+}
+
+body.dark-mode .product-placeholder,
+body.dark-mode .order-main-placeholder {
+    background: #292929;
+}
+</style>
+<div class="orders-page">
+
+    <div class="orders-header">
+
+        <div>
+            <h2 data-en="My Orders" data-hi="मेरे ऑर्डर">My Orders</h2>
+
+<p
+    data-en="View your recent orders and payment details"
+    data-hi="अपने हाल के ऑर्डर और भुगतान की जानकारी देखें"
+>
+    View your recent orders and payment details
+</p>
+        </div>
+
+    </div>
+
+    <div id="ordersContainer">
+        <p>Loading orders...</p>
+    </div>
+
+</div>
+
+{% endblock %}
+
+
+{% block extra_js %}
+
+<script>
+function getTrackingHtml(status) {
+
+    const steps = [
+        ["pending", "Order Placed"],
+        ["confirmed", "Confirmed"],
+        ["shipped", "Shipped"],
+        ["out_for_delivery", "Out for Delivery"],
+        ["delivered", "Delivered"]
+    ];
+
+    const statusOrder = {
+        pending: 0,
+        confirmed: 1,
+        shipped: 2,
+        out_for_delivery: 3,
+        delivered: 4
+    };
+
+    const currentStep = statusOrder[status] ?? -1;
+
+    let html = `<div class="tracking">`;
+
+    steps.forEach((step, index) => {
+
+        const active = index <= currentStep ? "active" : "";
+
+        html += `
+            <div class="tracking-step ${active}">
+                <div class="tracking-dot">
+                    ${index <= currentStep ? "✓" : ""}
+                </div>
+
+                <div class="tracking-label">
+                    ${step[1]}
+                </div>
+            </div>
+        `;
+    });
+
+    html += `</div>`;
+
+    return html;
+}
+
+
+
+
+function toggleOrderDetails(orderId) {
+
+    const currentDetails =
+        document.getElementById("orderDetails-" + orderId);
+
+    if (!currentDetails) return;
+
+
+    // Sabhi open order details ko close karo
+    document.querySelectorAll(".order-details").forEach(details => {
+
+        if (details.id !== "orderDetails-" + orderId) {
+            details.style.display = "none";
+        }
+
+    });
+
+
+    // Current order ko open / close karo
+    if (currentDetails.style.display === "none") {
+
+        currentDetails.style.display = "block";
+
+    } else {
+
+        currentDetails.style.display = "none";
+
+    }
+}
+
+
+function loadOrders() {
+
+    fetch("/orders/", {
+        method: "GET",
+        credentials: "same-origin"
+    })
+
+    .then(response => {
+
+        if (!response.ok) {
+            throw new Error("Orders request failed");
+        }
+
+        return response.json();
+    })
+
+    .then(data => {
+
+        // console.log("ORDERS:", data);
+
+        const container =
+            document.getElementById("ordersContainer");
+
+        if (!data.success) {
+
+            container.innerHTML = `
+                <div class="empty-orders">
+                    <div class="empty-icon">⚠️</div>
+                    <h3>Unable to Load Orders</h3>
+                    <p>Please try again.</p>
+                </div>
+            `;
+
+            return;
+        }
+
+        if (!data.orders || data.orders.length === 0) {
+
+            container.innerHTML = `
+                <div class="empty-orders">
+
+                    <div class="empty-icon">
+                        📦
+                    </div>
+
+                    <h3>No Orders Yet</h3>
+
+                    <p>
+                        You haven't placed any orders yet.
+                    </p>
+
+                    <a href="/dashboard/" class="shop-btn">
+                        Continue Shopping
+                    </a>
+
+                </div>
+            `;
+
+            return;
+        }
+
+        let html = "";
+
+        data.orders.forEach(order => {
+
+            /* =========================
+               ORDER PRODUCTS
+            ========================= */
+
+            let itemsHtml = "";
+
+            order.items.forEach(item => {
+
+                let imageHtml = "";
+
+                if (item.image) {
+
+                    imageHtml = `
+                        <img
+                            src="${item.image}"
+                            class="product-image"
+                            alt="${item.name}"
+                        >
+                    `;
+
+                } else {
+
+                    imageHtml = `
+                        <div class="product-placeholder">
+                            📦
+                        </div>
+                    `;
+                }
+
+                itemsHtml += `
+                    <div class="order-product">
+
+                        ${imageHtml}
+
+                        <div class="product-info">
+
+                            <div class="product-name">
+                                ${item.name}
+                            </div>
+
+                            <div class="product-price">
+                                ₹${item.price}
+                            </div>
+
+                        </div>
+
+                        <div class="product-total">
+                            ₹${item.total}
+                        </div>
+
+                    </div>
+                `;
+            });
+
+
+            /* =========================
+               PAYMENT ID
+            ========================= */
+
+            let paymentIdHtml = "";
+
+            if (order.payment_id) {
+
+                paymentIdHtml = `
+                    <div>
+                        Payment ID:
+                        <strong>
+                            ${order.payment_id}
+                        </strong>
+                    </div>
+                `;
+            }
+
+
+            /* =========================
+               INVOICE BUTTON
+            ========================= */
+
+            let invoiceButtonHtml = "";
+
+            if (order.status === "delivered") {
+
+                invoiceButtonHtml = `
+                    <a
+                        href="/download-invoice/${order.id}/"
+                        class="invoice-btn"
+                        onclick="event.stopPropagation();"
+                    >
+                        📄 Download Invoice PDF
+                    </a>
+                `;
+                
+            }
+
+
+            let cancelButtonHtml = "";
+
+                if (
+                    order.status === "pending" ||
+                    order.status === "confirmed"
+                ) {
+
+                    cancelButtonHtml = `
+                        <button
+                            class="cancel-btn"
+                            onclick="cancelOrder(event, ${order.id})"
+                        >
+                            ❌ Cancel Order
+                        </button>
+                    `;
+                }
+
+            /* =========================
+               STATUS TEXT
+            ========================= */
+
+      const statusHindi = {
+    pending: "लंबित",
+    confirmed: "पुष्टि हो गई",
+    shipped: "भेज दिया गया",
+    out_for_delivery: "डिलीवरी के लिए निकल गया",
+    delivered: "डिलीवर हो गया",
+    cancelled: "रद्द किया गया"
+};
+
+const statusEnglish =
+    order.status
+        .replaceAll("_", " ")
+        .replace(/\b\w/g, c => c.toUpperCase());
+
+const statusText =
+    localStorage.getItem("language") === "Hindi"
+        ? (statusHindi[order.status] || statusEnglish)
+        : statusEnglish;
+
+            /* =========================
+               ORDER CARD
+            ========================= */
+
+            html += `
+                <div class="order-card">
+
+                    <!-- ORDER HEADER -->
+
+                    <div
+                        class="order-top"
+                        onclick="toggleOrderDetails(${order.id})"
+                    >
+
+                        <div class="order-summary-left">
+
+                            ${
+                                order.items &&
+                                order.items.length > 0 &&
+                                order.items[0].image
+
+                                ?
+
+                                `
+                                <img
+                                    src="${order.items[0].image}"
+                                    alt="${order.items[0].name}"
+                                    class="order-main-image"
+                                >
+                                `
+
+                                :
+
+                                `
+                                <div class="order-main-placeholder">
+                                    📦
+                                </div>
+                                `
+                            }
+
+                            <div class="order-summary-info">
+
+                                <div class="order-product-name">
+
+                                    ${
+                                        order.items &&
+                                        order.items.length > 0
+
+                                        ? order.items[0].name
+
+                                        : "Order"
+                                    }
+
+                                </div>
+
+                 <div class="order-number">
+                    ${localStorage.getItem("language") === "Hindi"
+                        ? "ऑर्डर"
+                        : "Order"} #${order.id}
+                </div>
+
+                                <div class="order-date">
+                                    ${order.created_at}
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- STATUS -->
+
+                        <span class="status-badge">
+                            ${statusText}
+                        </span>
+
+                    </div>
+
+
+                    <!-- ORDER DETAILS -->
+
+                    <div
+                        class="order-details"
+                        id="orderDetails-${order.id}"
+                        style="display:none;"
+                    >
+
+                        <div class="order-body">
+
+
+                            <!-- ORDER TRACKING -->
+
+                            <div class="order-tracking">
+
+                                <div class="tracking-title">
+                                    📦 Order Tracking
+                                </div>
+
+                                ${getTrackingHtml(order.status)}
+
+                            </div>
+
+
+                            <!-- DELIVERY ADDRESS -->
+
+                            <div class="order-section">
+
+                                <div class="order-section-title">
+                                    📍 Delivery Address
+                                </div>
+
+                                <div class="address-box">
+
+                                    <div class="address-name">
+                                        ${order.full_name}
+                                    </div>
+
+                                    <div>
+                                        📱 ${order.mobile}
+                                    </div>
+
+                                    <div>
+                                        ${order.address}
+                                    </div>
+
+                                    <div>
+                                        ${order.city},
+                                        ${order.state}
+                                        - ${order.pincode}
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- ORDERED PRODUCTS -->
+
+                            <div class="order-section">
+
+                                <div class="order-section-title">
+                                    🛍️ Ordered Products
+                                </div>
+
+                                <div class="products-list">
+
+                                    ${itemsHtml}
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- PAYMENT -->
+
+                            <div class="order-bottom">
+
+                                <div class="payment-info">
+
+                                    <div>
+                                        Payment Method:
+                                        <strong>
+                                            ${order.payment_method}
+                                        </strong>
+                                    </div>
+
+                                    <div>
+                                        Payment Status:
+                                        <strong class="payment-paid">
+                                            ${order.payment_status}
+                                        </strong>
+                                    </div>
+
+                                    ${paymentIdHtml}
+
+                                </div>
+
+
+                                <!-- GRAND TOTAL -->
+
+                                <div class="grand-total">
+
+                                    <div class="grand-total-label">
+                                        Grand Total
+                                    </div>
+
+                                    <div class="grand-total-value">
+                                        ₹${order.total_amount}
+                                    </div>
+
+                                    ${invoiceButtonHtml}
+                                    ${cancelButtonHtml}
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            `;
+        });
+
+
+        container.innerHTML = html;
+
+    })
+
+    .catch(error => {
+
+        console.error("Orders Error:", error);
+
+        document.getElementById("ordersContainer").innerHTML = `
+            <div class="empty-orders">
+
+                <div class="empty-icon">
+                    ⚠️
+                </div>
+
+                <h3>Unable to Load Orders</h3>
+
+                <p>
+                    Please refresh the page and try again.
+                </p>
+
+            </div>
+        `;
+
+    });
+
+
+
+
+}
+
+
+function cancelOrder(event, orderId) {
+
+    event.stopPropagation();
+
+    const confirmCancel = confirm(
+        "Are you sure you want to cancel this order?"
+    );
+
+    if (!confirmCancel) {
+        return;
+    }
+
+    const csrfElement =
+        document.querySelector(
+            '[name=csrfmiddlewaretoken]'
+        );
+
+    if (!csrfElement) {
+        alert("CSRF token not found");
+        return;
+    }
+
+    fetch("/update-order-status/", {
+        method: "POST",
+        credentials: "same-origin",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": csrfElement.value
+        },
+        body: JSON.stringify({
+            order_id: orderId,
+            status: "cancelled"
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+
+        // console.log("CANCEL ORDER:", data);
+
+        if (data.success) {
+
+            alert("Order cancelled successfully.");
+
+            loadOrders();
+
+            if (typeof loadNotificationCount === "function") {
+                loadNotificationCount();
+            }
+
+        } else {
+
+            alert(
+                data.message ||
+                "Unable to cancel order."
+            );
+        }
+    })
+    .catch(error => {
+
+        console.error(
+            "Cancel order error:",
+            error
+        );
+
+        alert("Something went wrong.");
+    });
+
+// 
+}
+loadOrders();
+
+</script>
+
+{% endblock %}

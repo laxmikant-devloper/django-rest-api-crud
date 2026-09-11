@@ -1,0 +1,1402 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/style.css' %}"
+    >
+
+    <title>Register | SKSHOP</title>
+
+
+    <style>
+
+        /* =========================================
+           RESET
+        ========================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+
+        /* =========================================
+           BODY
+        ========================================= */
+
+        body {
+
+            min-height: 100vh;
+            height: 100vh;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at 8% 10%,
+                    #dceeff,
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 92% 90%,
+                    #e4f1ff,
+                    transparent 30%
+                ),
+                #f4f8fd;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            color: #122b52;
+        }
+
+
+        /* =========================================
+           MAIN CARD
+        ========================================= */
+
+        .register-wrapper {
+
+            width: 100%;
+
+            max-width: 1120px;
+
+            height:
+                calc(100vh - 40px);
+
+            max-height: 700px;
+
+            display: grid;
+
+            grid-template-columns:
+                44% 56%;
+
+            background: #ffffff;
+
+            border:
+                1px solid #d9e6f5;
+
+            border-radius: 27px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 25px 70px
+                rgba(30, 80, 140, .13);
+        }
+
+
+        /* =========================================
+           LEFT PANEL
+        ========================================= */
+
+        .register-left {
+
+            position: relative;
+
+            padding:
+                38px 43px;
+
+            background:
+                radial-gradient(
+                    circle at 90% 10%,
+                    rgba(35, 140, 255, .16),
+                    transparent 27%
+                ),
+                linear-gradient(
+                    145deg,
+                    #e8f4ff,
+                    #f5faff
+                );
+
+            overflow: hidden;
+        }
+
+
+        .register-left::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 240px;
+            height: 240px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(60, 150, 255, .07);
+
+            left: -110px;
+            bottom: -100px;
+        }
+
+
+        .register-left::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 160px;
+            height: 160px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(60, 150, 255, .07);
+
+            right: -60px;
+            top: -60px;
+        }
+
+
+        /* =========================================
+           BRAND
+        ========================================= */
+
+        .brand {
+
+            position: relative;
+
+            z-index: 2;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 11px;
+        }
+
+
+        .brand-icon {
+
+            width: 48px;
+            height: 48px;
+
+            border-radius: 14px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #1648c7,
+                    #138cff
+                );
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 23px;
+
+            box-shadow:
+                0 8px 20px
+                rgba(20,105,220,.22);
+        }
+
+
+        .brand-name {
+
+            font-size: 26px;
+
+            font-weight: 800;
+
+            color: #102b55;
+        }
+
+
+        .brand-name span {
+            color: #087ff5;
+        }
+
+
+        .brand-tagline {
+
+            margin-top: 2px;
+
+            font-size: 11px;
+
+            color: #7187a5;
+        }
+
+
+        /* =========================================
+           LEFT CONTENT
+        ========================================= */
+
+        .register-welcome {
+
+            position: relative;
+
+            z-index: 2;
+
+            margin-top: 38px;
+        }
+
+
+        .register-welcome h2 {
+
+            font-size: 36px;
+
+            line-height: 1.1;
+
+            color: #102b55;
+        }
+
+
+        .register-welcome h2 span {
+
+            color: #087ff5;
+        }
+
+
+        .register-welcome p {
+
+            margin-top: 12px;
+
+            max-width: 350px;
+
+            font-size: 15px;
+
+            line-height: 1.55;
+
+            color: #6b819f;
+        }
+
+
+        /* =========================================
+           ILLUSTRATION
+        ========================================= */
+
+        .register-illustration {
+
+            height: 220px;
+
+            position: relative;
+
+            z-index: 2;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            margin-top: 3px;
+        }
+
+
+        /* BOX */
+
+        .shop-box {
+
+            width: 155px;
+
+            height: 125px;
+
+            position: relative;
+
+            margin-top: 18px;
+        }
+
+
+        .box-top {
+
+            position: absolute;
+
+            top: 0;
+
+            left: 22px;
+
+            width: 110px;
+
+            height: 38px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #3b9cff,
+                    #0873df
+                );
+
+            transform:
+                skewY(-7deg);
+
+            border-radius: 7px 7px 2px 2px;
+        }
+
+
+        .box-body {
+
+            position: absolute;
+
+            top: 29px;
+
+            left: 22px;
+
+            width: 110px;
+
+            height: 88px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #1789f5,
+                    #0668ce
+                );
+
+            border-radius:
+                4px 4px 10px 10px;
+
+            box-shadow:
+                0 14px 25px
+                rgba(25,110,210,.20);
+        }
+
+
+        .box-tape {
+
+            position: absolute;
+
+            width: 17px;
+
+            height: 88px;
+
+            left: 68px;
+
+            top: 29px;
+
+            background:
+                rgba(255,255,255,.75);
+
+            z-index: 2;
+        }
+
+
+        .box-symbol {
+
+            position: absolute;
+
+            z-index: 3;
+
+            top: 50px;
+
+            left: 57px;
+
+            font-size: 25px;
+
+            color: #ffffff;
+        }
+
+
+        /* FLOATING ITEMS */
+
+        .register-bubble {
+
+            position: absolute;
+
+            width: 52px;
+
+            height: 52px;
+
+            border-radius: 14px;
+
+            background: #ffffff;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 25px;
+
+            box-shadow:
+                0 8px 20px
+                rgba(50,100,150,.14);
+        }
+
+
+        .bubble-user {
+
+            left: 45px;
+
+            top: 48px;
+        }
+
+
+        .bubble-heart {
+
+            right: 45px;
+
+            top: 55px;
+        }
+
+
+        /* =========================================
+           BENEFITS
+        ========================================= */
+
+        .benefits {
+
+            position: relative;
+
+            z-index: 2;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 6px;
+
+            padding:
+                14px 10px;
+
+            background:
+                rgba(255,255,255,.80);
+
+            border:
+                1px solid
+                rgba(218,230,244,.9);
+
+            border-radius: 17px;
+
+            backdrop-filter: blur(5px);
+        }
+
+
+        .benefit {
+
+            text-align: center;
+        }
+
+
+        .benefit-icon {
+
+            font-size: 22px;
+
+            margin-bottom: 5px;
+        }
+
+
+        .benefit-title {
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            color: #17345e;
+        }
+
+
+        .benefit-text {
+
+            margin-top: 2px;
+
+            font-size: 9px;
+
+            color: #7890ae;
+        }
+
+
+        /* =========================================
+           RIGHT PANEL
+        ========================================= */
+
+        .register-right {
+
+            padding:
+                35px 68px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+        }
+
+
+        /* =========================================
+           SECURE BADGE
+        ========================================= */
+
+        .secure-badge {
+
+            align-self: flex-end;
+
+            padding:
+                8px 13px;
+
+            border-radius: 10px;
+
+            background: #f7fbff;
+
+            border:
+                1px solid #dce8f5;
+
+            color: #58708f;
+
+            font-size: 12px;
+
+            margin-bottom: 15px;
+        }
+
+
+        /* =========================================
+           TITLE
+        ========================================= */
+
+        .register-title {
+
+            text-align: center;
+
+            font-size: 42px;
+
+            line-height: 1.1;
+
+            color: #102b55;
+
+            margin-bottom: 8px;
+        }
+
+
+        .register-title span {
+
+            color: #087ff5;
+        }
+
+
+        .register-subtitle {
+
+            text-align: center;
+
+            color: #7185a3;
+
+            font-size: 14px;
+
+            margin-bottom: 22px;
+        }
+
+
+        /* =========================================
+           FORM GROUP
+        ========================================= */
+
+        .form-group {
+
+            margin-bottom: 13px;
+        }
+
+
+        .form-label {
+
+            display: block;
+
+            margin-bottom: 7px;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            color: #17335c;
+        }
+
+
+        /* =========================================
+           INPUT
+        ========================================= */
+
+        .input-box {
+
+            height: 50px;
+
+            border:
+                1px solid #d7e3f0;
+
+            border-radius: 12px;
+
+            background: #ffffff;
+
+            display: flex;
+
+            align-items: center;
+
+            overflow: hidden;
+
+            transition: .2s;
+        }
+
+
+        .input-box:focus-within {
+
+            border-color: #1687f8;
+
+            box-shadow:
+                0 0 0 4px
+                rgba(22,135,248,.08);
+        }
+
+
+        .input-icon {
+
+            width: 48px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 18px;
+
+            color: #6d84a4;
+        }
+
+
+        .input-box input {
+
+            flex: 1;
+
+            height: 100%;
+
+            border: 0;
+
+            outline: 0;
+
+            padding:
+                0 14px 0 0;
+
+            background: transparent;
+
+            font-size: 15px;
+
+            color: #263d5e;
+        }
+
+
+        .input-box input::placeholder {
+
+            color: #8b9ab0;
+        }
+
+
+        /* =========================================
+           REGISTER BUTTON
+        ========================================= */
+
+        .register-btn {
+
+            width: 100%;
+
+            height: 57px;
+
+            margin-top: 8px;
+
+            border: 0;
+
+            border-radius: 13px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #168af8,
+                    #086fe5
+                );
+
+            color: #ffffff;
+
+            font-size: 18px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 12px 28px
+                rgba(15,120,235,.22);
+
+            transition: .2s;
+        }
+
+
+        .register-btn:hover {
+
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 16px 32px
+                rgba(15,120,235,.28);
+        }
+
+
+        .register-btn:active {
+
+            transform:
+                scale(.99);
+        }
+
+
+        /* =========================================
+           MESSAGE
+        ========================================= */
+
+        #registerMessage {
+
+            text-align: center;
+
+            min-height: 20px;
+
+            margin-top: 10px;
+
+            font-size: 14px;
+
+            color: #e53935;
+        }
+
+
+        /* =========================================
+           DIVIDER
+        ========================================= */
+
+        .divider {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            margin:
+                12px 0 11px;
+
+            color: #8999ad;
+
+            font-size: 12px;
+        }
+
+
+        .divider::before,
+        .divider::after {
+
+            content: "";
+
+            height: 1px;
+
+            background: #e2e9f1;
+
+            flex: 1;
+        }
+
+
+        /* =========================================
+           LOGIN LINK
+        ========================================= */
+
+        .login-link {
+
+            text-align: center;
+
+            color: #7185a3;
+
+            font-size: 14px;
+        }
+
+
+        .login-link a {
+
+            color: #087ff5;
+
+            font-weight: 700;
+
+            text-decoration: none;
+        }
+
+
+        .login-link a:hover {
+
+            text-decoration: underline;
+        }
+
+
+        /* =========================================
+           HEIGHT FIX
+        ========================================= */
+
+        @media (max-height: 700px) {
+
+            body {
+                padding: 10px;
+            }
+
+
+            .register-wrapper {
+
+                height:
+                    calc(100vh - 20px);
+
+                max-height: none;
+            }
+
+
+            .register-left {
+
+                padding:
+                    25px 35px;
+            }
+
+
+            .register-welcome {
+
+                margin-top: 20px;
+            }
+
+
+            .register-welcome h2 {
+
+                font-size: 30px;
+            }
+
+
+            .register-illustration {
+
+                height: 150px;
+            }
+
+
+            .shop-box {
+
+                transform:
+                    scale(.75);
+            }
+
+
+            .bubble-user,
+            .bubble-heart {
+
+                transform:
+                    scale(.8);
+            }
+
+
+            .benefits {
+
+                padding: 9px;
+            }
+
+
+            .register-right {
+
+                padding:
+                    22px 55px;
+            }
+
+
+            .register-title {
+
+                font-size: 35px;
+            }
+
+
+            .register-subtitle {
+
+                margin-bottom: 15px;
+            }
+
+
+            .form-group {
+
+                margin-bottom: 9px;
+            }
+
+
+            .input-box {
+
+                height: 45px;
+            }
+
+
+            .register-btn {
+
+                height: 51px;
+            }
+        }
+
+
+        /* =========================================
+           TABLET
+        ========================================= */
+
+        @media (max-width: 850px) {
+
+            html,
+            body {
+
+                height: auto;
+
+                overflow: auto;
+            }
+
+
+            body {
+
+                min-height: 100vh;
+
+                padding: 15px;
+            }
+
+
+            .register-wrapper {
+
+                height: auto;
+
+                max-height: none;
+
+                grid-template-columns: 1fr;
+
+                max-width: 550px;
+            }
+
+
+            .register-left {
+
+                display: none;
+            }
+
+
+            .register-right {
+
+                padding:
+                    40px 35px;
+            }
+        }
+
+
+        /* =========================================
+           MOBILE
+        ========================================= */
+
+        @media (max-width: 600px) {
+
+            .register-right {
+
+                padding:
+                    30px 20px;
+            }
+
+
+            .register-title {
+
+                font-size: 31px;
+            }
+
+
+            .register-subtitle {
+
+                font-size: 13px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="register-wrapper">
+
+
+    <!-- =====================================
+         LEFT PANEL
+    ====================================== -->
+
+    <div class="register-left">
+
+
+        <!-- BRAND -->
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                🛍️
+            </div>
+
+
+            <div>
+
+                <div class="brand-name">
+                    SK<span>SHOP</span>
+                </div>
+
+
+                <div class="brand-tagline">
+                    Shop Smarter, Live Better
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- WELCOME -->
+
+        <div class="register-welcome">
+
+            <h2>
+                Join <span>SKSHOP</span>
+            </h2>
+
+
+            <p>
+                Create your account and enjoy
+                a smarter, faster shopping experience.
+            </p>
+
+        </div>
+
+
+        <!-- ILLUSTRATION -->
+
+        <div class="register-illustration">
+
+
+            <div class="register-bubble bubble-user">
+                👤
+            </div>
+
+
+            <div class="shop-box">
+
+                <div class="box-top"></div>
+
+                <div class="box-body"></div>
+
+                <div class="box-tape"></div>
+
+                <div class="box-symbol">
+                    🛍️
+                </div>
+
+            </div>
+
+
+            <div class="register-bubble bubble-heart">
+                ❤️
+            </div>
+
+
+        </div>
+
+
+        <!-- BENEFITS -->
+
+        <div class="benefits">
+
+
+            <div class="benefit">
+
+                <div class="benefit-icon">
+                    🛡️
+                </div>
+
+                <div class="benefit-title">
+                    Secure
+                </div>
+
+                <div class="benefit-text">
+                    Your data is safe
+                </div>
+
+            </div>
+
+
+            <div class="benefit">
+
+                <div class="benefit-icon">
+                    ⚡
+                </div>
+
+                <div class="benefit-title">
+                    Fast
+                </div>
+
+                <div class="benefit-text">
+                    Quick access
+                </div>
+
+            </div>
+
+
+            <div class="benefit">
+
+                <div class="benefit-icon">
+                    🛒
+                </div>
+
+                <div class="benefit-title">
+                    Shop
+                </div>
+
+                <div class="benefit-text">
+                    Better shopping
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================
+         RIGHT PANEL
+    ====================================== -->
+
+    <div class="register-right">
+
+
+        <div class="secure-badge">
+            🔒 &nbsp; Safe & Secure
+        </div>
+
+
+        <h1 class="register-title">
+            Create <span>Account</span>
+        </h1>
+
+
+        <p class="register-subtitle">
+            Fill in your details to get started.
+        </p>
+
+
+        <!-- =================================
+             EXISTING FORM
+        ================================== -->
+
+        <form id="registerForm">
+
+            {% csrf_token %}
+
+
+            <!-- NAME -->
+
+            <div class="form-group">
+
+                <label
+                    class="form-label"
+                    for="name">
+
+                    Name
+
+                </label>
+
+
+                <div class="input-box">
+
+                    <div class="input-icon">
+                        👤
+                    </div>
+
+
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Enter your name"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- EMAIL -->
+
+            <div class="form-group">
+
+                <label
+                    class="form-label"
+                    for="email">
+
+                    Email
+
+                </label>
+
+
+                <div class="input-box">
+
+                    <div class="input-icon">
+                        ✉️
+                    </div>
+
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- PASSWORD -->
+
+            <div class="form-group">
+
+                <label
+                    class="form-label"
+                    for="password">
+
+                    Password
+
+                </label>
+
+
+                <div class="input-box">
+
+                    <div class="input-icon">
+                        🔒
+                    </div>
+
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- CONFIRM PASSWORD -->
+
+            <div class="form-group">
+
+                <label
+                    class="form-label"
+                    for="confirmPassword">
+
+                    Confirm Password
+
+                </label>
+
+
+                <div class="input-box">
+
+                    <div class="input-icon">
+                        🔐
+                    </div>
+
+
+                    <input
+                        type="password"
+                        id="confirmPassword"
+                        name="confirmPassword"
+                        placeholder="Confirm your password"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- REGISTER BUTTON -->
+
+            <button
+                type="submit"
+                class="register-btn">
+
+                Create Account &nbsp; →
+
+            </button>
+
+
+            <!-- EXISTING MESSAGE -->
+
+            <p id="registerMessage"></p>
+
+
+        </form>
+
+
+        <!-- DIVIDER -->
+
+        <div class="divider">
+            OR
+        </div>
+
+
+        <!-- LOGIN -->
+
+        <div class="login-link">
+
+            Already have an account?
+
+            <a href="/login/">
+                Login
+            </a>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<!-- =====================================
+     EXISTING REGISTER JS
+====================================== -->
+
+<script
+    src="{% static 'js/register.js' %}?v=2">
+</script>
+
+
+</body>
+
+</html>

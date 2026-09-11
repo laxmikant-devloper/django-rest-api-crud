@@ -1,0 +1,253 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>OTP Verification</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+<div class="otp-page">
+
+    <div class="otp-card">
+
+        <!-- LEFT SIDE -->
+        <div class="otp-left">
+
+            <div class="otp-icon">
+                🔐
+            </div>
+
+            <h2>Your Security<br>Our Priority</h2>
+
+            <p>
+                We've sent a 6 digit OTP<br>
+                to your registered mobile number.
+            </p>
+
+        </div>
+
+
+        <!-- RIGHT SIDE -->
+        <div class="otp-right">
+
+            <h1>OTP Verification</h1>
+
+            <p class="otp-subtitle">
+                Enter the 6 digit OTP sent to your mobile number
+            </p>
+
+            {% csrf_token %}
+
+            <!-- Actual value used by otp.js -->
+            <input type="hidden" id="otp">
+
+            <!-- OTP BOXES -->
+            <div class="otp-inputs">
+
+                <input type="text" maxlength="1" class="otp-box" inputmode="numeric" autofocus>
+                <input type="text" maxlength="1" class="otp-box" inputmode="numeric">
+                <input type="text" maxlength="1" class="otp-box" inputmode="numeric">
+                <input type="text" maxlength="1" class="otp-box" inputmode="numeric">
+                <input type="text" maxlength="1" class="otp-box" inputmode="numeric">
+                <input type="text" maxlength="1" class="otp-box" inputmode="numeric">
+
+            </div>
+
+
+            <!-- VERIFY -->
+            <button
+                type="button"
+                class="otp-verify-btn"
+                onclick="verifyOTP()">
+                Verify OTP
+                <span>→</span>
+            </button>
+
+
+            <!-- RESEND -->
+            <button
+                type="button"
+                class="otp-resend-btn"
+                onclick="resendOTP()">
+                ↻ &nbsp; Resend OTP
+            </button>
+
+
+          <p class="otp-timer" id="otpResendArea">
+            Didn't receive the OTP?
+            <span id="otpResendText">You can resend it in</span>
+            <strong id="otpTimer">00:30</strong>
+        </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+    /* ===============================
+       OTP INPUTS
+       =============================== */
+
+    const otpBoxes = document.querySelectorAll(".otp-box");
+    const hiddenOtp = document.getElementById("otp");
+
+    otpBoxes.forEach((box, index) => {
+
+        box.addEventListener("input", function () {
+
+            this.value = this.value.replace(/\D/g, "");
+
+            if (this.value && index < otpBoxes.length - 1) {
+                otpBoxes[index + 1].focus();
+            }
+
+            updateOTP();
+        });
+
+
+        box.addEventListener("keydown", function (event) {
+
+            if (
+                event.key === "Backspace" &&
+                !this.value &&
+                index > 0
+            ) {
+                otpBoxes[index - 1].focus();
+            }
+
+        });
+
+    });
+
+
+    function updateOTP() {
+
+        let otp = "";
+
+        otpBoxes.forEach(function(box) {
+            otp += box.value;
+        });
+
+        hiddenOtp.value = otp;
+    }
+
+
+    /* ===============================
+       PASTE OTP
+       =============================== */
+
+    otpBoxes[0].addEventListener("paste", function(event) {
+
+        event.preventDefault();
+
+        const pasted = event.clipboardData
+            .getData("text")
+            .replace(/\D/g, "")
+            .substring(0, 6);
+
+        pasted.split("").forEach(function(digit, index) {
+
+            if (otpBoxes[index]) {
+                otpBoxes[index].value = digit;
+            }
+
+        });
+
+        updateOTP();
+
+        if (pasted.length === 6) {
+            otpBoxes[5].focus();
+        }
+
+    });
+
+
+    /* ===============================
+       RESEND OTP TIMER
+       =============================== */
+let timeLeft = 30;
+let resendTimer = null;
+
+const timerText = document.getElementById("otpTimer");
+const resendArea = document.getElementById("otpResendArea");
+const resendText = document.getElementById("otpResendText");
+
+
+function startOTPTimer() {
+
+    if (resendTimer) {
+        clearInterval(resendTimer);
+    }
+
+    timeLeft = 30;
+
+    resendArea.classList.remove("resend-active");
+
+    resendText.textContent = "You can resend it in";
+    timerText.textContent = "00:30";
+
+
+    resendTimer = setInterval(function() {
+
+        timeLeft--;
+
+        let seconds = timeLeft < 10
+            ? "0" + timeLeft
+            : timeLeft;
+
+        timerText.textContent = "00:" + seconds;
+
+
+        if (timeLeft <= 0) {
+
+            clearInterval(resendTimer);
+
+            timerText.textContent = "Resend now";
+            resendText.textContent = "";
+
+            // Poora section clickable
+            resendArea.classList.add("resend-active");
+        }
+
+    }, 1000);
+}
+
+
+/* Timer section click */
+
+resendArea.addEventListener("click", function() {
+
+    // Time khatam nahi hua to kuch nahi hoga
+    if (timeLeft > 0) {
+        return;
+    }
+
+    // Existing resend function
+    resendOTP();
+
+    // Timer dobara 30 seconds
+    startOTPTimer();
+
+});
+
+
+/* First timer */
+
+startOTPTimer();
+
+</script>
+
+<script src="/static/js/otp.js?v=3"></script>
+
+</body>
+</html>

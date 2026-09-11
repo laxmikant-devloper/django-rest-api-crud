@@ -1,0 +1,238 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Profile</title>
+
+    <link rel="stylesheet"
+          href="{% static 'css/edit-profile.css' %}">
+
+</head>
+
+<body>
+
+    <div class="profile-page">
+
+        <div class="profile-card">
+
+            <!-- HEADER -->
+
+            <div class="profile-header">
+
+                <div class="profile-avatar">
+                    👤
+                </div>
+
+                <div>
+                    <h1>
+                        <span
+                            data-en="Edit Profile"
+                            data-hi="प्रोफ़ाइल संपादित करें">
+                            Edit Profile
+                        </span>
+                    </h1>
+
+                    <p>
+                        <span
+                            data-en="Update your personal information"
+                            data-hi="अपनी व्यक्तिगत जानकारी अपडेट करें">
+                            Update your personal information
+                        </span>
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- MESSAGE -->
+
+            <div id="message"
+                 class="message">
+            </div>
+
+
+            <!-- FORM -->
+
+            <div class="profile-form">
+
+                <!-- NAME -->
+
+                <div class="form-group">
+
+                    <label for="editName">
+                        <span
+                            data-en="Full Name"
+                            data-hi="पूरा नाम">
+                            Full Name
+                        </span>
+                    </label>
+
+                    <div class="input-box">
+
+                        <span>👤</span>
+
+                        <input
+                            type="text"
+                            id="editName"
+                            placeholder="Enter your name"
+                            data-en-placeholder="Enter your name"
+                            data-hi-placeholder="अपना नाम दर्ज करें"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="form-group">
+
+                    <label for="editEmail">
+
+                        <span
+                            data-en="Email Address"
+                            data-hi="ईमेल पता">
+                            Email Address
+                        </span>
+
+                    </label>
+
+                    <div class="input-box">
+
+                        <span>✉️</span>
+
+                        <input
+                            type="email"
+                            id="editEmail"
+                            placeholder="Enter your email"
+                            data-en-placeholder="Enter your email"
+                            data-hi-placeholder="अपना ईमेल दर्ज करें"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- PHONE -->
+
+                <div class="form-group">
+
+                    <label>
+
+                        <span
+                            data-en="Phone Number"
+                            data-hi="फ़ोन नंबर">
+                            Phone Number
+                        </span>
+
+                    </label>
+
+                    <div class="input-box">
+
+                        <span>📱</span>
+
+                        <input
+                            type="text"
+                            id="editPhone"
+                            placeholder="Phone number"
+                            readonly
+                        >
+
+                    </div>
+
+                </div>
+
+                <!-- PROFILE PHOTO -->
+
+            <div class="form-group">
+
+                <label for="editfile">
+
+                    <span
+                        data-en="Profile Photo"
+                        data-hi="प्रोफ़ाइल फोटो">
+                        Profile Photo
+                    </span>
+
+                </label>
+
+                <div class="input-box">
+
+                    <span>📷</span>
+
+                    <input
+                        type="file"
+                        id="editfile"
+                        accept="image/*"
+                    >
+
+                </div>
+
+            </div>
+
+            </div>
+
+
+            <!-- BUTTONS -->
+
+            <div class="button-row">
+
+                <button
+                    type="button"
+                    id="updateBtn"
+                    class="update-btn">
+
+                    <span
+                        data-en="Save Changes"
+                        data-hi="बदलाव सेव करें">
+                        Save Changes
+                    </span>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    id="cancelBtn"
+                    class="cancel-btn">
+
+                    <span
+                        data-en="Cancel"
+                        data-hi="रद्द करें">
+                        Cancel
+                    </span>
+
+                </button>
+
+            </div>
+
+
+            <!-- CSRF -->
+
+            <form style="display:none;">
+
+                {% csrf_token %}
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+  <script src="{% static 'js/edit-profile.js' %}?v=3"></script>
+
+<script src="{% static 'js/language.js' %}?v=2"></script>
+</body>
+
+</html>

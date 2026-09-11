@@ -1,0 +1,1309 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/style.css' %}"
+    >
+
+    <title>Forgot Password | SKSHOP</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+
+        body {
+
+            min-height: 100vh;
+            height: 100vh;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at 8% 10%,
+                    #dceeff,
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 92% 90%,
+                    #e4f1ff,
+                    transparent 30%
+                ),
+                #f4f8fd;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            color: #122b52;
+        }
+
+
+        /* =====================================
+           MAIN CARD
+        ===================================== */
+
+        .forgot-wrapper {
+
+            width: 100%;
+
+            max-width: 1080px;
+
+            height:
+                calc(100vh - 40px);
+
+            max-height: 690px;
+
+            display: grid;
+
+            grid-template-columns:
+                44% 56%;
+
+            background: #ffffff;
+
+            border:
+                1px solid #d9e6f5;
+
+            border-radius: 27px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 25px 70px
+                rgba(30,80,140,.13);
+        }
+
+
+        /* =====================================
+           LEFT
+        ===================================== */
+
+        .forgot-left {
+
+            position: relative;
+
+            padding:
+                38px 43px;
+
+            background:
+                radial-gradient(
+                    circle at 90% 10%,
+                    rgba(35,140,255,.16),
+                    transparent 27%
+                ),
+                linear-gradient(
+                    145deg,
+                    #e8f4ff,
+                    #f5faff
+                );
+
+            overflow: hidden;
+        }
+
+
+        .forgot-left::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 240px;
+            height: 240px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(60,150,255,.07);
+
+            left: -110px;
+            bottom: -100px;
+        }
+
+
+        .forgot-left::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 160px;
+            height: 160px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(60,150,255,.07);
+
+            right: -60px;
+            top: -60px;
+        }
+
+
+        /* =====================================
+           BRAND
+        ===================================== */
+
+        .brand {
+
+            position: relative;
+
+            z-index: 2;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 11px;
+        }
+
+
+        .brand-icon {
+
+            width: 48px;
+            height: 48px;
+
+            border-radius: 14px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #1648c7,
+                    #138cff
+                );
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 23px;
+
+            box-shadow:
+                0 8px 20px
+                rgba(20,105,220,.22);
+        }
+
+
+        .brand-name {
+
+            font-size: 26px;
+
+            font-weight: 800;
+
+            color: #102b55;
+        }
+
+
+        .brand-name span {
+            color: #087ff5;
+        }
+
+
+        .brand-tagline {
+
+            margin-top: 2px;
+
+            font-size: 11px;
+
+            color: #7187a5;
+        }
+
+
+        /* =====================================
+           LEFT CONTENT
+        ===================================== */
+
+        .forgot-welcome {
+
+            position: relative;
+
+            z-index: 2;
+
+            margin-top: 45px;
+        }
+
+
+        .forgot-welcome h2 {
+
+            font-size: 36px;
+
+            line-height: 1.12;
+
+            color: #102b55;
+        }
+
+
+        .forgot-welcome h2 span {
+
+            color: #087ff5;
+        }
+
+
+        .forgot-welcome p {
+
+            margin-top: 13px;
+
+            max-width: 350px;
+
+            font-size: 15px;
+
+            line-height: 1.6;
+
+            color: #6b819f;
+        }
+
+
+        /* =====================================
+           LOCK ILLUSTRATION
+        ===================================== */
+
+        .lock-area {
+
+            height: 230px;
+
+            position: relative;
+
+            z-index: 2;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+        }
+
+
+        .lock {
+
+            width: 120px;
+            height: 105px;
+
+            margin-top: 20px;
+
+            border-radius: 18px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #168af8,
+                    #086fe5
+                );
+
+            position: relative;
+
+            box-shadow:
+                0 18px 35px
+                rgba(15,120,235,.22);
+        }
+
+
+        .lock::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 65px;
+            height: 65px;
+
+            border:
+                12px solid #0876e8;
+
+            border-bottom: 0;
+
+            border-radius:
+                40px 40px 0 0;
+
+            left: 27px;
+
+            top: -52px;
+        }
+
+
+        .lock-hole {
+
+            position: absolute;
+
+            width: 18px;
+            height: 25px;
+
+            border-radius: 10px;
+
+            background: #ffffff;
+
+            left: 51px;
+            top: 39px;
+        }
+
+
+        .lock-hole::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 7px;
+            height: 14px;
+
+            background: #ffffff;
+
+            left: 5px;
+            top: 16px;
+
+            border-radius: 0 0 5px 5px;
+        }
+
+
+        .floating-icon {
+
+            position: absolute;
+
+            width: 52px;
+            height: 52px;
+
+            border-radius: 14px;
+
+            background: #ffffff;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 24px;
+
+            box-shadow:
+                0 8px 20px
+                rgba(50,100,150,.14);
+        }
+
+
+        .mail-icon {
+
+            left: 55px;
+            top: 70px;
+        }
+
+
+        .shield-icon {
+
+            right: 55px;
+            top: 58px;
+        }
+
+
+        /* =====================================
+           BENEFITS
+        ===================================== */
+
+        .benefits {
+
+            position: relative;
+
+            z-index: 2;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3,1fr);
+
+            gap: 6px;
+
+            padding:
+                14px 10px;
+
+            background:
+                rgba(255,255,255,.80);
+
+            border:
+                1px solid
+                rgba(218,230,244,.9);
+
+            border-radius: 17px;
+
+            backdrop-filter: blur(5px);
+        }
+
+
+        .benefit {
+
+            text-align: center;
+        }
+
+
+        .benefit-icon {
+
+            font-size: 21px;
+
+            margin-bottom: 5px;
+        }
+
+
+        .benefit-title {
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            color: #17345e;
+        }
+
+
+        .benefit-text {
+
+            margin-top: 2px;
+
+            font-size: 9px;
+
+            color: #7890ae;
+        }
+
+
+        /* =====================================
+           RIGHT
+        ===================================== */
+
+        .forgot-right {
+
+            padding:
+                40px 68px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+        }
+
+
+        .secure-badge {
+
+            align-self: flex-end;
+
+            padding:
+                8px 13px;
+
+            border-radius: 10px;
+
+            background: #f7fbff;
+
+            border:
+                1px solid #dce8f5;
+
+            color: #58708f;
+
+            font-size: 12px;
+
+            margin-bottom: 18px;
+        }
+
+
+        /* =====================================
+           TITLE
+        ===================================== */
+
+        .forgot-title {
+
+            text-align: center;
+
+            font-size: 40px;
+
+            line-height: 1.1;
+
+            color: #102b55;
+
+            margin-bottom: 8px;
+        }
+
+
+        .forgot-title span {
+
+            color: #087ff5;
+        }
+
+
+        .forgot-subtitle {
+
+            text-align: center;
+
+            color: #7185a3;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+
+            margin-bottom: 25px;
+        }
+
+
+        /* =====================================
+           FORM
+        ===================================== */
+
+        .form-group {
+
+            margin-bottom: 15px;
+        }
+
+
+        .form-label {
+
+            display: block;
+
+            margin-bottom: 7px;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            color: #17335c;
+        }
+
+
+        .input-box {
+
+            height: 52px;
+
+            border:
+                1px solid #d7e3f0;
+
+            border-radius: 12px;
+
+            display: flex;
+
+            align-items: center;
+
+            background: #ffffff;
+
+            overflow: hidden;
+
+            transition: .2s;
+        }
+
+
+        .input-box:focus-within {
+
+            border-color: #1687f8;
+
+            box-shadow:
+                0 0 0 4px
+                rgba(22,135,248,.08);
+        }
+
+
+        .input-icon {
+
+            width: 49px;
+
+            display: flex;
+
+            justify-content: center;
+
+            font-size: 18px;
+
+            color: #6d84a4;
+        }
+
+
+        .input-box input {
+
+            flex: 1;
+
+            height: 100%;
+
+            border: 0;
+
+            outline: 0;
+
+            padding:
+                0 14px 0 0;
+
+            background: transparent;
+
+            font-size: 15px;
+
+            color: #263d5e;
+        }
+
+
+        .input-box input::placeholder {
+
+            color: #8b9ab0;
+        }
+
+
+        /* =====================================
+           BUTTON
+        ===================================== */
+
+        .reset-btn {
+
+            width: 100%;
+
+            height: 58px;
+
+            margin-top: 5px;
+
+            border: 0;
+
+            border-radius: 13px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #168af8,
+                    #086fe5
+                );
+
+            color: #ffffff;
+
+            font-size: 18px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 12px 28px
+                rgba(15,120,235,.22);
+
+            transition: .2s;
+        }
+
+
+        .reset-btn:hover {
+
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 16px 32px
+                rgba(15,120,235,.28);
+        }
+
+
+        .reset-btn:active {
+
+            transform:
+                scale(.99);
+        }
+
+
+        /* =====================================
+           MESSAGE
+        ===================================== */
+
+        #forgetMessage {
+
+            min-height: 20px;
+
+            text-align: center;
+
+            margin-top: 10px;
+
+            font-size: 14px;
+
+            color: #e53935;
+        }
+
+
+        /* =====================================
+           DIVIDER
+        ===================================== */
+
+        .divider {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            margin:
+                17px 0 13px;
+
+            color: #8999ad;
+
+            font-size: 12px;
+        }
+
+
+        .divider::before,
+        .divider::after {
+
+            content: "";
+
+            height: 1px;
+
+            background: #e2e9f1;
+
+            flex: 1;
+        }
+
+
+        /* =====================================
+           LOGIN LINK
+        ===================================== */
+
+        .login-link {
+
+            text-align: center;
+
+            color: #7185a3;
+
+            font-size: 14px;
+        }
+
+
+        .login-link a {
+
+            color: #087ff5;
+
+            font-weight: 700;
+
+            text-decoration: none;
+        }
+
+
+        .login-link a:hover {
+
+            text-decoration: underline;
+        }
+
+
+        /* =====================================
+           SMALL HEIGHT
+        ===================================== */
+
+        @media (max-height: 700px) {
+
+            body {
+                padding: 10px;
+            }
+
+
+            .forgot-wrapper {
+
+                height:
+                    calc(100vh - 20px);
+
+                max-height: none;
+            }
+
+
+            .forgot-left {
+
+                padding:
+                    25px 35px;
+            }
+
+
+            .forgot-welcome {
+
+                margin-top: 20px;
+            }
+
+
+            .forgot-welcome h2 {
+
+                font-size: 30px;
+            }
+
+
+            .lock-area {
+
+                height: 155px;
+            }
+
+
+            .lock {
+
+                transform:
+                    scale(.78);
+            }
+
+
+            .forgot-right {
+
+                padding:
+                    22px 55px;
+            }
+
+
+            .forgot-title {
+
+                font-size: 35px;
+            }
+
+
+            .forgot-subtitle {
+
+                margin-bottom: 15px;
+            }
+
+
+            .form-group {
+
+                margin-bottom: 9px;
+            }
+
+
+            .input-box {
+
+                height: 45px;
+            }
+
+
+            .reset-btn {
+
+                height: 51px;
+            }
+        }
+
+
+        /* =====================================
+           TABLET
+        ===================================== */
+
+        @media (max-width: 850px) {
+
+            html,
+            body {
+
+                height: auto;
+
+                overflow: auto;
+            }
+
+
+            body {
+
+                min-height: 100vh;
+
+                padding: 15px;
+            }
+
+
+            .forgot-wrapper {
+
+                height: auto;
+
+                max-height: none;
+
+                grid-template-columns: 1fr;
+
+                max-width: 550px;
+            }
+
+
+            .forgot-left {
+
+                display: none;
+            }
+
+
+            .forgot-right {
+
+                padding:
+                    40px 35px;
+            }
+        }
+
+
+        /* =====================================
+           MOBILE
+        ===================================== */
+
+        @media (max-width: 600px) {
+
+            .forgot-right {
+
+                padding:
+                    30px 20px;
+            }
+
+
+            .forgot-title {
+
+                font-size: 31px;
+            }
+
+
+            .forgot-subtitle {
+
+                font-size: 13px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="forgot-wrapper">
+
+
+    <!-- =====================================
+         LEFT PANEL
+    ====================================== -->
+
+    <div class="forgot-left">
+
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                🛍️
+            </div>
+
+
+            <div>
+
+                <div class="brand-name">
+                    SK<span>SHOP</span>
+                </div>
+
+
+                <div class="brand-tagline">
+                    Shop Smarter, Live Better
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="forgot-welcome">
+
+            <h2>
+                Password
+                <span>Recovery</span>
+            </h2>
+
+
+            <p>
+                Update your password securely and
+                get back to your SKSHOP account.
+            </p>
+
+        </div>
+
+
+        <div class="lock-area">
+
+
+            <div class="floating-icon mail-icon">
+                ✉️
+            </div>
+
+
+            <div class="lock">
+
+                <div class="lock-hole"></div>
+
+            </div>
+
+
+            <div class="floating-icon shield-icon">
+                🛡️
+            </div>
+
+
+        </div>
+
+
+        <div class="benefits">
+
+
+            <div class="benefit">
+
+                <div class="benefit-icon">
+                    🔒
+                </div>
+
+                <div class="benefit-title">
+                    Secure
+                </div>
+
+                <div class="benefit-text">
+                    Protected account
+                </div>
+
+            </div>
+
+
+            <div class="benefit">
+
+                <div class="benefit-icon">
+                    ⚡
+                </div>
+
+                <div class="benefit-title">
+                    Simple
+                </div>
+
+                <div class="benefit-text">
+                    Easy process
+                </div>
+
+            </div>
+
+
+            <div class="benefit">
+
+                <div class="benefit-icon">
+                    🛡️
+                </div>
+
+                <div class="benefit-title">
+                    Private
+                </div>
+
+                <div class="benefit-text">
+                    Data protected
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================
+         RIGHT PANEL
+    ====================================== -->
+
+    <div class="forgot-right">
+
+
+        <div class="secure-badge">
+            🔒 &nbsp; Safe & Secure
+        </div>
+
+
+        <h1 class="forgot-title">
+            Reset <span>Password</span>
+        </h1>
+
+
+        <p class="forgot-subtitle">
+            Enter your current password and choose
+            a new password for your account.
+        </p>
+
+
+        <!-- =================================
+             FORM
+        ================================== -->
+
+        <form id="forgetForm">
+
+            {% csrf_token %}
+
+
+            <!-- CURRENT PASSWORD -->
+
+            <div class="form-group">
+
+               <label class="form-label" for="phone">
+    Phone Number
+</label>
+
+<div class="input-box">
+    <div class="input-icon">📱</div>
+
+    <input
+        type="tel"
+        id="phone"
+        placeholder="Enter 10 digit phone number"
+        maxlength="10"
+        required
+    >
+</div>
+
+            </div>
+
+
+            <!-- NEW PASSWORD -->
+
+            <div class="form-group">
+
+                <label
+                    class="form-label"
+                    for="newPassword">
+
+                    New Password
+
+                </label>
+
+
+                <div class="input-box">
+
+                    <div class="input-icon">
+                        🔒
+                    </div>
+
+
+                    <input
+                        type="password"
+                        id="newPassword"
+                        placeholder="Enter new password"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- CONFIRM PASSWORD -->
+
+            <div class="form-group">
+
+                <label
+                    class="form-label"
+                    for="confirmPassword">
+
+                    Confirm Password
+
+                </label>
+
+
+                <div class="input-box">
+
+                    <div class="input-icon">
+                        🔐
+                    </div>
+
+
+                    <input
+                        type="password"
+                        id="confirmPassword"
+                        placeholder="Confirm new password"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+<!---otppp -->
+
+
+
+<div class="form-group">
+    <button
+        type="button"
+        class="reset-btn"
+        id="sendOtpBtn"
+        onclick="sendForgotOTP()">
+        📱 &nbsp; Send OTP
+    </button>
+</div>
+
+<div
+    class="form-group"
+    id="forgotOTPBox"
+    style="display:none;">
+
+    <label class="form-label" for="forgotOTP">
+        Enter OTP
+    </label>
+
+    <div class="input-box">
+        <div class="input-icon">🔢</div>
+
+        <input
+            type="text"
+            id="forgotOTP"
+            placeholder="Enter 6 digit OTP"
+            maxlength="6"
+        >
+    </div>
+
+    <button
+        type="button"
+        class="reset-btn"
+        style="margin-top:10px;"
+        onclick="verifyForgotOTP()">
+        ✓ &nbsp; Verify OTP
+    </button>
+</div>
+            <!-- RESET -->
+
+            <button
+                type="submit"
+                class="reset-btn">
+
+                🔄 &nbsp; Reset Password
+
+            </button>
+
+
+            <p id="forgetMessage"></p>
+
+
+        </form>
+
+
+        <div class="divider">
+            OR
+        </div>
+
+
+        <div class="login-link">
+
+            Remember your password?
+
+            <a href="/login/">
+                Back to Login
+            </a>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+<script src="{% static 'js/forget.js' %}?v=4"></script>
+</body>
+
+</html>

@@ -1,0 +1,1142 @@
+{% extends "base.html" %}
+
+{% block title %}Settings{% endblock %}
+
+{% block content %}
+
+<div class="card">
+
+    <div class="section-title">
+        <h2>⚙️ Settings</h2>
+    </div>
+
+    {% csrf_token %}
+
+    <!-- ACCOUNT -->
+    <div class="settings-section">
+
+        <h3>👤 Account</h3>
+
+        <div class="settings-item clickable"
+             onclick="goProfile()">
+
+            <div>
+                <strong>Account Information</strong>
+                <p>View and manage your account details</p>
+            </div>
+
+            <button>›</button>
+
+        </div>
+
+        <div class="settings-item">
+            <div>
+                <strong>📱 Mobile Number</strong>
+                <p id="settingsMobile">Loading...</p>
+            </div>
+        </div>
+
+        <div class="settings-item">
+            <div>
+                <strong>📧 Email Address</strong>
+                <p id="settingsEmail">Loading...</p>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- NOTIFICATIONS -->
+    <div class="settings-section">
+
+        <h3>🔔 Notifications</h3>
+
+        <div class="settings-item">
+
+            <div>
+                <strong>Order Notifications</strong>
+                <p>Get updates about your orders</p>
+            </div>
+
+            <label class="switch">
+                <input
+                    type="checkbox"
+                    id="orderNotifications"
+                    checked
+                    onchange="saveSetting('orderNotifications', this.checked)"
+                >
+                <span class="slider"></span>
+            </label>
+
+        </div>
+
+
+        <div class="settings-item">
+
+            <div>
+                <strong>💳 Payment Notifications</strong>
+                <p>Get payment success and payment updates</p>
+            </div>
+
+            <label class="switch">
+                <input
+                    type="checkbox"
+                    id="paymentNotifications"
+                    checked
+                    onchange="saveSetting('paymentNotifications', this.checked)"
+                >
+                <span class="slider"></span>
+            </label>
+
+        </div>
+
+
+        <div class="settings-item">
+
+            <div>
+                <strong>🚚 Delivery Updates</strong>
+                <p>Get shipping and delivery updates</p>
+            </div>
+
+            <label class="switch">
+                <input
+                    type="checkbox"
+                    id="deliveryNotifications"
+                    checked
+                    onchange="saveSetting('deliveryNotifications', this.checked)"
+                >
+                <span class="slider"></span>
+            </label>
+
+        </div>
+
+    </div>
+
+
+    <!-- PREFERENCES -->
+    <div class="settings-section">
+
+        <h3>🌐 Preferences</h3>
+
+        <div class="settings-item">
+
+            <div>
+                <strong>🌐 Language</strong>
+                <p>Select your preferred language</p>
+            </div>
+
+            <select id="languageSelect">
+                <option value="English">English</option>
+                <option value="Hindi">हिंदी</option>
+            </select>
+
+        </div>
+
+
+        <div class="settings-item">
+
+            <div>
+                <strong>💰 Currency</strong>
+                <p>Your shopping currency</p>
+            </div>
+
+            <select id="currencySelect">
+                <option value="INR">₹ INR</option>
+            </select>
+
+        </div>
+
+    </div>
+
+
+    <!-- SECURITY -->
+    <div class="settings-section">
+
+        <h3>🔒 Security</h3>
+
+        <div class="settings-item clickable"
+             onclick="changePassword()">
+
+            <div>
+                <strong>🔑 Change Password</strong>
+                <p>Update your account password</p>
+            </div>
+
+            <button>›</button>
+
+        </div>
+
+
+       <div class="settings-item clickable"
+     onclick="openPrivacySecurity()">
+
+    <div>
+        <strong>🛡️ Privacy & Security</strong>
+        <p>Manage your account privacy and security</p>
+    </div>
+
+    <button>›</button>
+
+</div>
+
+    </div>
+
+
+    <!-- DANGER ZONE -->
+    <div class="settings-section danger">
+
+        <h3>⚠️ Danger Zone</h3>
+
+        <div class="settings-item">
+
+            <div>
+                <strong style="color:#d32f2f;">
+                    🗑️ Delete Account
+                </strong>
+
+                <p>
+                    Permanently delete your account
+                </p>
+            </div>
+
+            <button
+                class="delete-btn"
+                onclick="deleteAccount()"
+            >
+                Delete
+            </button>
+
+        </div>
+
+
+        <div class="settings-item">
+
+            <div>
+                <strong>🚪 Logout</strong>
+
+                <p>
+                    Sign out from your account
+                </p>
+            </div>
+
+            <button type="button"
+                class="logout-btn"
+                id="settingsLogoutBtn"
+                onclick="logoutUser(event)"
+            >
+                Logout
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     CHANGE PASSWORD MODAL
+========================= -->
+
+<div id="passwordModal" class="password-modal">
+
+    <div class="password-box">
+
+        <div class="password-header">
+
+            <h3>🔑 Change Password</h3>
+
+            <button
+                type="button"
+                class="close-password"
+                onclick="closePasswordModal()"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <form id="passwordForm">
+
+            {% csrf_token %}
+
+            <div class="password-field">
+
+                <label>
+                    Current Password
+                </label>
+
+                <input
+                    type="password"
+                    id="currentPassword"
+                    placeholder="Enter current password"
+                    required
+                >
+
+            </div>
+
+
+            <div class="password-field">
+
+                <label>
+                    New Password
+                </label>
+
+                <input
+                    type="password"
+                    id="newPassword"
+                    placeholder="Enter new password"
+                    required
+                >
+
+            </div>
+
+
+            <div class="password-field">
+
+                <label>
+                    Confirm New Password
+                </label>
+
+                <input
+                    type="password"
+                    id="confirmPassword"
+                    placeholder="Confirm new password"
+                    required
+                >
+
+            </div>
+
+
+            <div
+                id="passwordMessage"
+                style="
+                    display:none;
+                    padding:10px;
+                    border-radius:6px;
+                    margin-bottom:15px;
+                    font-size:14px;
+                "
+            ></div>
+
+
+            <div class="password-buttons">
+
+                <button
+                    type="button"
+                    class="cancel-password-btn"
+                    onclick="closePasswordModal()"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="submit"
+                    class="save-password-btn"
+                    id="savePasswordBtn"
+                >
+                    Save Password
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<style>
+
+/* =========================
+   SETTINGS
+========================= */
+
+.settings-section {
+    border:1px solid #ddd;
+    border-radius:10px;
+    margin-bottom:20px;
+    overflow:hidden;
+    background:white;
+}
+
+.settings-section h3 {
+    margin:0;
+    padding:16px 20px;
+    background:#f8fff9;
+    border-bottom:1px solid #eee;
+}
+
+.settings-item {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+    padding:17px 20px;
+    border-bottom:1px solid #eee;
+}
+
+.settings-item:last-child {
+    border-bottom:none;
+}
+
+.settings-item strong {
+    font-size:16px;
+}
+
+.settings-item p {
+    margin:5px 0 0;
+    color:#777;
+    font-size:14px;
+}
+
+.settings-item > button {
+    border:none;
+    background:transparent;
+    font-size:28px;
+    cursor:pointer;
+    color:#08a52b;
+}
+
+.settings-item.clickable {
+    cursor:pointer;
+}
+
+.settings-item.clickable:hover {
+    background:#f8fff9;
+}
+
+
+/* SELECT */
+
+.settings-item select {
+    padding:9px 12px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    background:white;
+    font-size:14px;
+    cursor:pointer;
+}
+
+
+/* SWITCH */
+
+.switch {
+    position:relative;
+    width:48px;
+    height:26px;
+    flex-shrink:0;
+}
+
+.switch input {
+    display:none;
+}
+
+.slider {
+    position:absolute;
+    inset:0;
+    background:#ccc;
+    border-radius:30px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.slider:before {
+    content:"";
+    position:absolute;
+    width:20px;
+    height:20px;
+    left:3px;
+    top:3px;
+    background:white;
+    border-radius:50%;
+    transition:.2s;
+}
+
+.switch input:checked + .slider {
+    background:#08a52b;
+}
+
+.switch input:checked + .slider:before {
+    transform:translateX(22px);
+}
+
+
+/* DANGER */
+
+.danger {
+    border-color:#f0c4c4;
+}
+
+.danger h3 {
+    background:#fff6f6;
+}
+
+.delete-btn {
+    padding:9px 16px !important;
+    background:#d32f2f !important;
+    color:white !important;
+    border:none !important;
+    border-radius:6px;
+    font-size:14px !important;
+}
+
+.logout-btn {
+    padding:9px 16px !important;
+    background:#555 !important;
+    color:white !important;
+    border:none !important;
+    border-radius:6px;
+    font-size:14px !important;
+}
+
+
+/* =========================
+   PASSWORD MODAL
+========================= */
+
+.password-modal {
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.45);
+    z-index:99999;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.password-box {
+    width:100%;
+    max-width:450px;
+    background:white;
+    border-radius:12px;
+    padding:25px;
+    box-sizing:border-box;
+    box-shadow:0 10px 35px rgba(0,0,0,0.25);
+}
+
+.password-header {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.password-header h3 {
+    margin:0;
+}
+
+.close-password {
+    border:none;
+    background:none;
+    font-size:28px;
+    color:#777;
+    cursor:pointer;
+    line-height:1;
+}
+
+.close-password:hover {
+    color:#d32f2f;
+}
+
+
+.password-field {
+    margin-bottom:16px;
+}
+
+.password-field label {
+    display:block;
+    font-weight:600;
+    margin-bottom:7px;
+}
+
+.password-field input {
+    width:100%;
+    box-sizing:border-box;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:7px;
+    font-size:15px;
+    outline:none;
+}
+
+.password-field input:focus {
+    border-color:#08a52b;
+}
+
+
+.password-buttons {
+    display:flex;
+    gap:10px;
+    margin-top:20px;
+}
+
+.password-buttons button {
+    flex:1;
+    padding:12px;
+    border:none;
+    border-radius:7px;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.save-password-btn {
+    background:#08a52b;
+    color:white;
+}
+
+.save-password-btn:hover {
+    background:#078f25;
+}
+
+.cancel-password-btn {
+    background:#eee;
+    color:#333;
+}
+
+
+/* MOBILE */
+
+@media (max-width:600px) {
+
+    .settings-item {
+        padding:15px;
+    }
+
+    .settings-item p {
+        font-size:13px;
+    }
+
+    .password-box {
+        padding:20px;
+    }
+
+}
+
+</style>
+
+
+<script>
+
+
+function openPrivacySecurity() {
+
+    window.location.href =
+        "/dashboard/privacy-security/";
+
+}
+
+
+
+
+/* =========================
+   LOAD PROFILE
+========================= */
+
+function loadSettingsProfile() {
+
+    fetch("/profile/", {
+        method:"GET",
+        credentials:"same-origin"
+    })
+
+    .then(response => response.json())
+
+    .then(data => {
+
+        if (!data.success) {
+            return;
+        }
+
+        document.getElementById("settingsMobile").innerText =
+            data.phone || "Not available";
+
+        document.getElementById("settingsEmail").innerText =
+            data.email || "Not available";
+
+    })
+
+    .catch(error => {
+        console.error("Settings profile error:", error);
+    });
+
+}
+
+
+/* =========================
+   OPEN PASSWORD FORM
+========================= */
+
+function changePassword() {
+
+    const modal =
+        document.getElementById("passwordModal");
+
+    modal.style.display = "flex";
+
+    document.getElementById(
+        "currentPassword"
+    ).focus();
+
+}
+
+
+// 
+/* =========================
+   CLOSE PASSWORD FORM
+========================= */
+
+function closePasswordModal() {
+
+    const modal =
+        document.getElementById("passwordModal");
+
+    modal.style.display = "none";
+
+    document.getElementById(
+        "passwordForm"
+    ).reset();
+
+    const message =
+        document.getElementById("passwordMessage");
+
+    message.style.display = "none";
+
+}
+
+
+/* =========================
+   PASSWORD SUBMIT
+========================= */
+
+document.getElementById(
+    "passwordForm"
+).addEventListener(
+    "submit",
+    function(event) {
+
+        event.preventDefault();
+
+
+        const currentPassword =
+            document.getElementById(
+                "currentPassword"
+            ).value.trim();
+
+
+        const newPassword =
+            document.getElementById(
+                "newPassword"
+            ).value.trim();
+
+
+        const confirmPassword =
+            document.getElementById(
+                "confirmPassword"
+            ).value.trim();
+
+
+        if (!currentPassword ||
+            !newPassword ||
+            !confirmPassword) {
+
+            alert(
+                "Please fill all password fields."
+            );
+
+            return;
+        }
+
+
+        if (newPassword !== confirmPassword) {
+
+            alert(
+                "New password and confirm password do not match."
+            );
+
+            return;
+        }
+
+
+        if (newPassword.length < 6) {
+
+            alert(
+                "New password must be at least 6 characters."
+            );
+
+            return;
+        }
+
+
+        const csrfElement =
+            document.querySelector(
+                '[name=csrfmiddlewaretoken]'
+            );
+
+
+        if (!csrfElement) {
+
+            alert(
+                "CSRF token not found."
+            );
+
+            return;
+        }
+
+
+        const button =
+            document.getElementById(
+                "savePasswordBtn"
+            );
+
+
+        button.disabled = true;
+        button.innerText = "Saving...";
+
+
+        fetch("/change-password/", {
+
+            method:"POST",
+
+            credentials:"same-origin",
+
+            headers: {
+
+                "Content-Type":
+                    "application/json",
+
+                "X-CSRFToken":
+                    csrfElement.value
+
+            },
+
+            body:JSON.stringify({
+
+                current_password:
+                    currentPassword,
+
+                new_password:
+                    newPassword,
+
+                confirm_password:
+                    confirmPassword
+
+            })
+
+        })
+
+        .then(response => response.json())
+
+        .then(data => {
+
+            if (data.success) {
+
+                alert(
+                    "✅ Password changed successfully."
+                );
+
+                closePasswordModal();
+
+            } else {
+
+                alert(
+                    data.message ||
+                    "Unable to change password."
+                );
+
+            }
+
+        })
+
+        .catch(error => {
+
+            console.error(
+                "Change password error:",
+                error
+            );
+
+            alert(
+                "Something went wrong."
+            );
+
+        })
+
+        .finally(() => {
+
+            button.disabled = false;
+
+            button.innerText =
+                "Save Password";
+
+        });
+
+    }
+);
+
+
+/* =========================
+   SETTINGS SAVE
+========================= */
+
+function saveSetting(name, value) {
+
+    localStorage.setItem(
+        "setting_" + name,
+        value
+    );
+
+}
+
+
+/* =========================
+   LOAD SETTINGS
+========================= */
+
+function loadSettings() {
+
+    const order =
+        localStorage.getItem(
+            "setting_orderNotifications"
+        );
+
+    const payment =
+        localStorage.getItem(
+            "setting_paymentNotifications"
+        );
+
+    const delivery =
+        localStorage.getItem(
+            "setting_deliveryNotifications"
+        );
+
+
+    if (order !== null) {
+
+        document.getElementById(
+            "orderNotifications"
+        ).checked = order === "true";
+
+    }
+
+
+    if (payment !== null) {
+
+        document.getElementById(
+            "paymentNotifications"
+        ).checked = payment === "true";
+
+    }
+
+
+    if (delivery !== null) {
+
+        document.getElementById(
+            "deliveryNotifications"
+        ).checked = delivery === "true";
+
+    }
+
+}
+
+
+/* =========================
+   LANGUAGE
+========================= */
+const languageSelect =
+    document.getElementById("languageSelect");
+
+
+function applyLanguage(language) {
+
+    localStorage.setItem(
+        "language",
+        language
+    );
+
+    if (language === "Hindi") {
+
+        document.documentElement.lang = "hi";
+
+        document.querySelectorAll(
+            '[data-en][data-hi]'
+        ).forEach(function(element) {
+
+            element.innerText =
+                element.getAttribute("data-hi");
+
+        });
+
+    } else {
+
+        document.documentElement.lang = "en";
+
+        document.querySelectorAll(
+            '[data-en][data-hi]'
+        ).forEach(function(element) {
+
+            element.innerText =
+                element.getAttribute("data-en");
+
+        });
+
+    }
+
+}
+
+
+languageSelect.addEventListener(
+    "change",
+    function() {
+
+        localStorage.setItem(
+            "language",
+            this.value
+        );
+
+        location.reload();
+
+    }
+);
+
+const savedLanguage =
+    localStorage.getItem("language") || "English";
+
+languageSelect.value =
+    savedLanguage;
+
+applyLanguage(savedLanguage);
+
+/* =========================
+   PROFILE
+========================= */
+
+function goProfile() {
+
+    window.location.href =
+        "/dashboard/profile/";
+
+}
+
+
+/* =========================
+   DELETE ACCOUNT
+========================= */
+
+function deleteAccount() {
+
+    const confirmDelete =
+        confirm(
+            "Are you sure you want to permanently delete your account?"
+        );
+
+    if (!confirmDelete) {
+        return;
+    }
+
+    alert(
+        "Account deletion API will be connected next."
+    );
+
+}
+
+
+/* =========================
+   LOGOUT
+========================= */
+function logoutUser(event) {
+
+    if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+
+    if (!confirm("Are you sure you want to logout?")) {
+        return;
+    }
+
+    const csrfElement =
+        document.querySelector('[name=csrfmiddlewaretoken]');
+
+    if (!csrfElement) {
+        alert("CSRF token not found.");
+        return;
+    }
+
+    fetch("/logout/", {
+        method: "POST",
+        credentials: "same-origin",
+        headers: {
+            "X-CSRFToken": csrfElement.value,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({})
+    })
+    .then(response => {
+
+        if (!response.ok) {
+            throw new Error(
+                "Logout failed: " + response.status
+            );
+        }
+
+        return response.json().catch(() => ({}));
+    })
+    .then(data => {
+
+        console.log("Logout successful:", data);
+
+        window.location.href = "/";
+
+    })
+    .catch(error => {
+
+        console.error("Logout error:", error);
+
+        alert("Unable to logout.");
+
+    });
+}
+
+/* =========================
+   CLOSE MODAL ON OUTSIDE CLICK
+========================= */
+
+document.getElementById(
+    "passwordModal"
+).addEventListener(
+    "click",
+    function(event) {
+
+        if (event.target === this) {
+
+            closePasswordModal();
+
+        }
+
+    }
+);
+
+
+/* =========================
+   PAGE LOAD
+========================= */
+
+loadSettingsProfile();
+
+loadSettings();
+
+const urlParams = new URLSearchParams(
+    window.location.search
+);
+
+if (urlParams.get("open") === "password") {
+    changePassword();
+}
+
+</script>
+
+{% endblock %}

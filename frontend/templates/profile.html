@@ -1,0 +1,115 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Profile</title>
+
+    <link rel="stylesheet"
+          href="{% static 'css/edit-profile.css' %}">
+
+</head>
+
+<body>
+
+    <div class="edit-profile-box">
+
+        <h1>Edit Profile</h1>
+
+        <!-- PROFILE PHOTO -->
+
+        <div class="photo-section">
+
+            <img
+                id="profilePhoto"
+                src=""
+                alt="Profile Photo"
+            >
+
+            <label
+                for="photoInput"
+                class="choose-photo">
+                Choose Photo
+            </label>
+
+            <input
+                type="file"
+                id="photoInput"
+                accept="image/*"
+            >
+
+        </div>
+
+
+        <!-- MESSAGE -->
+
+        <p id="message"></p>
+
+
+        <!-- NAME -->
+
+        <label for="editName">
+            Name
+        </label>
+
+        <input
+            type="text"
+            id="editName"
+            placeholder="Enter your name"
+        >
+
+
+        <!-- EMAIL -->
+
+        <label for="editEmail">
+            Email
+        </label>
+
+        <input
+            type="email"
+            id="editEmail"
+            placeholder="Enter your email"
+        >
+
+
+        <!-- BUTTONS -->
+
+        <div class="button-row">
+
+            <button
+                type="button"
+                id="updateBtn">
+                Update Profile
+            </button>
+
+            <button
+                type="button"
+                id="cancelBtn">
+                Cancel
+            </button>
+
+        </div>
+
+
+        <!-- CSRF -->
+
+        <form style="display:none;">
+
+            {% csrf_token %}
+
+        </form>
+
+    </div>
+
+<script src="{% static 'js/edit-profile.js' %}?v=999"></script>
+<script src="{% static 'js/language.js' %}?v=2"></script>
+</body>
+
+</html>

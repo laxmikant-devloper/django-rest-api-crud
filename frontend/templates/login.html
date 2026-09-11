@@ -1,0 +1,1287 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/style.css' %}"
+    >
+
+    <title>Login | SKSHOP</title>
+
+
+    <style>
+
+        /* =========================================
+           RESET
+        ========================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+
+        /* =========================================
+           BODY
+        ========================================= */
+
+        body {
+
+            min-height: 100vh;
+            height: 100vh;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at 8% 10%,
+                    #dceeff,
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 92% 90%,
+                    #e4f1ff,
+                    transparent 30%
+                ),
+                #f4f8fd;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            color: #122b52;
+        }
+
+
+        /* =========================================
+           MAIN CARD
+        ========================================= */
+
+        .login-wrapper {
+
+            width: 100%;
+
+            max-width: 1100px;
+
+            height:
+                calc(100vh - 40px);
+
+            max-height: 690px;
+
+            display: grid;
+
+            grid-template-columns:
+                44% 56%;
+
+            background: #ffffff;
+
+            border:
+                1px solid #d9e6f5;
+
+            border-radius: 27px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 25px 70px
+                rgba(30, 80, 140, .13);
+        }
+
+
+        /* =========================================
+           LEFT SIDE
+        ========================================= */
+
+        .login-left {
+
+            position: relative;
+
+            padding:
+                38px 43px;
+
+            background:
+                radial-gradient(
+                    circle at 90% 10%,
+                    rgba(35, 140, 255, .16),
+                    transparent 27%
+                ),
+                linear-gradient(
+                    145deg,
+                    #e8f4ff,
+                    #f5faff
+                );
+
+            overflow: hidden;
+        }
+
+
+        .login-left::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 240px;
+            height: 240px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(60, 150, 255, .07);
+
+            left: -110px;
+            bottom: -100px;
+        }
+
+
+        .login-left::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 160px;
+            height: 160px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(60, 150, 255, .07);
+
+            right: -60px;
+            top: -60px;
+        }
+
+
+        /* =========================================
+           BRAND
+        ========================================= */
+
+        .brand {
+
+            position: relative;
+
+            z-index: 2;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 11px;
+        }
+
+
+        .brand-icon {
+
+            width: 48px;
+            height: 48px;
+
+            border-radius: 14px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #1648c7,
+                    #138cff
+                );
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 23px;
+
+            box-shadow:
+                0 8px 20px
+                rgba(20,105,220,.22);
+        }
+
+
+        .brand-name {
+
+            font-size: 26px;
+
+            font-weight: 800;
+
+            color: #102b55;
+        }
+
+
+        .brand-name span {
+
+            color: #087ff5;
+        }
+
+
+        .brand-tagline {
+
+            margin-top: 2px;
+
+            font-size: 11px;
+
+            color: #7187a5;
+        }
+
+
+        /* =========================================
+           WELCOME
+        ========================================= */
+
+        .welcome {
+
+            position: relative;
+
+            z-index: 2;
+
+            margin-top: 38px;
+        }
+
+
+        .welcome h2 {
+
+            font-size: 37px;
+
+            line-height: 1.1;
+
+            color: #102b55;
+        }
+
+
+        .welcome p {
+
+            margin-top: 12px;
+
+            max-width: 350px;
+
+            font-size: 15px;
+
+            line-height: 1.55;
+
+            color: #6b819f;
+        }
+
+
+        /* =========================================
+           SHOPPING ILLUSTRATION
+        ========================================= */
+
+        .shopping-area {
+
+            height: 225px;
+
+            position: relative;
+
+            z-index: 2;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            margin-top: 5px;
+        }
+
+
+        /* LAPTOP */
+
+        .laptop {
+
+            width: 220px;
+
+            height: 130px;
+
+            border-radius:
+                11px 11px 6px 6px;
+
+            border:
+                6px solid #9db2cc;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #dce9f7,
+                    #f7fbff
+                );
+
+            position: relative;
+
+            box-shadow:
+                0 14px 25px
+                rgba(45,80,120,.16);
+        }
+
+
+        .laptop-screen {
+
+            position: absolute;
+
+            top: 10px;
+            left: 11px;
+            right: 11px;
+            bottom: 10px;
+
+            border-radius: 5px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #eaf5ff,
+                    #ffffff
+                );
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 42px;
+        }
+
+
+        .laptop-base {
+
+            position: absolute;
+
+            width: 260px;
+
+            height: 12px;
+
+            left: -26px;
+
+            bottom: -18px;
+
+            background: #9db2cc;
+
+            border-radius:
+                0 0 13px 13px;
+        }
+
+
+        /* FLOATING ICONS */
+
+        .cart-bubble,
+        .secure-bubble {
+
+            position: absolute;
+
+            width: 53px;
+            height: 53px;
+
+            border-radius: 14px;
+
+            background: #ffffff;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 25px;
+
+            box-shadow:
+                0 8px 20px
+                rgba(50,100,150,.14);
+        }
+
+
+        .cart-bubble {
+
+            left: 42px;
+
+            top: 48px;
+        }
+
+
+        .secure-bubble {
+
+            right: 48px;
+
+            top: 45px;
+        }
+
+
+        /* =========================================
+           BENEFITS
+        ========================================= */
+
+        .benefits {
+
+            position: relative;
+
+            z-index: 2;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 6px;
+
+            padding: 14px 10px;
+
+            background:
+                rgba(255,255,255,.80);
+
+            border:
+                1px solid
+                rgba(218,230,244,.9);
+
+            border-radius: 17px;
+
+            backdrop-filter: blur(5px);
+        }
+
+
+        .benefit {
+
+            text-align: center;
+        }
+
+
+        .benefit-icon {
+
+            font-size: 22px;
+
+            margin-bottom: 5px;
+        }
+
+
+        .benefit-title {
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            color: #17345e;
+        }
+
+
+        .benefit-text {
+
+            margin-top: 2px;
+
+            font-size: 9px;
+
+            color: #7890ae;
+        }
+
+
+        /* =========================================
+           RIGHT SIDE
+        ========================================= */
+
+        .login-right {
+
+            padding:
+                45px 68px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+        }
+
+
+        /* =========================================
+           SECURE BADGE
+        ========================================= */
+
+        .secure-badge {
+
+            align-self: flex-end;
+
+            padding:
+                8px 13px;
+
+            border-radius: 10px;
+
+            background: #f7fbff;
+
+            border:
+                1px solid #dce8f5;
+
+            color: #58708f;
+
+            font-size: 12px;
+
+            margin-bottom: 20px;
+        }
+
+
+        /* =========================================
+           TITLE
+        ========================================= */
+
+        .login-title {
+
+            text-align: center;
+
+            font-size: 44px;
+
+            line-height: 1.1;
+
+            color: #102b55;
+
+            margin-bottom: 9px;
+        }
+
+
+        .login-subtitle {
+
+            text-align: center;
+
+            color: #7185a3;
+
+            font-size: 15px;
+
+            margin-bottom: 28px;
+        }
+
+
+        /* =========================================
+           LABEL
+        ========================================= */
+
+        .form-label {
+
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            color: #17335c;
+        }
+
+
+        /* =========================================
+           INPUT
+        ========================================= */
+
+        .input-box {
+
+            height: 57px;
+
+            border:
+                1px solid #d7e3f0;
+
+            border-radius: 13px;
+
+            background: #ffffff;
+
+            display: flex;
+
+            align-items: center;
+
+            overflow: hidden;
+
+            transition: .2s;
+        }
+
+
+        .input-box:focus-within {
+
+            border-color: #1687f8;
+
+            box-shadow:
+                0 0 0 4px
+                rgba(22,135,248,.08);
+        }
+
+
+        .input-icon {
+
+            width: 52px;
+
+            display: flex;
+
+            justify-content: center;
+
+            font-size: 19px;
+
+            color: #6d84a4;
+        }
+
+
+        .input-box input {
+
+            flex: 1;
+
+            height: 100%;
+
+            border: 0;
+
+            outline: 0;
+
+            padding:
+                0 15px 0 0;
+
+            background: transparent;
+
+            font-size: 16px;
+
+            color: #263d5e;
+        }
+
+
+        .input-box input::placeholder {
+
+            color: #8b9ab0;
+        }
+
+
+        /* =========================================
+           FORM GROUP
+        ========================================= */
+
+        .form-group {
+
+            margin-bottom: 18px;
+        }
+
+
+        /* =========================================
+           LOGIN BUTTON
+        ========================================= */
+
+        .login-btn {
+
+            width: 100%;
+
+            height: 60px;
+
+            margin-top: 5px;
+
+            border: 0;
+
+            border-radius: 14px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #168af8,
+                    #086fe5
+                );
+
+            color: #ffffff;
+
+            font-size: 18px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 12px 28px
+                rgba(15,120,235,.22);
+
+            transition: .2s;
+        }
+
+
+        .login-btn:hover {
+
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 16px 32px
+                rgba(15,120,235,.28);
+        }
+
+
+        .login-btn:active {
+
+            transform:
+                scale(.99);
+        }
+
+
+        /* =========================================
+           MESSAGE
+        ========================================= */
+
+        #loginMessage {
+
+            text-align: center;
+
+            margin-top: 13px;
+
+            min-height: 20px;
+
+            font-size: 14px;
+
+            color: #e53935;
+        }
+
+
+        /* =========================================
+           LINKS
+        ========================================= */
+
+        .links {
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 25px;
+
+            margin-top: 3px;
+        }
+
+
+        .links a {
+
+            color: #087ff5;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: 600;
+        }
+
+
+        .links a:hover {
+
+            text-decoration: underline;
+        }
+
+
+        /* =========================================
+           DIVIDER
+        ========================================= */
+
+        .divider {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            margin:
+                19px 0 15px;
+
+            color: #8999ad;
+
+            font-size: 12px;
+        }
+
+
+        .divider::before,
+        .divider::after {
+
+            content: "";
+
+            height: 1px;
+
+            background: #e2e9f1;
+
+            flex: 1;
+        }
+
+
+        /* =========================================
+           HEIGHT FIX
+        ========================================= */
+
+        @media (max-height: 700px) {
+
+            body {
+
+                padding: 10px;
+            }
+
+
+            .login-wrapper {
+
+                height:
+                    calc(100vh - 20px);
+
+                max-height: none;
+            }
+
+
+            .login-left {
+
+                padding:
+                    25px 35px;
+            }
+
+
+            .welcome {
+
+                margin-top: 20px;
+            }
+
+
+            .welcome h2 {
+
+                font-size: 31px;
+            }
+
+
+            .shopping-area {
+
+                height: 155px;
+            }
+
+
+            .laptop {
+
+                transform:
+                    scale(.78);
+            }
+
+
+            .benefits {
+
+                padding: 9px;
+            }
+
+
+            .login-right {
+
+                padding:
+                    25px 55px;
+            }
+
+
+            .login-title {
+
+                font-size: 36px;
+            }
+
+
+            .login-subtitle {
+
+                margin-bottom: 18px;
+            }
+
+
+            .form-group {
+
+                margin-bottom: 12px;
+            }
+
+
+            .login-btn {
+
+                height: 55px;
+            }
+
+
+            .divider {
+
+                margin:
+                    14px 0 11px;
+            }
+        }
+
+
+        /* =========================================
+           TABLET
+        ========================================= */
+
+        @media (max-width: 850px) {
+
+            html,
+            body {
+
+                height: auto;
+
+                overflow: auto;
+            }
+
+
+            body {
+
+                min-height: 100vh;
+
+                padding: 15px;
+            }
+
+
+            .login-wrapper {
+
+                height: auto;
+
+                max-height: none;
+
+                grid-template-columns: 1fr;
+
+                max-width: 550px;
+            }
+
+
+            .login-left {
+
+                display: none;
+            }
+
+
+            .login-right {
+
+                padding:
+                    42px 35px;
+            }
+        }
+
+
+        /* =========================================
+           MOBILE
+        ========================================= */
+
+        @media (max-width: 600px) {
+
+            .login-right {
+
+                padding:
+                    30px 20px;
+            }
+
+
+            .login-title {
+
+                font-size: 32px;
+            }
+
+
+            .login-subtitle {
+
+                font-size: 14px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="login-wrapper">
+
+
+    <!-- =====================================
+         LEFT PANEL
+    ====================================== -->
+
+    <div class="login-left">
+
+
+        <!-- BRAND -->
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                🛍️
+            </div>
+
+
+            <div>
+
+                <div class="brand-name">
+                    <a href="/phone" style="text-decoration: none;">SK<span>SHOP</span></a>
+                    
+                </div>
+
+
+                <div class="brand-tagline">
+                    Shop Smarter, Live Better
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- WELCOME -->
+
+        <div class="welcome">
+
+            <h2>
+                Welcome Back!
+            </h2>
+
+
+            <p>
+                Login to continue and enjoy
+                a seamless shopping experience.
+            </p>
+
+        </div>
+
+
+        <!-- ILLUSTRATION -->
+
+        <div class="shopping-area">
+
+
+            <div class="cart-bubble">
+                🛒
+            </div>
+
+
+            <div class="laptop">
+
+                <div class="laptop-screen">
+                    🛍️
+                </div>
+
+                <div class="laptop-base"></div>
+
+            </div>
+
+
+            <div class="secure-bubble">
+                🛡️
+            </div>
+
+        </div>
+
+
+        <!-- BENEFITS -->
+
+        <div class="benefits">
+
+
+            <div class="benefit">
+
+                <div class="benefit-icon">
+                    🛡️
+                </div>
+
+                <div class="benefit-title">
+                    Secure
+                </div>
+
+                <div class="benefit-text">
+                    Your data is safe
+                </div>
+
+            </div>
+
+
+            <div class="benefit">
+
+                <div class="benefit-icon">
+                    ⚡
+                </div>
+
+                <div class="benefit-title">
+                    Fast
+                </div>
+
+                <div class="benefit-text">
+                    Quick access
+                </div>
+
+            </div>
+
+
+            <div class="benefit">
+
+                <div class="benefit-icon">
+                    ❤️
+                </div>
+
+                <div class="benefit-title">
+                    Better
+                </div>
+
+                <div class="benefit-text">
+                    Smart shopping
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================
+         RIGHT PANEL
+    ====================================== -->
+
+    <div class="login-right">
+
+
+        <div class="secure-badge">
+            🔒 &nbsp; Safe & Secure
+        </div>
+
+
+        <h1 class="login-title">
+            Login
+        </h1>
+
+
+        <p class="login-subtitle">
+            Please enter your details to continue.
+        </p>
+
+
+        <!-- =================================
+             EXISTING FORM
+        ================================== -->
+
+        <form id="loginForm">
+
+            {% csrf_token %}
+
+
+            <!-- EMAIL -->
+
+            <div class="form-group">
+
+                <label
+                    class="form-label"
+                    for="email">
+
+                    Email
+
+                </label>
+
+
+                <div class="input-box">
+
+                    <div class="input-icon">
+                        ✉️
+                    </div>
+
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Enter your email"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- PASSWORD -->
+
+            <div class="form-group">
+
+                <label
+                    class="form-label"
+                    for="password">
+
+                    Password
+
+                </label>
+
+
+                <div class="input-box">
+
+                    <div class="input-icon">
+                        🔒
+                    </div>
+
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Enter your password"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- LOGIN -->
+
+            <button
+                type="submit"
+                class="login-btn">
+
+                Login &nbsp; →
+
+            </button>
+
+
+            <!-- EXISTING MESSAGE -->
+
+            <p id="loginMessage"></p>
+
+
+            <!-- LINKS -->
+
+            <div class="links">
+
+                <a href="/register/">
+                    Create Account
+                </a>
+
+
+                <a href="/forget/">
+                    Forgot Password?
+                </a>
+                 <a href="/phone/">
+                    Home
+                </a>
+            </div>
+
+
+        </form>
+
+
+    </div>
+
+</div>
+
+
+<!-- =====================================
+     EXISTING LOGIN JS
+====================================== -->
+
+<script
+    src="{% static 'js/login.js' %}?v=1">
+</script>
+
+
+</body>
+
+</html>

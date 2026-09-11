@@ -1,0 +1,1334 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Phone Verification</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <style>
+        /* =========================================
+           RESET
+        ========================================= */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            min-height: 100vh;
+            height: 100vh;
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at 8% 10%,
+                    #dceeff 0,
+                    transparent 27%
+                ),
+                radial-gradient(
+                    circle at 92% 90%,
+                    #e4f1ff 0,
+                    transparent 28%
+                ),
+                #f4f8fd;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            color: #122b52;
+        }
+
+
+        /* =========================================
+           MAIN WRAPPER
+        ========================================= */
+
+        .verify-wrapper {
+            width: 100%;
+            max-width: 1180px;
+
+            height: calc(100vh - 40px);
+            max-height: 720px;
+
+            min-height: 0;
+
+            display: grid;
+            grid-template-columns: 42% 58%;
+
+            background: #ffffff;
+
+            border: 1px solid #d8e5f4;
+
+            border-radius: 28px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 25px 70px rgba(31, 78, 121, 0.13);
+        }
+
+
+        /* =========================================
+           LEFT PANEL
+        ========================================= */
+
+        .verify-left {
+            position: relative;
+
+            padding: 35px 42px;
+
+            background:
+                radial-gradient(
+                    circle at 88% 8%,
+                    rgba(68, 153, 255, .17),
+                    transparent 27%
+                ),
+                linear-gradient(
+                    145deg,
+                    #e8f4ff,
+                    #f5faff
+                );
+
+            overflow: hidden;
+        }
+
+
+        .verify-left::before {
+            content: "";
+
+            position: absolute;
+
+            width: 230px;
+            height: 230px;
+
+            border-radius: 50%;
+
+            background: rgba(72, 153, 255, .08);
+
+            left: -100px;
+            bottom: -90px;
+        }
+
+
+        .verify-left::after {
+            content: "";
+
+            position: absolute;
+
+            width: 150px;
+            height: 150px;
+
+            border-radius: 50%;
+
+            background: rgba(72, 153, 255, .07);
+
+            right: -55px;
+            top: -55px;
+        }
+
+
+        /* =========================================
+           BRAND
+        ========================================= */
+
+        .brand {
+            position: relative;
+            z-index: 2;
+
+            display: flex;
+            align-items: center;
+
+            gap: 11px;
+        }
+
+
+        .brand-icon {
+            width: 47px;
+            height: 47px;
+
+            border-radius: 14px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #1648c7,
+                    #138cff
+                );
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 23px;
+
+            box-shadow:
+                0 8px 20px rgba(20, 105, 220, .22);
+        }
+
+
+        .brand-name {
+            font-size: 25px;
+
+            font-weight: 800;
+
+            color: #102b55;
+        }
+
+
+        .brand-name span {
+            color: #087ff5;
+        }
+
+
+        .brand-tagline {
+            margin-top: 2px;
+
+            font-size: 11px;
+
+            color: #7187a5;
+        }
+
+
+        /* =========================================
+           LEFT CONTENT
+        ========================================= */
+
+        .left-content {
+            position: relative;
+            z-index: 2;
+
+            margin-top: 30px;
+        }
+
+
+        .left-content h1 {
+            font-size: 34px;
+
+            line-height: 1.1;
+
+            color: #102b55;
+        }
+
+
+        .left-content h1 span {
+            color: #087ff5;
+        }
+
+
+        .left-content p {
+            margin-top: 12px;
+
+            max-width: 350px;
+
+            font-size: 14px;
+
+            line-height: 1.55;
+
+            color: #6b819f;
+        }
+
+
+        /* =========================================
+           PHONE ILLUSTRATION
+        ========================================= */
+
+        .illustration {
+            height: 190px;
+
+            position: relative;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            margin-top: 3px;
+        }
+
+
+        .phone {
+            width: 105px;
+            height: 170px;
+
+            border: 6px solid #244bb7;
+
+            border-radius: 25px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #ffffff,
+                    #e7f3ff
+                );
+
+            transform: rotate(-7deg);
+
+            position: relative;
+
+            box-shadow:
+                0 15px 30px rgba(30, 70, 150, .18);
+        }
+
+
+        .phone::before {
+            content: "";
+
+            position: absolute;
+
+            width: 40px;
+            height: 5px;
+
+            border-radius: 10px;
+
+            background: #244bb7;
+
+            top: 5px;
+            left: 26px;
+        }
+
+
+        .phone-shield {
+            position: absolute;
+
+            top: 53px;
+            left: 25px;
+
+            width: 52px;
+            height: 61px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #238dff,
+                    #1663d5
+                );
+
+            clip-path: polygon(
+                50% 0,
+                92% 18%,
+                86% 65%,
+                50% 100%,
+                14% 65%,
+                8% 18%
+            );
+
+            color: #ffffff;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 25px;
+
+            font-weight: bold;
+        }
+
+
+        .otp-badge {
+            position: absolute;
+
+            right: 55px;
+            top: 38px;
+
+            background: #1687f8;
+
+            color: #ffffff;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            padding: 9px 13px;
+
+            border-radius: 11px;
+
+            box-shadow:
+                0 8px 20px rgba(20, 130, 245, .2);
+        }
+
+
+        .otp-badge::after {
+            content: "";
+
+            position: absolute;
+
+            left: 14px;
+            bottom: -7px;
+
+            border-style: solid;
+
+            border-width: 7px 7px 0 0;
+
+            border-color:
+                #1687f8
+                transparent
+                transparent
+                transparent;
+        }
+
+
+        /* =========================================
+           BENEFITS
+        ========================================= */
+
+        .benefits {
+            position: relative;
+            z-index: 2;
+
+            background:
+                rgba(255, 255, 255, .82);
+
+            border:
+                1px solid rgba(218, 230, 244, .9);
+
+            border-radius: 17px;
+
+            padding: 14px 18px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 11px;
+
+            backdrop-filter: blur(5px);
+        }
+
+
+        .benefit {
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+            
+           
+        }
+
+
+        .benefit-icon {
+            width: 37px;
+            height: 37px;
+
+            flex-shrink: 0;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background: #edf6ff;
+
+            font-size: 17px;
+        }
+
+
+        .benefit-title {
+            font-size: 14px;
+
+            font-weight: 700;
+
+            color: #17345e;
+        }
+
+
+        .benefit-text {
+            margin-top: 2px;
+
+            font-size: 11px;
+
+            color: #7890ae;
+        }
+
+
+        /* =========================================
+           RIGHT PANEL
+        ========================================= */
+
+        .verify-right {
+            padding: 42px 65px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+        }
+
+
+        /* =========================================
+           SECURE BADGE
+        ========================================= */
+
+        .secure {
+            align-self: flex-end;
+
+            padding: 8px 13px;
+
+            border-radius: 10px;
+
+            background: #f7fbff;
+
+            border:
+                1px solid #dce8f5;
+
+            color: #58708f;
+
+            font-size: 12px;
+
+            margin-bottom: 22px;
+        }
+
+
+        /* =========================================
+           TITLE
+        ========================================= */
+
+        .verify-right h2 {
+            font-size: 43px;
+
+            line-height: 1.1;
+
+            color: #102b55;
+
+            margin-bottom: 10px;
+        }
+
+
+        .verify-right h2 span {
+            color: #087ff5;
+        }
+
+
+        .subtitle {
+            font-size: 15px;
+
+            color: #7185a3;
+
+            margin-bottom: 29px;
+
+            line-height: 1.5;
+        }
+
+
+        /* =========================================
+           LABEL
+        ========================================= */
+
+        .form-label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            color: #17335c;
+            margin-top: 10px;
+        }
+
+
+        .required {
+            color: #e53935;
+        }
+
+
+        /* =========================================
+           PHONE FIELD
+        ========================================= */
+
+        .phone-box {
+            height: 58px;
+
+            border:
+                1px solid #d7e3f0;
+
+            border-radius: 13px;
+
+            display: flex;
+
+            align-items: center;
+
+            background: #ffffff;
+
+            overflow: hidden;
+
+            transition: .2s;
+        }
+
+
+        .phone-box:focus-within {
+            border-color: #1687f8;
+
+            box-shadow:
+                0 0 0 4px rgba(
+                    22,
+                    135,
+                    248,
+                    .08
+                );
+        }
+
+
+        .country {
+            height: 100%;
+
+            padding: 0 16px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            border-right:
+                1px solid #e6edf5;
+
+            font-weight: 700;
+
+            color: #273f62;
+        }
+
+
+        .country span:first-child {
+            font-size: 19px;
+        }
+
+
+        #phone {
+            flex: 1;
+
+            height: 100%;
+
+            border: 0;
+
+            outline: 0;
+
+            padding: 0 17px;
+
+            font-size: 16px;
+
+            color: #263d5e;
+
+            background: transparent;
+        }
+
+
+        #phone::placeholder {
+            color: #8b9ab0;
+        }
+
+
+        /* =========================================
+           CAPTCHA
+        ========================================= */
+
+        .captcha-section {
+            margin-top: 24px;
+        }
+
+
+        .captcha-row {
+            display: grid;
+
+            grid-template-columns:
+                1fr
+                60px
+                1.25fr;
+
+            gap: 11px;
+
+            align-items: center;
+        }
+
+
+        .captcha-code {
+            height: 58px;
+
+            border-radius: 13px;
+
+            border:
+                1px solid #dce8f4;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #eef6ff,
+                    #e9f3fd
+                );
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 21px;
+
+            font-weight: 800;
+
+            letter-spacing: 5px;
+
+            color: #151c28;
+
+            user-select: none;
+        }
+
+
+        /* =========================================
+           REFRESH
+        ========================================= */
+
+        .refresh-btn {
+            width: 60px;
+            height: 58px;
+
+            border: 0;
+
+            border-radius: 13px;
+
+            background: #42b957;
+
+            color: #ffffff;
+
+            font-size: 27px;
+
+            cursor: pointer;
+
+            transition: .2s;
+
+            box-shadow:
+                0 8px 18px
+                rgba(66,185,87,.2);
+        }
+
+
+        .refresh-btn:hover {
+            background: #34a94b;
+
+            transform: translateY(-2px);
+        }
+
+
+        .refresh-btn:active {
+            transform: scale(.97);
+        }
+
+
+        /* =========================================
+           CAPTCHA INPUT
+        ========================================= */
+
+        #captcha {
+            width: 100%;
+
+            height: 58px;
+
+            border:
+                1px solid #d7e3f0;
+
+            border-radius: 13px;
+
+            outline: none;
+
+            padding: 0 17px;
+
+            font-size: 16px;
+
+            color: #263d5e;
+
+            transition: .2s;
+
+            background: #ffffff;
+        }
+
+
+        #captcha:focus {
+            border-color: #1687f8;
+
+            box-shadow:
+                0 0 0 4px rgba(
+                    22,
+                    135,
+                    248,
+                    .08
+                );
+        }
+
+
+        #captcha::placeholder {
+            color: #8b9ab0;
+        }
+
+
+        /* =========================================
+           SEND BUTTON
+        ========================================= */
+
+        .send-btn {
+            width: 100%;
+
+            height: 61px;
+
+            margin-top: 28px;
+
+            border: 0;
+
+            border-radius: 14px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #168af8,
+                    #086fe5
+                );
+
+            color: #ffffff;
+
+            font-size: 18px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 12px 28px
+                rgba(15,120,235,.22);
+
+            transition: .2s;
+        }
+
+
+        .send-btn:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 16px 32px
+                rgba(15,120,235,.28);
+        }
+
+
+        .send-btn:active {
+            transform: scale(.99);
+        }
+
+
+        /* =========================================
+           DIVIDER
+        ========================================= */
+
+        .divider {
+            display: flex;
+
+            align-items: center;
+
+            gap: 14px;
+
+            margin: 23px 0 16px;
+
+            color: #8999ad;
+
+            font-size: 12px;
+        }
+
+
+        .divider::before,
+        .divider::after {
+            content: "";
+
+            height: 1px;
+
+            background: #e2e9f1;
+
+            flex: 1;
+        }
+
+
+        /* =========================================
+           LOGIN
+        ========================================= */
+
+        .login-link {
+            text-align: center;
+
+            text-decoration: none;
+
+            color: #087ff5;
+
+            font-weight: 700;
+
+            font-size: 14px;
+        }
+
+
+        .login-link:hover {
+            text-decoration: underline;
+        }
+
+
+        /* =========================================
+           DESKTOP HEIGHT FIX
+        ========================================= */
+
+        @media (max-height: 700px) {
+
+            body {
+                padding: 10px;
+            }
+
+            .verify-wrapper {
+                height: calc(100vh - 20px);
+                max-height: none;
+            }
+
+            .verify-left {
+                padding: 25px 35px;
+            }
+
+            .left-content {
+                margin-top: 20px;
+            }
+
+            .left-content h1 {
+                font-size: 29px;
+            }
+
+            .illustration {
+                height: 150px;
+            }
+
+            .phone {
+                transform: scale(.82) rotate(-7deg);
+            }
+
+            .otp-badge {
+                top: 25px;
+            }
+
+            .verify-right {
+                padding: 25px 55px;
+            }
+
+            .verify-right h2 {
+                font-size: 36px;
+            }
+
+            .subtitle {
+                margin-bottom: 20px;
+            }
+
+            .captcha-section {
+                margin-top: 18px;
+            }
+
+            .send-btn {
+                margin-top: 20px;
+            }
+        }
+
+
+        /* =========================================
+           TABLET
+        ========================================= */
+
+        @media (max-width: 900px) {
+
+            html,
+            body {
+                overflow: auto;
+
+                height: auto;
+
+                min-height: 100%;
+            }
+
+
+            body {
+                min-height: 100vh;
+
+                padding: 15px;
+            }
+
+
+            .verify-wrapper {
+                height: auto;
+
+                max-height: none;
+
+                min-height: auto;
+
+                grid-template-columns: 1fr;
+
+                max-width: 600px;
+            }
+
+
+            .verify-left {
+                display: none;
+            }
+
+
+            .verify-right {
+                padding: 42px 35px;
+            }
+
+
+            .verify-right h2 {
+                font-size: 38px;
+            }
+        }
+
+
+        /* =========================================
+           MOBILE
+        ========================================= */
+
+        @media (max-width: 600px) {
+
+            .verify-right {
+                padding: 30px 20px;
+            }
+
+
+            .verify-right h2 {
+                font-size: 31px;
+            }
+
+
+            .subtitle {
+                font-size: 14px;
+            }
+
+
+            .captcha-row {
+                grid-template-columns:
+                    1fr
+                    55px;
+            }
+
+
+            #captcha {
+                grid-column: 1 / -1;
+            }
+
+
+            .refresh-btn {
+                width: 55px;
+            }
+
+
+            .captcha-code {
+                font-size: 19px;
+            }
+        }
+
+
+    </style>
+</head>
+
+
+<body>
+
+<div class="verify-wrapper">
+    <!-- =====================================
+         LEFT PANEL
+    ====================================== -->
+    <div class="verify-left">
+
+        <!-- BRAND -->
+
+        <div class="brand">
+            <div class="brand-icon">
+                🛍️
+            </div>
+            <div>
+                <div class="brand-name">
+                    SK<span>SHOP</span>
+                </div>
+
+                <div class="brand-tagline">
+                    Shop Smarter, Live Better
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- CONTENT -->
+
+        <div class="left-content">
+
+            <h1>
+                Your Safety
+                <br>
+                <span>Our Priority</span>
+            </h1>
+
+            <p>
+                We'll send a secure OTP to your phone
+                number to keep your account safe and secure.
+            </p>
+
+        </div>
+
+
+        <!-- PHONE -->
+
+        <div class="illustration">
+
+            <div class="phone">
+
+                <div class="phone-shield">                    ✓
+                </div>
+
+            </div>
+
+            <div class="otp-badge">
+                OTP
+            </div>
+
+        </div>
+
+
+        <!-- BENEFITS -->
+
+        <div class="benefits">
+
+
+            <div class="benefit">
+
+                <div class="benefit-icon">
+                    🛡️
+                </div>
+
+                <div>
+
+                    <div class="benefit-title">
+                        Secure & Safe
+                    </div>
+
+                    <div class="benefit-text">
+                        Your data is always protected
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="benefit">
+
+                <div class="benefit-icon">
+                    ⚡
+                </div>
+
+                <div>
+
+                    <div class="benefit-title">
+                        Quick Verification
+                    </div>
+
+                    <div class="benefit-text">
+                        Get OTP in seconds
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="benefit">
+
+                <div class="benefit-icon">
+                    🔒
+                </div>
+
+                <div>
+
+                    <div class="benefit-title">
+                        Privacy Guaranteed
+                    </div>
+
+                    <div class="benefit-text">
+                        We never share your number
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================
+         RIGHT PANEL
+    ====================================== -->
+
+    <div class="verify-right">
+
+
+        <div class="secure">
+            🔒 &nbsp; 100% Secure
+        </div>
+
+
+        <h2>
+            Phone <span>Verification</span>
+        </h2>
+
+
+        <p class="subtitle">
+            Enter your phone number and solve the captcha
+            to continue.
+        </p>
+
+
+        <!-- IMPORTANT:
+             Form ID same as your original
+        -->
+
+    <form id="phoneForm">
+
+    {% csrf_token %}
+
+    <!-- ================= PHONE NUMBER ================= -->
+
+    <label
+        class="form-label"
+        for="phone">
+
+        Phone Number
+        <span class="required">*</span>
+
+    </label>
+
+    <div class="phone-box">
+
+        <div class="country">
+
+            <span>🇮🇳</span>
+            <span>+91</span>
+
+        </div>
+
+        <input
+            type="tel"
+            id="phone"
+            placeholder="Enter Phone Number"
+            maxlength="10"
+        >
+
+    </div>
+
+
+
+    <!-- ================= CAPTCHA ================= -->
+
+    <label
+        class="form-label"
+        for="captcha">
+
+        Captcha
+        <span class="required">*</span>
+
+    </label>
+
+    <div class="captcha-row">
+
+        <div
+            class="captcha-code"
+            id="captchaCode">
+        </div>
+
+        <button
+            type="button"
+            class="refresh-btn"
+            onclick="refreshCaptcha()"
+            title="Refresh Captcha">
+
+            ↻
+
+        </button>
+
+        <input
+            type="text"
+            id="captcha"
+            placeholder="Enter Captcha"
+        >
+
+    </div>
+
+
+    <!-- ================= SEND OTP ================= -->
+
+    <button
+        type="button"
+        class="send-btn"
+        onclick="sendData()">
+
+        ✈ &nbsp; Send OTP
+
+    </button>
+
+</form>
+
+
+        <!-- DIVIDER -->
+
+        <div class="divider">
+            OR
+        </div>
+
+
+        <!-- LOGIN -->
+
+        <a
+            href="/login/"
+            class="login-link">
+
+            ← &nbsp; Back to Login
+
+        </a>
+
+
+    </div>
+
+</div>
+
+
+<!-- =====================================
+     EXISTING PHONE JS
+     DON'T CHANGE
+====================================== -->
+
+<script src="{% static 'js/phone.js' %}?v=11"></script>
+
+</body>
+</html>

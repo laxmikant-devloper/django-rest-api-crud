@@ -1,0 +1,764 @@
+/* =========================================================
+   GLOBAL CSS
+   ========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   STUDENT PAGE CSS
+   ========================================================= */
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+    padding: 40px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: auto;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.form-box {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.form-box input {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    padding: 12px 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#addBtn {
+    background: #007bff;
+    color: white;
+}
+
+h2 {
+    margin-bottom: 15px;
+}
+
+table {
+    width: 100%;
+    background: white;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+th {
+    background: #eee;
+}
+
+
+/* =========================================================
+   PHONE / OTP BASE CSS
+   ========================================================= */
+
+.phone-container {
+    max-width: 600px;
+    margin: 60px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+}
+
+.phone-container h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.phone-container label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.phone-container label span {
+    color: red;
+}
+
+.phone-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+
+/* =========================================================
+   CAPTCHA
+   ========================================================= */
+
+.captcha-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.captcha-code {
+    width: 150px;
+    height: 45px;
+    background: #eeeeee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: 4px;
+    font-family: monospace;
+}
+
+.refresh-btn {
+    width: 45px;
+    height: 45px;
+    padding: 0;
+    background: #4caf50;
+    color: white;
+    font-size: 25px;
+}
+
+.captcha-input {
+    flex: 1;
+    height: 45px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+
+/* =========================================================
+   OTP BUTTON
+   ========================================================= */
+
+.send-btn {
+    display: block;
+    width: 150px;
+    margin: auto;
+    padding: 12px;
+    background: #007bff;
+    color: white;
+    font-size: 17px;
+}
+
+.send-btn:hover {
+    background: #0056b3;
+}
+
+
+/* =========================================================
+   REGISTER PAGE CSS
+   ========================================================= */
+
+.register-box {
+    background: white;
+    width: 350px;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+
+    margin: 60px auto;
+}
+
+.register-box h1 {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.register-box label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+.register-box input {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.register-box button {
+    width: 100%;
+    padding: 11px;
+    margin-top: 25px;
+    border: none;
+    border-radius: 5px;
+    background: #007bff;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.register-box button:hover {
+    background: #0056b3;
+}
+
+#registerMessage {
+    text-align: center;
+    margin-top: 15px;
+}
+
+
+/* =========================================================
+   LOGIN PAGE CSS
+   ========================================================= */
+
+.login-box {
+    background: white;
+    width: 350px;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+
+    margin: 60px auto;
+}
+
+.login-box h1 {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.login-box label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+.login-box input {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.login-box button {
+    width: 100%;
+    padding: 11px;
+    margin-top: 25px;
+    border: none;
+    border-radius: 5px;
+    background: #007bff;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.login-box button:hover {
+    background: #0056b3;
+}
+
+#loginMessage {
+    text-align: center;
+    margin-top: 15px;
+}
+
+
+/* =========================================================
+   LOGIN / REGISTER LINKS
+   ========================================================= */
+
+.login-box a,
+.register-box a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.login-box a:hover,
+.register-box a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   MOBILE - PHONE / OTP / LOGIN / REGISTER
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 20px;
+    }
+
+    .phone-container {
+        width: 100%;
+        margin: 30px auto;
+        padding: 20px;
+    }
+
+    .register-box,
+    .login-box {
+        width: 100%;
+        margin: 30px auto;
+        padding: 22px;
+    }
+
+    .captcha-row {
+        flex-wrap: wrap;
+    }
+
+    .captcha-input {
+        min-width: 150px;
+    }
+
+}
+
+/* =========================================
+   MODERN OTP VERIFICATION PAGE
+   ========================================= */
+
+.otp-page {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    box-sizing: border-box;
+
+    background:
+        radial-gradient(circle at top left,
+        rgba(30, 136, 229, 0.10),
+        transparent 35%),
+        #f4f8fc;
+}
+
+
+/* MAIN CARD */
+
+.otp-card {
+    width: min(1050px, 100%);
+    min-height: 600px;
+
+    display: grid;
+    grid-template-columns: 40% 60%;
+
+    background: #ffffff;
+
+    border-radius: 22px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 20px 60px rgba(0, 80, 160, 0.15);
+}
+
+
+/* LEFT BLUE PANEL */
+
+.otp-left {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    padding: 55px;
+
+    background:
+        radial-gradient(circle at 75% 30%,
+        rgba(255,255,255,0.18),
+        transparent 30%),
+        linear-gradient(
+            145deg,
+            #1595f5,
+            #126be6
+        );
+
+    color: white;
+}
+
+
+.otp-left::after {
+    content: "";
+
+    position: absolute;
+
+    width: 350px;
+    height: 350px;
+
+    border-radius: 50%;
+
+    right: -180px;
+    bottom: -160px;
+
+    background: rgba(255,255,255,0.07);
+}
+
+
+/* LOCK ICON */
+
+.otp-icon {
+    width: 110px;
+    height: 110px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 55px;
+
+    border-radius: 28px;
+
+    background: rgba(255,255,255,0.16);
+
+    box-shadow:
+        0 15px 30px rgba(0,0,0,0.10);
+
+    margin-bottom: 45px;
+
+    animation: otpFloat 3s ease-in-out infinite;
+}
+
+
+@keyframes otpFloat {
+
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+
+}
+
+
+.otp-left h2 {
+    font-size: 34px;
+    line-height: 1.25;
+
+    margin: 0 0 20px;
+
+    font-weight: 700;
+}
+
+
+.otp-left p {
+    font-size: 17px;
+    line-height: 1.7;
+
+    margin: 0;
+
+    opacity: 0.95;
+}
+
+
+/* RIGHT SIDE */
+
+.otp-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    padding: 55px 75px;
+}
+
+
+.otp-right h1 {
+    margin: 0;
+
+    text-align: center;
+
+    font-size: 42px;
+
+    color: #111827;
+
+    font-weight: 750;
+}
+
+
+.otp-subtitle {
+    text-align: center;
+
+    margin: 18px 0 42px;
+
+    font-size: 17px;
+
+    color: #64748b;
+}
+
+
+/* OTP BOXES */
+
+.otp-inputs {
+    display: flex;
+    justify-content: center;
+
+    gap: 14px;
+
+    margin-bottom: 38px;
+}
+
+
+.otp-box {
+    width: 58px;
+    height: 65px;
+
+    border: 2px solid #d7dee8;
+
+    border-radius: 12px;
+
+    background: #ffffff;
+
+    text-align: center;
+
+    font-size: 28px;
+    font-weight: 600;
+
+    color: #126be6;
+
+    outline: none;
+
+    transition: all 0.2s ease;
+
+    box-sizing: border-box;
+}
+
+
+.otp-box:focus {
+    border-color: #087cf0;
+
+    box-shadow:
+        0 0 0 4px rgba(8,124,240,0.10);
+
+    transform: translateY(-2px);
+}
+
+
+/* VERIFY BUTTON */
+
+.otp-verify-btn {
+    width: 100%;
+
+    height: 62px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: linear-gradient(
+        135deg,
+        #168bf4,
+        #0874e8
+    );
+
+    color: white;
+
+    font-size: 19px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 20px rgba(8,116,232,0.20);
+
+    transition: all 0.2s ease;
+}
+
+
+.otp-verify-btn span {
+    font-size: 26px;
+
+    margin-left: 12px;
+}
+
+
+.otp-verify-btn:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 12px 25px rgba(8,116,232,0.28);
+}
+
+
+.otp-verify-btn:active {
+    transform: scale(0.98);
+}
+
+
+/* RESEND BUTTON */
+
+.otp-resend-btn {
+    width: 100%;
+
+    height: 62px;
+
+    margin-top: 15px;
+
+    border-radius: 12px;
+
+    border: 2px solid #087cf0;
+
+    background: white;
+
+    color: #0874e8;
+
+    font-size: 18px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+
+.otp-resend-btn:hover {
+    background: #f0f7ff;
+
+    transform: translateY(-2px);
+}
+
+
+/* TIMER */
+
+.otp-timer {
+    text-align: center;
+
+    margin-top: 28px;
+
+    color: #718096;
+
+    font-size: 15px;
+}
+
+
+.otp-timer strong {
+    color: #087cf0;
+
+    font-size: 16px;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 800px) {
+
+    .otp-page {
+        padding: 15px;
+    }
+
+    .otp-card {
+        grid-template-columns: 1fr;
+
+        min-height: auto;
+    }
+
+    .otp-left {
+        padding: 35px;
+
+        text-align: center;
+
+        align-items: center;
+    }
+
+    .otp-left h2 {
+        font-size: 27px;
+    }
+
+    .otp-left p {
+        font-size: 15px;
+    }
+
+    .otp-icon {
+        width: 80px;
+        height: 80px;
+
+        font-size: 40px;
+
+        margin-bottom: 25px;
+    }
+
+    .otp-right {
+        padding: 40px 25px;
+    }
+
+    .otp-right h1 {
+        font-size: 31px;
+    }
+
+    .otp-subtitle {
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    .otp-inputs {
+        gap: 8px;
+    }
+
+    .otp-box {
+        width: 45px;
+        height: 55px;
+
+        font-size: 23px;
+    }
+
+}
+
+.otp-timer {
+    text-align: center;
+    margin-top: 28px;
+    color: #718096;
+    font-size: 15px;
+    transition: all 0.2s ease;
+}
+
+.otp-timer strong {
+    color: #087cf0;
+    font-size: 16px;
+}
+
+/* Jab Resend now aaye */
+.otp-timer.resend-active {
+    cursor: pointer;
+    color: #087cf0;
+    font-weight: 600;
+    padding: 10px 15px;
+    border-radius: 10px;
+    background: #f0f7ff;
+}
+
+.otp-timer.resend-active:hover {
+    background: #e3f1ff;
+    transform: translateY(-1px);
+}
+
+.otp-timer.resend-active strong {
+    color: #087cf0;
+}

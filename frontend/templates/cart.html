@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}My Cart{% endblock %}
+
+{% block extra_js %}{% endblock %}
+
+{% block content %}
+
+
+{% csrf_token %}
+<section class="card">
+
+    <div class="section-title">
+        <h2>My Cart</h2>
+    </div>
+
+    <div id="cartContainer">
+        <p>Loading cart...</p>
+    </div>
+
+</section>
+
+{% endblock %}

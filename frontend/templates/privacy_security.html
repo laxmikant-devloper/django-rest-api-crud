@@ -1,0 +1,495 @@
+{% extends "base.html" %}
+
+{% block title %}Privacy & Security{% endblock %}
+
+{% block content %}
+
+<div class="card">
+
+    <div class="section-title">
+        <h2 style="margin-bottom: 10px;">🛡️ Privacy & Security</h2>
+    </div>
+
+
+    <!-- SECURITY STATUS -->
+
+    <div class="security-status">
+
+        <div class="security-icon">
+            🛡️
+        </div>
+
+        <div>
+            <h3>Account Security</h3>
+
+            <p>
+                Your account security settings and privacy
+                information are managed here.
+            </p>
+        </div>
+
+    </div>
+
+
+    <!-- PASSWORD -->
+
+    <div class="privacy-section">
+
+        <h3>🔐 Password & Login</h3>
+
+
+        <div class="privacy-item">
+
+            <div>
+                <strong>🔑 Password</strong>
+
+                <p>
+                    Keep your password secure and change it regularly.
+                </p>
+            </div>
+
+            <button
+                class="green-btn"
+                onclick="changePassword()"
+            >
+                Change
+            </button>
+
+        </div>
+
+
+        <div class="privacy-item">
+
+            <div>
+                <strong>👤 Login Security</strong>
+
+                <p>
+                    Your account is protected by authenticated login.
+                </p>
+            </div>
+
+            <span class="secure-badge">
+                ✓ Secure
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- PRIVACY -->
+
+    <div class="privacy-section">
+
+        <h3>🔒 Privacy</h3>
+
+
+        <div class="privacy-item">
+
+            <div>
+                <strong>📦 Order Information</strong>
+
+                <p>
+                    Your order information is associated with
+                    your account and is not publicly displayed.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="privacy-item">
+
+            <div>
+                <strong>📍 Address Information</strong>
+
+                <p>
+                    Saved delivery addresses are available
+                    only to your account.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="privacy-item">
+
+            <div>
+                <strong>💳 Payment Information</strong>
+
+                <p>
+                    Payment information is handled securely
+                    through the payment system.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ACCOUNT DATA -->
+
+    <div class="privacy-section">
+
+        <h3>📋 Account Data</h3>
+
+
+        <div class="privacy-item">
+
+            <div>
+                <strong>👤 Profile Information</strong>
+
+                <p>
+                    Name, mobile number and email are used
+                    to manage your account.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="privacy-item">
+
+            <div>
+                <strong>🛒 Shopping Activity</strong>
+
+                <p>
+                    Cart, orders, wishlist and reviews are
+                    linked to your account.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- DANGER -->
+
+    <div class="privacy-section danger-section">
+
+        <h3>⚠️ Account Protection</h3>
+
+
+        <div class="privacy-item">
+
+            <div>
+                <strong style="color:#d32f2f;">
+                    🗑️ Delete Account
+                </strong>
+
+                <p>
+                    Permanently remove your account and
+                    associated account data.
+                </p>
+            </div>
+
+            <button
+                class="delete-btn"
+                onclick="deleteAccount()"
+            >
+                Delete Account
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- BACK -->
+
+    <button
+        class="back-btn"
+        onclick="goBackSettings()"
+    >
+        ← Back to Settings
+    </button>
+
+</div>
+
+
+<style>
+
+.security-status {
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+    padding:20px;
+
+    margin-bottom:22px;
+
+    background:#f5fff7;
+
+    border:1px solid #c8e8ce;
+
+    border-radius:10px;
+
+}
+
+.security-icon {
+
+    width:55px;
+
+    height:55px;
+
+    border-radius:50%;
+
+    background:#08a52b;
+
+    color:white;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:27px;
+
+}
+
+.security-status h3 {
+
+    margin:0 0 5px;
+
+}
+
+.security-status p {
+
+    margin:0;
+
+    color:#666;
+
+}
+
+
+.privacy-section {
+
+    border:1px solid #ddd;
+
+    border-radius:10px;
+
+    overflow:hidden;
+
+    background:white;
+
+    margin-bottom:20px;
+
+}
+
+.privacy-section h3 {
+
+    margin:0;
+
+    padding:16px 20px;
+
+    background:#f8fff9;
+
+    border-bottom:1px solid #eee;
+
+}
+
+
+.privacy-item {
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:20px;
+
+    padding:17px 20px;
+
+    border-bottom:1px solid #eee;
+
+}
+
+.privacy-item:last-child {
+
+    border-bottom:none;
+
+}
+
+
+.privacy-item strong {
+
+    font-size:16px;
+
+}
+
+.privacy-item p {
+
+    margin:6px 0 0;
+
+    color:#777;
+
+    font-size:14px;
+
+    line-height:1.5;
+
+}
+
+
+.green-btn {
+
+    border:none;
+
+    background:#08a52b;
+
+    color:white;
+
+    padding:9px 18px;
+
+    border-radius:6px;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+}
+
+
+.secure-badge {
+
+    color:#08a52b;
+
+    background:#eaffef;
+
+    padding:7px 12px;
+
+    border-radius:20px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+}
+
+
+.danger-section {
+
+    border-color:#efc4c4;
+
+}
+
+
+.danger-section h3 {
+
+    background:#fff6f6;
+
+}
+
+
+.delete-btn {
+
+    border:none;
+
+    background:#d32f2f;
+
+    color:white;
+
+    padding:9px 15px;
+
+    border-radius:6px;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+}
+
+
+.back-btn {
+
+    border:none;
+
+    background:#555;
+
+    color:white;
+
+    padding:11px 20px;
+
+    border-radius:7px;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+}
+
+
+@media(max-width:600px) {
+
+    .security-status {
+
+        align-items:flex-start;
+
+    }
+
+    .privacy-item {
+
+        align-items:flex-start;
+
+    }
+
+    .privacy-item button,
+    .secure-badge {
+
+        flex-shrink:0;
+
+    }
+
+}
+
+</style>
+
+
+<script>
+
+function changePassword() {
+
+    window.location.href =
+        "/dashboard/setting/?open=password";
+
+    /*
+       Settings page par jaakar
+       Change Password option open karenge.
+    */
+
+}
+
+
+function deleteAccount() {
+
+    const confirmDelete = confirm(
+        "Are you sure you want to permanently delete your account?"
+    );
+
+    if (!confirmDelete) {
+        return;
+    }
+
+    alert(
+        "Account deletion feature will be connected next."
+    );
+
+}
+
+
+function goBackSettings() {
+
+    window.location.href =
+        "/dashboard/setting/";
+
+}
+
+</script>
+
+{% endblock %}

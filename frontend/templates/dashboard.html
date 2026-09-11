@@ -1,0 +1,250 @@
+{% extends "base.html" %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+
+<!-- ================= WELCOME ================= -->
+
+<!-- <section class="welcome">
+
+    <div class="welcome-text">
+
+        <p>Welcome back,</p>
+
+        <h1 id="dashboardName">
+            Loading... 👋
+        </h1>
+
+        <span>
+            Explore latest deals and continue
+            shopping your favorite products.
+        </span>
+
+        <button>
+            Shop Now
+        </button>
+
+    </div>
+
+
+    <div class="big-offer">
+
+        <small>
+            BIG SAVING DAYS
+        </small>
+
+        <h2>
+            UP TO
+        </h2>
+
+        <strong>
+            50%
+        </strong>
+
+        <h3>
+            OFF
+        </h3>
+
+        <p>
+            On Electronics & More
+        </p>
+
+        <button>
+            Explore Deals
+        </button>
+
+    </div>
+
+</section> -->
+
+
+<!-- ================= STATS ================= -->
+
+<section class="stats">
+
+    <div class="stat">
+
+        <div class="stat-icon purple">
+            🛍️
+        </div>
+
+        <div>
+
+            <span>
+                Total Orders
+            </span>
+
+            <h2 id="totalOrdersCount">
+                0
+            </h2>
+
+            <small>
+                View all orders →
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <div class="stat-icon green">
+            💰
+        </div>
+
+        <div>
+
+            <span>
+                Total Spent
+            </span>
+
+            <h2 id="totalSpentAmount">
+                ₹0
+            </h2>
+
+            <small>
+                View spending →
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <div class="stat-icon orange">
+            📦
+        </div>
+
+        <div>
+
+            <span>
+                Pending Orders
+            </span>
+
+            <h2 id="pendingOrdersCount">
+                0
+            </h2>
+
+            <small>
+                Track orders →
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <div class="stat-icon blue">
+            🎟️
+        </div>
+
+        <div>
+
+            <span>
+                Coupons
+            </span>
+
+            <h2 id="couponCount">
+                05
+            </h2>
+
+            <small>
+                View coupons →
+            </small>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================= CATEGORIES ================= -->
+<section class="card">
+
+    <div class="section-title">
+
+        <h2>
+            Top Categories
+        </h2>
+
+        <a href="#">
+            View All
+        </a>
+
+    </div>
+
+    <div class="categories">
+
+       <div class="category" onclick="loadProducts('mobile')">
+    <div>📱</div>
+    <span>Mobiles</span>
+</div>
+
+<div class="category" onclick="loadProducts('laptop')">
+    <div>💻</div>
+    <span>Laptops</span>
+</div>
+
+<div class="category" onclick="loadProducts('electronics')">
+    <div>🎧</div>
+    <span>Electronics</span>
+</div>
+
+<div class="category" onclick="loadProducts('shoes')">
+    <div>👟</div>
+    <span>Shoes</span>
+</div>
+
+<div class="category" onclick="loadProducts('fashion')">
+    <div>👕</div>
+    <span>Fashion</span>
+</div>
+
+<div class="category" onclick="loadProducts('accessories')">
+    <div>⌚</div>
+    <span>Accessories</span>
+</div>
+
+    </div>
+
+</section>
+
+<!-- ================= PRODUCTS ================= -->
+
+<section class="card">
+
+    <div class="section-title">
+
+        <h2>
+            Recommended for You
+        </h2>
+
+        <a href="#">
+            View All
+        </a>
+
+    </div>
+
+
+    <div
+        class="products"
+        id="productsContainer"
+    >
+
+        <p>
+            Loading products...
+        </p>
+
+    </div>
+
+</section>
+
+{% endblock %}

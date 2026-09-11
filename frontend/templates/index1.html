@@ -1,0 +1,665 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ShopVista Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{% static 'css/dashboard.css' %}">
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="logo">
+            🛍️ <span>Shop<span>Vista</span></span>
+        </div>
+
+        <nav>
+
+            <a href="/dashboard/" class="menu active">
+                <span>▣</span>
+                Dashboard
+            </a>
+
+            <a href="/profile-page/" class="menu">
+                <span>👤</span>
+                My Profile
+            </a>
+
+            <a href="#" class="menu">
+                <span>📦</span>
+                Orders
+                <b>4</b>
+            </a>
+
+            <a href="#" class="menu">
+                <span>🛒</span>
+                Cart
+            </a>
+
+            <a href="#" class="menu">
+                <span>♡</span>
+                Wishlist
+                <b>3</b>
+            </a>
+
+            <a href="#" class="menu">
+                <span>📍</span>
+                Addresses
+            </a>
+
+            <a href="#" class="menu">
+                <span>💳</span>
+                Payment Methods
+            </a>
+
+            <a href="#" class="menu">
+                <span>⭐</span>
+                My Reviews
+            </a>
+
+            <a href="#" class="menu">
+                <span>🔔</span>
+                Notifications
+            </a>
+
+            <a href="#" class="menu">
+                <span>❓</span>
+                Help & Support
+            </a>
+
+            <a href="#" class="menu">
+                <span>⚙️</span>
+                Settings
+            </a>
+
+            <a href="/logout/" class="menu logout">
+                <span>↪️</span>
+                Logout
+            </a>
+
+        </nav>
+
+        <div class="offer-box">
+
+            <div class="offer-icon">
+                🎁
+            </div>
+
+            <h3>Special Offer!</h3>
+
+            <p>
+                Get up to 40% OFF on selected products
+            </p>
+
+            <button>
+                Shop Now
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main">
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <button id="menuBtn" class="menu-btn">
+                ☰
+            </button>
+
+            <div class="search">
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search for products, brands and more..."
+                >
+
+                <button id="searchBtn">
+                    🔍
+                </button>
+
+            </div>
+
+            <div class="top-icons">
+
+                <div class="top-icon">
+                    ♡
+                    <span>3</span>
+                </div>
+
+                <div class="top-icon">
+                    🛒
+                    <span>2</span>
+                </div>
+
+                <div class="top-icon">
+                    🔔
+                    <span>5</span>
+                </div>
+
+                <div class="top-user">
+
+                    <div class="avatar">
+                        LK
+                    </div>
+
+                    <div>
+                        <small>Welcome</small>
+                        <strong>Laxmi Kant</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- ================= CONTENT ================= -->
+
+        <div class="content">
+
+            <div class="left-content">
+
+                <!-- WELCOME -->
+
+                <section class="welcome">
+
+                    <div class="welcome-text">
+
+                        <p>Welcome back,</p>
+
+                        <h1>Laxmi Kant 👋</h1>
+
+                        <span>
+                            Explore latest deals and continue
+                            shopping your favorite products.
+                        </span>
+
+                        <button>
+                            Shop Now
+                        </button>
+
+                    </div>
+
+
+                    <div class="big-offer">
+
+                        <small>
+                            BIG SAVING DAYS
+                        </small>
+
+                        <h2>UP TO</h2>
+
+                        <strong>50%</strong>
+
+                        <h3>OFF</h3>
+
+                        <p>
+                            On Electronics & More
+                        </p>
+
+                        <button>
+                            Explore Deals
+                        </button>
+
+                    </div>
+
+                </section>
+
+
+                <!-- STATS -->
+
+                <section class="stats">
+
+                    <div class="stat">
+
+                        <div class="stat-icon purple">
+                            🛍️
+                        </div>
+
+                        <div>
+                            <span>Total Orders</span>
+                            <h2>12</h2>
+                            <small>View all orders →</small>
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat">
+
+                        <div class="stat-icon green">
+                            💰
+                        </div>
+
+                        <div>
+                            <span>Total Spent</span>
+                            <h2>₹24,680</h2>
+                            <small>View spending →</small>
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat">
+
+                        <div class="stat-icon orange">
+                            📦
+                        </div>
+
+                        <div>
+                            <span>Pending Orders</span>
+                            <h2>02</h2>
+                            <small>Track orders →</small>
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat">
+
+                        <div class="stat-icon blue">
+                            🎟️
+                        </div>
+
+                        <div>
+                            <span>Coupons</span>
+                            <h2>05</h2>
+                            <small>View coupons →</small>
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- CATEGORIES -->
+
+                <section class="card">
+
+                    <div class="section-title">
+
+                        <h2>Top Categories</h2>
+
+                        <a href="#">
+                            View All
+                        </a>
+
+                    </div>
+
+
+                    <div class="categories">
+
+                        <div class="category">
+                            <div>📱</div>
+                            <span>Mobiles</span>
+                        </div>
+
+                        <div class="category">
+                            <div>💻</div>
+                            <span>Laptops</span>
+                        </div>
+
+                        <div class="category">
+                            <div>🎧</div>
+                            <span>Electronics</span>
+                        </div>
+
+                        <div class="category">
+                            <div>👟</div>
+                            <span>Shoes</span>
+                        </div>
+
+                        <div class="category">
+                            <div>👕</div>
+                            <span>Fashion</span>
+                        </div>
+
+                        <div class="category">
+                            <div>⌚</div>
+                            <span>Accessories</span>
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- PRODUCTS -->
+
+                <section class="card">
+
+                    <div class="section-title">
+
+                        <h2>Recommended for You</h2>
+
+                        <a href="#">
+                            View All
+                        </a>
+
+                    </div>
+
+
+                    <div class="products">
+
+
+                        <div class="product">
+
+                            <button class="heart">
+                                ♡
+                            </button>
+
+                            <div class="product-image">
+                                📱
+                            </div>
+
+                            <h3>
+                                iPhone 15 (128GB)
+                            </h3>
+
+                            <strong>
+                                ₹69,900
+                            </strong>
+
+                            <p class="rating">
+                                ⭐ 4.6
+                                <span>(128)</span>
+                            </p>
+
+                            <button class="cart-btn">
+                                Add to Cart
+                            </button>
+
+                        </div>
+
+
+                        <div class="product">
+
+                            <button class="heart">
+                                ♡
+                            </button>
+
+                            <div class="product-image">
+                                💻
+                            </div>
+
+                            <h3>
+                                HP Pavilion 15
+                            </h3>
+
+                            <strong>
+                                ₹45,990
+                            </strong>
+
+                            <p class="rating">
+                                ⭐ 4.3
+                                <span>(98)</span>
+                            </p>
+
+                            <button class="cart-btn">
+                                Add to Cart
+                            </button>
+
+                        </div>
+
+
+                        <div class="product">
+
+                            <button class="heart">
+                                ♡
+                            </button>
+
+                            <div class="product-image">
+                                🎧
+                            </div>
+
+                            <h3>
+                                boAt Rockerz 450
+                            </h3>
+
+                            <strong>
+                                ₹1,299
+                            </strong>
+
+                            <p class="rating">
+                                ⭐ 4.4
+                                <span>(267)</span>
+                            </p>
+
+                            <button class="cart-btn">
+                                Add to Cart
+                            </button>
+
+                        </div>
+
+
+                        <div class="product">
+
+                            <button class="heart">
+                                ♡
+                            </button>
+
+                            <div class="product-image">
+                                👟
+                            </div>
+
+                            <h3>
+                                Nike Air Max
+                            </h3>
+
+                            <strong>
+                                ₹3,499
+                            </strong>
+
+                            <p class="rating">
+                                ⭐ 4.5
+                                <span>(189)</span>
+                            </p>
+
+                            <button class="cart-btn">
+                                Add to Cart
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+
+            <!-- ================= RIGHT SIDEBAR ================= -->
+
+            <aside class="right-content">
+
+
+                <!-- PROFILE -->
+
+                <section class="right-card">
+
+                    <h2>My Profile</h2>
+
+                    <div class="profile-avatar">
+                        LK
+                    </div>
+
+                    <h3>Laxmi Kant</h3>
+
+                    <p>
+                        laxmikantofficial@gmail.com
+                    </p>
+
+                    <p>
+                        +91 6200 123 456
+                    </p>
+
+                    <button class="edit-btn">
+                        Edit Profile
+                    </button>
+
+                </section>
+
+
+                <!-- ORDER STATUS -->
+
+                <section class="right-card">
+
+                    <div class="section-title">
+
+                        <h2>Order Status</h2>
+
+                        <a href="#">
+                            View All
+                        </a>
+
+                    </div>
+
+                    <div class="order-status">
+
+                        <p>
+                            <span class="green">●</span>
+                            Delivered
+                            <b>8</b>
+                        </p>
+
+                        <p>
+                            <span class="blue">●</span>
+                            Shipped
+                            <b>2</b>
+                        </p>
+
+                        <p>
+                            <span class="orange">●</span>
+                            Processing
+                            <b>2</b>
+                        </p>
+
+                        <p>
+                            <span class="red">●</span>
+                            Cancelled
+                            <b>0</b>
+                        </p>
+
+                    </div>
+
+                </section>
+
+
+                <!-- PAYMENT -->
+
+                <section class="right-card">
+
+                    <div class="section-title">
+
+                        <h2>Payment Methods</h2>
+
+                        <a href="#">
+                            View All
+                        </a>
+
+                    </div>
+
+                    <div class="payment">
+
+                        <p>
+                            💳 **** **** **** 4242
+                            <b>VISA</b>
+                        </p>
+
+                        <p>
+                            💳 **** **** **** 8888
+                            <b>Card</b>
+                        </p>
+
+                        <p>
+                            🟣 UPI - laxmikant@upi
+                            <b>UPI</b>
+                        </p>
+
+                        <a href="#">
+                            + Add New Card
+                        </a>
+
+                    </div>
+
+                </section>
+
+
+                <!-- RECENT ORDERS -->
+
+                <section class="right-card">
+
+                    <div class="section-title">
+
+                        <h2>Recent Orders</h2>
+
+                        <a href="#">
+                            View All
+                        </a>
+
+                    </div>
+
+                    <div class="recent-order">
+
+                        <div class="recent-image">
+                            🎧
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                boAt Rockerz 450
+                            </h3>
+
+                            <strong>
+                                ₹1,299
+                            </strong>
+
+                            <p>
+                                Delivered recently
+                            </p>
+
+                        </div>
+
+                        <span class="delivered">
+                            Delivered
+                        </span>
+
+                    </div>
+
+                </section>
+
+            </aside>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<script src="{% static 'js/script.js' %}?v=1"></script>
+
+</body>
+
+</html>

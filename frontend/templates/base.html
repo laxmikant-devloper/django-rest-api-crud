@@ -1,0 +1,1284 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% block title %}
+            SK SHOP
+        {% endblock %}
+    </title>
+
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+
+    {% block extra_css %}
+    {% endblock %}
+
+
+<style>
+
+/* CHAT BUTTON */
+.sk-chat-btn {
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+    width: 60px;
+    height: 60px;
+    border: none;
+    border-radius: 50%;
+    background: #2868d8;
+    color: #fff;
+    font-size: 27px;
+    cursor: pointer;
+    box-shadow: 0 8px 25px rgba(0,0,0,.22);
+    z-index: 99999;
+    transition: .2s;
+}
+
+.sk-chat-btn:hover {
+    transform: scale(1.06);
+}
+
+
+/* CHAT WINDOW */
+.sk-chat-box {
+    position: fixed;
+    right: 25px;
+    bottom: 98px;
+    width: 380px;
+    height: 560px;
+    background: #fff;
+    border: 1px solid #dfe5ee;
+    border-radius: 20px;
+    box-shadow: 0 15px 45px rgba(0,0,0,.20);
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 99999;
+}
+
+.sk-chat-box.active {
+    display: flex;
+}
+
+/* HEADER */
+.sk-chat-header {
+    height: 72px;
+    padding: 0 18px;
+    background: #2868d8;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.sk-chat-title {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+.sk-chat-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+}
+
+.sk-chat-title strong {
+    display: block;
+    font-size: 16px;
+}
+
+.sk-chat-title small {
+    display: block;
+    margin-top: 3px;
+    font-size: 11px;
+    opacity: .85;
+}
+
+.sk-chat-close {
+    width: 35px;
+    height: 35px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: white;
+    font-size: 26px;
+    cursor: pointer;
+}
+
+.sk-chat-close:hover {
+    background: rgba(255,255,255,.15);
+}
+
+
+/* MESSAGES */
+.sk-chat-messages {
+    flex: 1;
+    padding: 18px;
+    overflow-y: auto;
+    background: #f7f9fc;
+}
+
+
+/* BOT MESSAGE */
+.sk-bot-message {
+    max-width: 82%;
+    background: #fff;
+    border: 1px solid #e3e8ef;
+    border-radius: 14px 14px 14px 4px;
+    padding: 11px 14px;
+    margin-bottom: 12px;
+    font-size: 14px;
+    line-height: 1.45;
+    color: #222;
+    box-shadow: 0 2px 7px rgba(0,0,0,.04);
+}
+
+
+/* USER MESSAGE */
+.sk-user-message {
+    max-width: 82%;
+    background: #2868d8;
+    color: #fff;
+    border-radius: 14px 14px 4px 14px;
+    padding: 11px 14px;
+    margin: 0 0 12px auto;
+    font-size: 14px;
+    line-height: 1.45;
+}
+
+
+/* QUICK QUESTIONS */
+.sk-quick-title {
+    font-size: 12px;
+    color: #777;
+    margin: 4px 0 8px;
+}
+
+.sk-quick-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-bottom: 15px;
+}
+
+.sk-quick-btn {
+    border: 1px solid #d5dfed;
+    background: #fff;
+    color: #2868d8;
+    border-radius: 20px;
+    padding: 7px 11px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.sk-quick-btn:hover {
+    background: #eef5ff;
+}
+
+
+/* PRODUCT RESULT */
+.sk-product-card {
+    background: #fff;
+    border: 1px solid #e1e7ef;
+    border-radius: 13px;
+    padding: 10px;
+    margin-top: 8px;
+}
+
+.sk-product-card img {
+    width: 100%;
+    height: 120px;
+    object-fit: contain;
+    display: block;
+}
+
+.sk-product-card h4 {
+    margin: 8px 0 4px;
+    font-size: 14px;
+    color: #222;
+}
+
+.sk-product-price {
+    font-size: 15px;
+    font-weight: 700;
+    color: #2868d8;
+}
+
+
+/* INPUT AREA */
+.sk-chat-input-area {
+    padding: 12px;
+    background: #fff;
+    border-top: 1px solid #e5e9ef;
+    display: flex;
+    gap: 8px;
+}
+
+.sk-chat-input {
+    flex: 1;
+    height: 44px;
+    border: 1px solid #d5dce7;
+    border-radius: 11px;
+    padding: 0 13px;
+    outline: none;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.sk-chat-input:focus {
+    border-color: #2868d8;
+}
+
+.sk-chat-send {
+    width: 45px;
+    height: 44px;
+    border: none;
+    border-radius: 11px;
+    background: #2868d8;
+    color: white;
+    font-size: 18px;
+
+    cursor: pointer;
+}
+
+
+/* DARK MODE */
+body.dark-mode .sk-chat-box {
+    background: #1e1e1e;
+
+    border-color: #444;
+}
+
+body.dark-mode .sk-chat-messages {
+    background: #121212;
+}
+
+body.dark-mode .sk-bot-message {
+    background: #292929;
+    border-color: #444;
+    color: #fff;
+}
+
+body.dark-mode .sk-chat-input-area {
+    background: #1e1e1e;
+    border-color: #444;
+}
+
+body.dark-mode .sk-chat-input {
+    background: #292929;
+    border-color: #555;
+    color: #fff;
+}
+
+body.dark-mode .sk-quick-btn {
+    background: #292929;
+    border-color: #555;
+    color: #8ab4ff;
+}
+
+body.dark-mode .sk-product-card {
+    background: #292929;
+    border-color: #444;
+}
+
+body.dark-mode .sk-product-card h4 {
+    color: #fff;
+}
+
+
+/* MOBILE */
+@media (max-width: 600px) {
+
+    .sk-chat-box {
+        right: 10px;
+        bottom: 82px;
+        width: calc(100% - 20px);
+        height: 70vh;
+    }
+    .sk-chat-btn {
+        right: 15px;
+        bottom: 15px;
+    }
+}
+
+
+/* =========================================
+   MY PROFILE CARD
+   ========================================= */
+
+.modern-profile-card {
+    padding: 20px !important;
+    overflow: hidden;
+    position: relative;
+}
+
+.profile-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 14px;
+}
+
+.profile-small-title {
+    display: block;
+    margin-bottom: 2px;
+    color: #8a94a6;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+}
+
+.profile-card-header h2 {
+    margin: 0;
+    color: #111827;
+    font-size: 20px;
+}
+
+.profile-status {
+    padding: 5px 10px;
+    border-radius: 20px;
+    background: #ecfdf3;
+    color: #16a34a;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.modern-profile-avatar {
+    width: 92px;
+    height: 92px;
+    margin: 8px auto 12px;
+    padding: 4px;
+    position: relative;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #2563eb, #6366f1);
+    box-shadow: 0 8px 24px rgba(37, 99, 235, .18);
+}
+
+.modern-profile-avatar img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #eef2f7;
+}
+
+.profile-camera {
+    position: absolute;
+    right: -1px;
+    bottom: 1px;
+    width: 27px;
+    height: 27px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    background: #2563eb;
+    font-size: 12px;
+}
+
+.modern-profile-card #profileName {
+    margin: 0;
+    text-align: center;
+    color: #111827;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.verified-user {
+    width: max-content;
+    margin: 7px auto 17px;
+    padding: 5px 11px;
+    border-radius: 20px;
+    background: #eff6ff;
+    color: #2563eb;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.profile-details {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.profile-detail-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border: 1px solid #edf0f5;
+    border-radius: 11px;
+    background: #fafbfd;
+    transition: .2s ease;
+}
+
+.profile-detail-row:hover {
+    border-color: #dce6f8;
+    background: #f6f9ff;
+    transform: translateY(-1px);
+}
+
+.profile-detail-icon {
+    width: 34px;
+    height: 34px;
+    flex: 0 0 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+    font-size: 16px;
+}
+
+.email-icon {
+    background: #eaf3ff;
+    color: #2563eb;
+}
+
+.phone-icon {
+    background: #eafbf0;
+    color: #16a34a;
+}
+
+.profile-detail-text {
+    min-width: 0;
+}
+
+.profile-detail-text small {
+    display: block;
+    margin-bottom: 2px;
+    color: #8a94a6;
+    font-size: 9px;
+}
+
+.profile-detail-text p {
+    margin: 0;
+    overflow: hidden;
+    color: #273142;
+    font-size: 12px;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.modern-edit-profile {
+    width: 100%;
+    height: 45px;
+    margin-top: 15px;
+    padding: 0 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: 0;
+    border-radius: 11px;
+    background: linear-gradient(135deg, #168bf4, #4f46e5);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 7px 18px rgba(37, 99, 235, .20);
+    transition: .2s ease;
+}
+
+.modern-edit-profile span:first-child {
+    font-size: 17px;
+}
+
+.modern-edit-profile strong {
+    margin-left: auto;
+    font-size: 18px;
+}
+
+.modern-edit-profile:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 22px rgba(37, 99, 235, .28);
+}
+
+body.dark-mode .modern-profile-card {
+    background: #1e1e1e;
+}
+
+body.dark-mode .profile-card-header h2,
+body.dark-mode .modern-profile-card #profileName {
+    color: #fff;
+}
+
+body.dark-mode .profile-detail-row {
+    border-color: #444;
+    background: #292929;
+}
+
+body.dark-mode .profile-detail-text p {
+    color: #eee;
+}
+
+body.dark-mode .profile-detail-text small {
+    color: #aaa;
+}
+</style>
+</head>
+
+
+<!-- CHAT BUTTON -->
+<button type="button"  id="skChatBtn"  class="sk-chat-btn">  💬</button>
+
+
+<!-- CHAT BOX -->
+<div id="skChatBox" class="sk-chat-box">
+
+    <!-- HEADER -->
+    <div class="sk-chat-header">
+
+        <div class="sk-chat-title">
+
+            <div class="sk-chat-avatar"> 🤖 </div>
+
+            <div>
+                <strong>  SKSHOP Assistant </strong>
+
+                <small> Product Assistant </small>
+
+            </div>
+
+        </div>
+
+
+        <button type="button"  id="skChatClose" class="sk-chat-close"> × </button>
+
+    </div>
+
+
+    <!-- MESSAGES -->
+    <div id="skChatMessages" class="sk-chat-messages">
+                <div class="sk-bot-message">
+            👋 Hi! I'm your SKSHOP Product Assistant.
+
+            <br><br>
+
+            Main aapko products find karne, price check karne aur suitable products suggest karne mein help kar sakta hoon.
+
+        </div>
+
+
+        <div class="sk-quick-title">
+            Try asking:
+        </div>
+
+
+        <div class="sk-quick-buttons">
+
+            <button
+                type="button"
+                class="sk-quick-btn"
+                data-question="Show me products">
+                🛍️ Products
+            </button>
+
+            <button
+                type="button"
+                class="sk-quick-btn"
+                data-question="Show me products under ₹1000">
+                💰 Under ₹1000
+            </button>
+
+            <button
+                type="button"
+                class="sk-quick-btn"
+                data-question="Show electronics">
+                📱 Electronics
+            </button>
+
+            <button
+                type="button"
+                class="sk-quick-btn"
+                data-question="Show discounted products">
+                🔥 Offers
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- INPUT -->
+    <div class="sk-chat-input-area">
+
+        <input
+            type="text"
+            id="skChatInput"
+            class="sk-chat-input"
+            placeholder="Ask about products...">
+
+        <button
+            type="button"
+            id="skChatSend"
+            class="sk-chat-send">
+            ➤
+        </button>
+
+    </div>
+
+</div>
+
+
+
+<body>
+
+<div class="dashboard">
+
+
+    <!-- =================  NAV SIDEBAR ================= -->
+
+    <aside class="sidebar" id="sidebar">
+
+        {% csrf_token %}
+
+        <div class="logo">
+            🛍️ <span>SK<span>SHOP</span></span>
+        </div>
+
+
+        <nav>
+
+         <a href="/dashboard/" class="menu">
+            <span>▣</span>
+            <span data-en="Dashboard" data-hi="डैशबोर्ड">Dashboard</span>
+        </a>
+
+        <a href="/dashboard/profile/" class="menu">
+            <span>👤</span>
+            <span data-en="My Profile" data-hi="मेरी प्रोफ़ाइल">My Profile</span>
+        </a>
+
+        <a href="/dashboard/order/" class="menu">
+            <span>📦</span>
+            <span data-en="Orders" data-hi="ऑर्डर">Orders</span>
+            
+            
+        </a>
+
+        <a href="/dashboard/cart/" class="menu">
+            <span>🛒</span>
+            <span data-en="Cart" data-hi="कार्ट">Cart</span>
+            
+        </a>
+
+        <a href="/dashboard/wishlist/" class="menu">
+            <span>♡</span>
+            <span data-en="Wishlist" data-hi="विशलिस्ट">Wishlist</span>
+         
+            
+        </a>
+
+        <a href="/dashboard/address/" class="menu">
+            <span>📍</span>
+            <span data-en="Addresses" data-hi="पते">Addresses</span>
+        </a>
+
+        <a href="/dashboard/pay/" class="menu">
+            <span>💳</span>
+            <span data-en="Payment Methods" data-hi="भुगतान के तरीके">Payment Methods</span>
+        </a>
+
+        <a href="/dashboard/reviews/" class="menu">
+            <span>⭐</span>
+            <span data-en="My Reviews" data-hi="मेरे रिव्यू">My Reviews</span>
+        </a>
+
+        <a href="/dashboard/notification/" class="menu">
+            <span>🔔</span>
+            <span data-en="Notifications" data-hi="सूचनाएँ">Notifications</span>
+        </a>
+
+        <a href="/dashboard/helps/" class="menu">
+            <span>❓</span>
+            <span data-en="Help & Support" data-hi="मदद और सहायता">Help & Support</span>
+        </a>
+
+        <a href="/dashboard/setting/" class="menu">
+            <span>⚙️</span>
+            <span data-en="Settings" data-hi="सेटिंग्स">Settings</span>
+        </a>
+
+        <a href="/logout/" id="logoutBtn" class="menu logout">
+            <span>↪️</span>
+            <span data-en="Logout" data-hi="लॉगआउट">Logout</span>
+        </a>
+
+        </nav>
+
+
+        <!-- ================= OFFER ================= -->
+
+     <div class="offer-box">
+
+    <div class="offer-icon">
+        🎁
+    </div>
+
+    <h3>
+        <span data-en="Special Offer!" data-hi="विशेष ऑफ़र!">
+            Special Offer!
+        </span>
+    </h3>
+
+    <p>
+        <span
+            data-en="Get up to 40% OFF on selected products"
+            data-hi="चयनित उत्पादों पर 40% तक की छूट पाएं">
+            Get up to 40% OFF on selected products
+        </span>
+    </p>
+
+    <button>
+        <span data-en="Shop Now" data-hi="अभी खरीदें">
+            Shop Now
+        </span>
+    </button>
+
+</div>
+    </aside>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main">
+
+
+        <!-- ================= TOPBAR ================= -->
+
+        <header class="topbar">
+
+
+            <button id="menuBtn" class="menu-btn" type="button">
+                ☰
+            </button>
+
+
+            <div class="search">
+
+              <input type="text" id="searchInput" placeholder="Search for products, brands and more..."
+                data-en-placeholder="Search for products, brands and more..."
+                data-hi-placeholder="उत्पाद, ब्रांड और अन्य चीज़ें खोजें..."
+            >
+
+                <button id="searchBtn">
+                    🔍
+                </button>
+
+            </div>
+
+
+<div class="accessibility-tools">
+
+    <!-- Language -->
+    <div class="language-selector">
+        <span class="globe">🌐</span>
+
+        <select id="globalLanguage">
+            <option value="English">English</option>
+            <option value="Hindi">हिंदी</option>
+
+        </select>
+    </div>
+
+    <div class="separator"></div>
+
+    <!-- Text Size -->
+  <div class="text-size-selector">
+
+    <button   type="button" data-size="small"onclick="changeTextSize('small')">A<sup>−</sup>
+     </button>
+
+    <button type="button" data-size="normal" onclick="changeTextSize('normal')"> A
+    </button>
+
+    <button type="button" data-size="large" onclick="changeTextSize('large')"> A<sup>+</sup>
+    </button>
+
+    </div>
+
+    <div class="separator"></div>
+
+    <!-- Dark / Light -->
+    <div class="theme-selector">
+
+    <button type="button" id="themeToggle"> ◐ </button>
+
+    </div>
+
+</div>
+            
+
+            <div class="top-icons">
+              <!-- WISHLIST -->
+
+            <div class="top-icon">
+                ♡
+                <span id="wishlistCount">
+                    0
+                </span>
+
+            </div>
+
+                <!-- CART -->
+
+            <div class="top-icon" id="topCartIcon" onclick="window.location.href='/dashboard/cart/'"> 🛒
+                <span id="cartCount">0</span>
+            </div>
+
+
+                <!-- NOTIFICATION -->
+                <div class="top-icon" id="notificationIcon">
+                    🔔
+                    <span id="notificationCount">0</span>
+                </div>
+
+                <!-- USER -->
+
+                <div class="top-user">
+
+                   <div class="avatar" id="topUserAvatar">
+                         LK
+                    </div>
+
+                    <div>
+
+                        <small>
+                            Welcome
+                        </small>
+
+                        <strong id="topUserName">
+                            Loading...
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- ================= CONTENT ================= -->
+
+        <div class="content">
+
+
+            <div class="left-content">
+
+
+                <!-- ================= WELCOME ================= -->
+
+                <section class="welcome" id="recommended-section">
+
+
+                    <div class="welcome-text">
+                    <p>
+                    <span style="color:#000000"
+                        data-en="Welcome back,"
+                        data-hi="वापसी पर स्वागत है,">
+                        Welcome ,
+                    </span>
+                </p>
+
+                <h1 id="dashboardName">
+                    Loading... 👋
+                </h1>
+
+                <span>
+                    <span style="color:#000000"
+                        data-en="Explore latest deals and continue shopping your favorite products."
+                        data-hi="नवीनतम ऑफ़र देखें और अपने पसंदीदा उत्पादों की खरीदारी जारी रखें।">
+                        Explore latest deals and continue shopping your favorite products.
+                    </span>
+                </span>
+                
+                    <a href="#recommended-section" style="text-decoration: none;">
+                <button type="button">
+                    <span data-en="Shop Now" data-hi="अभी खरीदें">
+                        Shop Now
+                    </span>
+                </button>
+                </a>
+
+                    </div>
+
+
+
+                    <!-- <div class="big-offer">
+
+                       <small>
+                    <span data-en="BIG SAVING DAYS" data-hi="बड़ी बचत के दिन">
+                        BIG SAVING DAYS
+                    </span>
+                </small>
+
+                <h2>
+                    <span data-en="UP TO" data-hi="तक">
+                        UP TO
+                    </span>
+                </h2>
+
+                <strong>50%</strong>
+
+                <h3>
+                    <span data-en="OFF" data-hi="छूट">
+                        OFF
+                    </span>
+                </h3>
+
+                <p>
+                    <span
+                        data-en="On Electronics & More"
+                        data-hi="इलेक्ट्रॉनिक्स और अन्य उत्पादों पर">
+                        On Electronics & More
+                    </span>
+                </p>
+
+                <button>
+                    <span data-en="Explore Deals" data-hi="ऑफ़र देखें">
+                        Explore Deals
+                    </span>
+                </button>
+
+            
+
+                    </div> -->
+<div class="big-offer">
+
+    <img
+        src="{% static 'images/ecommerce_50_off_banner.png' %}"
+        alt="50% OFF Electronics Sale"
+        class="offer-banner-image"
+    >
+
+</div>
+                </section>
+
+
+
+                <!-- ================= PAGE CONTENT ================= -->
+
+                {% block content %}
+                {% endblock %}
+
+
+            </div>
+
+
+
+            <!-- ================= RIGHT SIDEBAR ================= -->
+
+            <aside class="right-content">
+
+
+                <!-- ================= PROFILE ================= -->
+
+                
+
+<!-- ================= PROFILE ================= -->
+
+<section class="right-card modern-profile-card">
+
+    <div class="profile-card-header">
+
+        <div>
+            <span class="profile-small-title">ACCOUNT</span>
+
+            <h2>
+                <span data-en="My Profile"
+                      data-hi="मेरी प्रोफ़ाइल">
+                    My Profile
+                </span>
+            </h2>
+        </div>
+
+        <span class="profile-status">
+            ● Active
+        </span>
+
+    </div>
+
+
+    <!-- PROFILE PHOTO -->
+
+<!-- PROFILE PHOTO -->
+
+<div class="modern-profile-avatar">
+
+    <img
+        id="dashboardProfilePhoto"
+        src="{% static 'images/default-profile.png' %}"
+        alt="Profile"
+    >
+
+   
+
+</div>
+
+
+    <!-- NAME -->
+
+    <h3 id="profileName">
+        Loading...
+    </h3>
+
+    <div class="verified-user">
+        ✓ Verified User
+    </div>
+
+
+    <!-- DETAILS -->
+
+    <div class="profile-details">
+
+        <div class="profile-detail-row">
+
+            <div class="profile-detail-icon email-icon">
+                ✉
+            </div>
+
+            <div class="profile-detail-text">
+                <small>Email Address</small>
+
+                <p id="profileEmail">
+                    Loading...
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="profile-detail-row">
+
+            <div class="profile-detail-icon phone-icon">
+                ☎
+            </div>
+
+            <div class="profile-detail-text">
+                <small>Phone Number</small>
+
+                <p id="profilePhone">
+                    Loading...
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- EDIT PROFILE -->
+
+    <button
+        type="button"
+        id="editProfileBtn"
+        class="modern-edit-profile">
+
+        <span>✎</span>
+
+        <span data-en="Edit Profile"
+              data-hi="प्रोफ़ाइल संपादित करें">
+            Edit Profile
+        </span>
+
+        <strong>→</strong>
+
+    </button>
+
+</section>
+
+                <!-- ================= ORDER STATUS ================= -->
+
+                <section class="right-card">
+
+
+                    <div class="section-title">
+
+                        
+                        <h2>
+                            <span data-en="Order Status" data-hi="ऑर्डर की स्थिति">
+                                Order Status
+                            </span>
+                        </h2>
+
+                       
+                        <a href="#">
+                            <span data-en="View All" data-hi="सभी देखें">
+                                View All
+                            </span>
+                        </a>
+
+                    </div>
+
+
+            <div class="order-status">
+
+                 <p>
+                <span class="green">●</span>
+
+                <span data-en="Delivered" data-hi="डिलीवर हो गया">
+                    Delivered
+                </span>
+
+                <b id="deliveredCount">0</b>
+            </p>
+
+            <p>
+                <span class="blue">●</span>
+
+                <span data-en="Shipped" data-hi="भेज दिया गया">
+                    Shipped
+                </span>
+
+                <b id="shippedCount">0</b>
+            </p>
+
+            <p>
+                <span class="orange">●</span>
+
+                <span data-en="Processing" data-hi="प्रोसेसिंग">
+                    Processing
+                </span>
+
+                <b id="processingCount">0</b>
+            </p>
+
+            <p>
+                <span class="red">●</span>
+
+                <span data-en="Cancelled" data-hi="रद्द किया गया">
+                    Cancelled
+                </span>
+
+                <b id="cancelledCount">0</b>
+            </p>
+
+            </div>
+
+                </section>
+
+
+
+                <!-- ================= PAYMENT ================= -->
+
+                <section class="right-card">
+
+
+                    <div class="section-title">
+                    <h2>
+                        <span data-en="Payment Methods" data-hi="भुगतान के तरीके">
+                            Payment Methods
+                        </span>
+                    </h2>
+                        <a href="#">
+                            View All
+                        </a>
+
+                    </div>
+
+
+                    <div class="payment">
+
+
+                        <p>
+                            💳 **** **** **** 4242
+                            <b>VISA</b>
+                        </p>
+
+
+                        <p>
+                            💳 **** **** **** 8888
+                            <b>Card</b>
+                        </p>
+
+
+                        <p>
+                            🟣 UPI - laxmikant@upi
+                            <b>UPI</b>
+                        </p>
+
+
+                      <a href="#">
+                        <span data-en="+ Add New Card" data-hi="+ नया कार्ड जोड़ें">
+                            + Add New Card
+                        </span>
+                    </a>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- ================= RECENT ORDERS ================= -->
+
+                <section class="right-card">
+
+                <div class="section-title">
+
+                <h2>
+                    <span data-en="Recent Orders" data-hi="हाल के ऑर्डर">
+                        Recent Orders
+                    </span>
+                </h2>
+
+                    <a href="/dashboard/order/">
+                        View All
+                    </a>
+
+                </div>
+
+                <div id="recentOrdersContainer">
+                </div>
+
+            </section>
+
+
+            </aside>
+
+
+        </div>
+
+    </main>
+
+</div>
+
+
+
+<!-- ================= COMMON JS ================= -->
+<script src="{% static 'js/dashboard.js' %}?v=19"></script>
+
+<script src="{% static 'js/language.js' %}?v=100"></script>
+<script src="{% static 'js/chatbot.js' %}"></script>
+
+<script>
+
+
+</script>
+{% block extra_js %}
+{% endblock %}
+
+<div id="sidebarOverlay" class="sidebar-overlay"></div>
+</body>
+
+</html>

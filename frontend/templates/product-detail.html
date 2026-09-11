@@ -1,0 +1,1255 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Product Details{% endblock %}
+
+{% block content %}
+
+<style>
+/* ================= PRODUCT DETAIL ================= */
+
+.product-detail-page {
+    padding: 20px;
+}
+
+.product-detail-card {
+    background: var(--card-bg, #fff);
+    border-radius: 18px;
+    padding: 25px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+}
+
+/* ================= TOP ================= */
+
+.product-detail-top {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}
+
+/* ================= GALLERY ================= */
+
+.product-gallery {
+    display: flex;
+    gap: 15px;
+}
+
+.product-thumbnails {
+    width: 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.product-thumb {
+    width: 70px;
+    height: 70px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 5px;
+    background: #fff;
+    cursor: pointer;
+}
+
+.product-thumb.active {
+    border: 2px solid #111;
+}
+
+.product-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.product-main-image {
+    flex: 1;
+    height: 450px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fafafa;
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+    cursor: zoom-in;
+}
+
+.product-main-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 20px;
+    display: block;
+    transition: transform 0.25s ease;
+    transform-origin: center center;
+}
+/* ================= PRODUCT INFO ================= */
+
+.product-info h1 {
+    font-size: 30px;
+    margin: 0 0 12px;
+}
+
+.product-category {
+    color: #777;
+    margin-bottom: 15px;
+}
+
+.product-rating {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.rating-box {
+    background: #16833b;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+.product-price {
+    font-size: 30px;
+    font-weight: 700;
+    margin: 20px 0;
+}
+
+.product-description {
+    line-height: 1.7;
+    color: #555;
+}
+
+/* ================= QUANTITY ================= */
+
+.quantity-section {
+    margin-top: 25px;
+}
+
+.quantity-box {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.quantity-box button {
+    width: 42px;
+    height: 42px;
+    border: none;
+    background: #f5f5f5;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.quantity-box span {
+    width: 45px;
+    text-align: center;
+    font-weight: 600;
+}
+
+/* ================= BUTTONS ================= */
+
+.product-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 25px;
+    flex-wrap: wrap;
+}
+
+.product-actions button {
+    border: none;
+    padding: 13px 24px;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.add-cart-btn {
+    background: #ff9f00;
+    color: #fff;
+}
+
+.buy-now-btn {
+    background: #ff5722;
+    color: #fff;
+}
+
+.wishlist-btn {
+    background: #fff;
+    border: 1px solid #ddd !important;
+    color: #222;
+}
+
+.wishlist-btn.active {
+    color: #e53935;
+}
+
+/* ================= REVIEWS ================= */
+
+.product-reviews {
+    margin-top: 40px;
+    border-top: 1px solid #eee;
+    padding-top: 30px;
+}
+
+.product-reviews h2,
+.related-products h2 {
+    margin-bottom: 20px;
+}
+
+.review-summary {
+    background: #f8f8f8;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+.review-item {
+    border-bottom: 1px solid #eee;
+    padding: 18px 0;
+}
+
+.review-user {
+    font-weight: 600;
+}
+
+.review-stars {
+    color: #f5a623;
+    margin: 5px 0;
+}
+
+.review-date {
+    color: #999;
+    font-size: 13px;
+}
+
+.review-comment {
+    margin-top: 8px;
+    color: #555;
+}
+
+/* ================= RELATED ================= */
+
+.related-products {
+    margin-top: 40px;
+    border-top: 1px solid #eee;
+    padding-top: 30px;
+}
+
+.related-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+}
+
+.related-card {
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 12px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.related-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.related-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: contain;
+}
+
+.related-card h3 {
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+.related-price {
+    font-weight: 700;
+}
+
+/* ================= LOADING ================= */
+
+.product-loading {
+    text-align: center;
+    padding: 60px;
+    font-size: 18px;
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 900px) {
+
+    .product-detail-top {
+        grid-template-columns: 1fr;
+    }
+
+    .related-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ==============================
+   PRODUCT DETAILS MOBILE
+================================ */
+
+@media (max-width: 600px) {
+
+    .product-detail-page {
+        width: 100%;
+        padding: 8px !important;
+        box-sizing: border-box;
+        overflow-x: hidden;
+    }
+
+    .product-detail-card {
+        width: 100%;
+        max-width: 100%;
+        padding: 12px !important;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+    /* Product image + information */
+    .product-detail-top {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 20px !important;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Gallery */
+    .product-gallery {
+        width: 100%;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 10px !important;
+        box-sizing: border-box;
+    }
+
+    /* Main image */
+    .product-main-image {
+        width: 100% !important;
+        height: 330px !important;
+        min-height: 330px !important;
+        box-sizing: border-box;
+        border-radius: 14px;
+    }
+
+    .product-main-image img {
+        width: 100% !important;
+        height: 100% !important;
+        padding: 10px !important;
+        object-fit: contain !important;
+        box-sizing: border-box;
+    }
+
+    /* Thumbnails */
+    .product-thumbnails {
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 8px !important;
+        overflow-x: auto !important;
+        padding: 2px 0 !important;
+        box-sizing: border-box;
+    }
+
+    .product-thumb {
+        width: 60px !important;
+        height: 60px !important;
+        min-width: 60px !important;
+        box-sizing: border-box;
+    }
+
+    /* Product information */
+    .product-info {
+        width: 100% !important;
+        min-width: 0 !important;
+        box-sizing: border-box;
+        overflow-wrap: anywhere;
+    }
+
+    .product-info h1 {
+        font-size: 23px !important;
+        line-height: 1.3 !important;
+        margin-bottom: 10px !important;
+        overflow-wrap: anywhere;
+    }
+
+    .product-category {
+        font-size: 14px;
+    }
+
+    .product-rating {
+        flex-wrap: wrap !important;
+        gap: 7px !important;
+    }
+
+    .product-price {
+        font-size: 25px !important;
+        margin: 15px 0 !important;
+    }
+
+    .product-description {
+        font-size: 15px;
+        line-height: 1.6;
+        overflow-wrap: anywhere;
+    }
+
+    /* Quantity */
+    .quantity-section {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .quantity-box {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Buttons */
+    .product-info button {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Customer reviews */
+    .product-reviews {
+        width: 100%;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+    .review-summary {
+        width: 100%;
+        box-sizing: border-box;
+        overflow-wrap: anywhere;
+    }
+
+    .review-item {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow-wrap: anywhere;
+    }
+
+    /* Related products */
+    .related-products {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .related-grid {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 10px !important;
+    }
+}
+</style>
+
+
+<div class="product-detail-page">
+
+    <div id="productLoading" class="product-loading">
+        Loading product...
+    </div>
+
+    <div id="productDetail" style="display:none;">
+
+        <div class="product-detail-card">
+
+            <!-- ================= PRODUCT TOP ================= -->
+
+            <div class="product-detail-top">
+
+                <!-- GALLERY -->
+
+                <div class="product-gallery">
+
+                    <div
+                        class="product-thumbnails"
+                        id="productThumbnails">
+                    </div>
+
+                    <div class="product-main-image">
+                        <img
+                            id="productMainImage"
+                            src=""
+                            alt="Product">
+                    </div>
+
+                </div>
+
+
+                <!-- PRODUCT INFO -->
+
+                <div class="product-info">
+
+                    <div class="product-category" id="productCategory">
+                        Category
+                    </div>
+
+                    <h1 id="productName">
+                        Product Name
+                    </h1>
+
+                    <div class="product-rating">
+
+                        <span
+                            class="rating-box"
+                            id="productRating">
+                            0 ⭐
+                        </span>
+
+                        <span id="reviewCount">
+                            0 Reviews
+                        </span>
+
+                    </div>
+
+                    <div
+                        class="product-price"
+                        id="productPrice">
+                        ₹0
+                    </div>
+
+                    <div
+                        class="product-description"
+                        id="productDescription">
+                    </div>
+
+
+                    <!-- QUANTITY -->
+
+                    <div class="quantity-section">
+
+                        <strong>Quantity</strong>
+
+                        <div class="quantity-box">
+
+                            <button
+                                type="button"
+                                id="minusBtn">
+                                −
+                            </button>
+
+                            <span id="quantity">
+                                1
+                            </span>
+
+                            <button
+                                type="button"
+                                id="plusBtn">
+                                +
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ACTIONS -->
+
+                    <div class="product-actions">
+
+                   
+
+                        <button
+                            type="button"
+                            class="add-cart-btn"
+                            id="addCartBtn">
+                            🛒 Add to Cart
+                        </button>
+
+                        <button
+                            type="button"
+                            class="buy-now-btn"
+                            id="buyNowBtn">
+                            ⚡ Buy Now
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= REVIEWS ================= -->
+
+            <div class="product-reviews">
+
+                <h2>Customer Reviews</h2>
+
+                <div
+                    class="review-summary"
+                    id="reviewSummary">
+                    Loading reviews...
+                </div>
+
+                <div id="reviewsContainer"></div>
+
+            </div>
+
+
+            <!-- ================= RELATED PRODUCTS ================= -->
+
+            <div class="related-products">
+
+                <h2>Related Products</h2>
+
+                <div
+                    class="related-grid"
+                    id="relatedProducts">
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    /* =====================================
+       PRODUCT ID
+    ===================================== */
+
+    const pathParts = window.location.pathname
+        .split("/")
+        .filter(Boolean);
+
+    const productId = pathParts[pathParts.length - 1];
+
+    if (!productId || isNaN(productId)) {
+
+        document.getElementById("productLoading").innerText =
+            "Invalid product.";
+
+        return;
+    }
+
+
+    /* =====================================
+       ELEMENTS
+    ===================================== */
+
+    const loading =
+        document.getElementById("productLoading");
+
+    const productDetail =
+        document.getElementById("productDetail");
+
+    const mainImage =
+        document.getElementById("productMainImage");
+
+    const thumbnails =
+        document.getElementById("productThumbnails");
+
+    const name =
+        document.getElementById("productName");
+
+    const category =
+        document.getElementById("productCategory");
+
+    const price =
+        document.getElementById("productPrice");
+
+    const description =
+        document.getElementById("productDescription");
+
+    const rating =
+        document.getElementById("productRating");
+
+    const reviewCount =
+        document.getElementById("reviewCount");
+
+    const quantity =
+        document.getElementById("quantity");
+
+        /* =====================================
+   IMAGE ZOOM
+===================================== */
+
+    const imageBox = document.querySelector(".product-main-image");
+
+    imageBox.addEventListener("mousemove", function (e) {
+
+        const rect = imageBox.getBoundingClientRect();
+
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+        mainImage.style.transformOrigin = `${x}% ${y}%`;
+        mainImage.style.transform = "scale(2)";
+    });
+
+    imageBox.addEventListener("mouseleave", function () {
+
+        mainImage.style.transform = "scale(1)";
+        mainImage.style.transformOrigin = "center center";
+
+    });
+
+    /* =====================================
+       LOAD PRODUCT
+    ===================================== */
+
+    fetch(`/product-api/${productId}/`, {
+        method: "GET",
+        credentials: "same-origin"
+    })
+
+    .then(response => {
+
+        if (!response.ok) {
+            throw new Error("Product request failed");
+        }
+
+        return response.json();
+    })
+
+    .then(data => {
+
+        if (!data.success) {
+            throw new Error(
+                data.message || "Product not found"
+            );
+        }
+
+        const product = data.product;
+
+
+        /* =====================================
+           BASIC INFO
+        ===================================== */
+
+        name.innerText = product.name;
+
+        category.innerText =
+            product.category;
+
+        price.innerText =
+            `₹${product.price}`;
+
+        description.innerText =
+            product.description ||
+            "No description available.";
+
+
+        /* =====================================
+           RATING
+        ===================================== */
+
+        const productRating =
+            Number(product.rating || 0);
+
+        rating.innerText =
+            `${productRating.toFixed(1)} ⭐`;
+
+        reviewCount.innerText =
+            `${product.review_count || 0} Reviews`;
+
+
+        /* =====================================
+           IMAGES
+        ===================================== */
+
+        let images = product.images || [];
+
+        if (
+            images.length === 0 &&
+            product.main_image
+        ) {
+            images = [product.main_image];
+        }
+
+        if (images.length > 0) {
+
+            mainImage.src = images[0];
+
+            thumbnails.innerHTML = "";
+
+            images.forEach((image, index) => {
+
+                const thumb =
+                    document.createElement("div");
+
+                thumb.className =
+                    "product-thumb" +
+                    (index === 0 ? " active" : "");
+
+                thumb.innerHTML = `
+                    <img
+                        src="${image}"
+                        alt="${product.name}">
+                `;
+
+                thumb.addEventListener(
+                    "click",
+                    function () {
+
+                        mainImage.src = image;
+
+                        document
+                            .querySelectorAll(
+                                ".product-thumb"
+                            )
+                            .forEach(item =>
+                                item.classList.remove(
+                                    "active"
+                                )
+                            );
+
+                        thumb.classList.add("active");
+                    }
+                );
+
+                thumbnails.appendChild(thumb);
+
+            });
+
+        }
+
+
+        /* =====================================
+           REVIEWS
+        ===================================== */
+
+        renderReviews(
+            product.reviews || [],
+            productRating,
+            product.review_count || 0
+        );
+
+
+        /* =====================================
+           RELATED PRODUCTS
+        ===================================== */
+
+        renderRelatedProducts(
+            product.related_products || []
+        );
+
+
+        loading.style.display = "none";
+
+        productDetail.style.display = "block";
+
+    })
+
+    .catch(error => {
+
+        console.error(error);
+
+        loading.innerText =
+            "Product load nahi ho raha.";
+
+    });
+
+
+    /* =====================================
+       QUANTITY
+    ===================================== */
+
+    let qty = 1;
+
+    document
+        .getElementById("minusBtn")
+        .addEventListener("click", function () {
+
+            if (qty > 1) {
+                qty--;
+                quantity.innerText = qty;
+            }
+
+        });
+
+
+    document
+        .getElementById("plusBtn")
+        .addEventListener("click", function () {
+
+            qty++;
+            quantity.innerText = qty;
+
+        });
+
+
+    /* =====================================
+       ADD TO CART
+    ===================================== */
+
+    document
+        .getElementById("addCartBtn")
+        .addEventListener("click", function () {
+
+            addToCart(productId, qty);
+
+        });
+
+
+    /* =====================================
+       BUY NOW
+    ===================================== */
+
+    document
+        .getElementById("buyNowBtn")
+        .addEventListener("click", function () {
+
+            addToCart(
+                productId,
+                qty,
+                true
+            );
+
+        });
+
+
+    /* =====================================
+       WISHLIST
+    ===================================== */
+
+});
+
+
+/* =========================================
+   ADD TO CART
+========================================= */
+
+function addToCart(productId, quantity, buyNow = false) {
+
+    fetch("/add-to-cart/", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCSRFToken()
+        },
+
+        credentials: "same-origin",
+
+        body: JSON.stringify({
+            product_id: productId,
+            quantity: quantity
+        })
+
+    })
+
+    .then(response => {
+
+        if (response.status === 401) {
+            alert("Please login first.");
+            return null;
+        }
+
+        return response.json();
+
+    })
+
+    .then(data => {
+
+        if (!data) return;
+
+        if (data.success) {
+
+            if (buyNow) {
+
+                window.location.href =
+                    "/dashboard/pay/";
+
+            } else {
+
+                alert("Product added to cart 🛒");
+
+            }
+
+        } else {
+
+            alert(
+                data.message ||
+                "Unable to add product."
+            );
+
+        }
+
+    })
+
+    .catch(error => {
+
+        console.error(error);
+
+        alert("Something went wrong.");
+
+    });
+
+}
+
+
+/* =========================================
+   WISHLIST
+========================================= */
+
+
+
+/* =========================================
+   REVIEWS
+========================================= */
+
+function renderReviews(
+    reviews,
+    average,
+    count
+) {
+
+    const summary =
+        document.getElementById(
+            "reviewSummary"
+        );
+
+    const container =
+        document.getElementById(
+            "reviewsContainer"
+        );
+
+
+    summary.innerHTML = `
+        <strong>
+            ${average.toFixed(1)} ⭐
+        </strong>
+        &nbsp;
+        Based on ${count} customer review${count === 1 ? "" : "s"}
+    `;
+
+
+    if (!reviews.length) {
+
+        container.innerHTML = `
+            <p>
+                No customer reviews yet.
+            </p>
+        `;
+
+        return;
+    }
+
+
+    container.innerHTML = "";
+
+
+    reviews.forEach(review => {
+
+        const item =
+            document.createElement("div");
+
+        item.className =
+            "review-item";
+
+
+        let stars = "";
+
+        for (
+            let i = 1;
+            i <= 5;
+            i++
+        ) {
+
+            stars +=
+                i <= review.rating
+                    ? "★"
+                    : "☆";
+
+        }
+
+
+        item.innerHTML = `
+
+            <div class="review-user">
+                ${escapeHTML(review.user)}
+            </div>
+
+            <div class="review-stars">
+                ${stars}
+            </div>
+
+            <div class="review-date">
+                ${review.created_at}
+            </div>
+
+            <div class="review-comment">
+                ${escapeHTML(
+                    review.comment || ""
+                )}
+            </div>
+
+        `;
+
+
+        container.appendChild(item);
+
+    });
+
+}
+
+
+/* =========================================
+   RELATED PRODUCTS
+========================================= */
+
+function renderRelatedProducts(products) {
+
+    const container =
+        document.getElementById(
+            "relatedProducts"
+        );
+
+    container.innerHTML = "";
+
+
+    if (!products.length) {
+
+        container.innerHTML =
+            "<p>No related products.</p>";
+
+        return;
+    }
+
+
+    products.forEach(product => {
+
+        const card =
+            document.createElement("div");
+
+        card.className =
+            "related-card";
+
+
+        card.innerHTML = `
+
+            ${
+                product.image
+                ? `
+                    <img
+                        src="${product.image}"
+                        alt="${escapeHTML(product.name)}">
+                  `
+                : `
+                    <div style="
+                        height:180px;
+                        display:flex;
+                        align-items:center;
+                        justify-content:center;
+                        font-size:50px;">
+                        🛍️
+                    </div>
+                  `
+            }
+
+            <h3>
+                ${escapeHTML(product.name)}
+            </h3>
+
+            <div>
+                ⭐ ${Number(
+                    product.rating || 0
+                ).toFixed(1)}
+                (${product.review_count || 0})
+            </div>
+
+            <div class="related-price">
+                ₹${product.price}
+            </div>
+
+        `;
+
+
+        card.addEventListener(
+            "click",
+            function () {
+
+                window.location.href =
+                    `/product/${product.id}/`;
+
+            }
+        );
+
+
+        container.appendChild(card);
+
+    });
+
+}
+
+
+/* =========================================
+   SECURITY
+========================================= */
+
+function escapeHTML(text) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        text ?? "";
+
+    return div.innerHTML;
+}
+
+
+/* =========================================
+   CSRF
+========================================= */
+
+function getCSRFToken() {
+
+    const name =
+        "csrftoken=";
+
+    const cookies =
+        document.cookie.split(";");
+
+    for (
+        let cookie of cookies
+    ) {
+
+        cookie =
+            cookie.trim();
+
+        if (
+            cookie.startsWith(name)
+        ) {
+
+            return decodeURIComponent(
+                cookie.substring(
+                    name.length
+                )
+            );
+
+        }
+
+    }
+
+    return "";
+
+}
+
+</script>
+
+{% endblock %}
