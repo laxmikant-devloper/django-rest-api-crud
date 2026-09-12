@@ -86,21 +86,27 @@ WSGI_APPLICATION = 'restapi.wsgi.application'
 #     }
 # }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'apidp',
-        'HOST': 'localhost',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'PORT': '3306',
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'apidp',
+#         'HOST': 'localhost',
+#         'USER': 'root',
+#         'PASSWORD': 'root',
+#         'PORT': '3306',
         
 
 
 
-    }
-}
+#     }
+# }
+import dj_database_url
 
+DATABASES = {
+    'default': dj_database_url.config(
+        default='postgresql://localhost/postgres'
+    )
+}
 # Password validation
 # https://docs.djangoproject.com/en/6.1/ref/settings/#auth-password-validators
 

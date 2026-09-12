@@ -1,7 +1,29 @@
-.env
-env/
-__pycache__/
-*/__pycache__/
-*.pyc
-db.sqlite3
-media/
+🚀 SKShop – Django E-Commerce Web Application
+
+I developed this full-stack e-commerce web application as a practical implementation of the concepts and skills I learned during my training at IT Vedant Institute.
+
+Throughout my learning journey, I gained hands-on knowledge of Python, Django, Django REST Framework, MySQL, HTML, CSS, JavaScript, REST APIs, authentication, database management and API integration. I implemented these concepts in this project to build a real-world e-commerce application.
+
+In this project, I implemented:
+
+🔐 Phone Number & OTP Authentication
+🔑 JWT & Cookie-Based Authentication
+🛍️ Product and Category Management
+🛒 Shopping Cart & Wishlist
+👤 User Profile & Address Management
+📦 Order Creation, Management & Tracking
+💳 Razorpay Payment Integration
+🔔 Notifications
+⭐ Product Reviews & Ratings
+🧾 PDF Invoice Generation & Download
+🤖 Chatbot Functionality
+🔌 REST API Development & Integration
+🗄️ MySQL Database Management
+
+This project gave me the opportunity to apply my classroom and practical learning to a real-world application, understand how different technologies work together, and improve my skills in backend development and full-stack web development.
+
+Tech Stack: Python | Django | Django REST Framework | MySQL | HTML5 | CSS3 | JavaScript | JWT | Razorpay | ReportLab
+
+🔗 GitHub: SKShop GitHub Repository
+
+#ITVedant #Python #Django #DjangoRESTFramework #MySQL #JavaScript #WebDevelopment #BackendDevelopment #RESTAPI #Ecommerce #FullStackDevelopment #Razorpay #GitHub
