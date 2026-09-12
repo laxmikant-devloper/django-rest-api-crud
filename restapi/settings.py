@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-jx&9*qazx)%vi0p_%l8$*3qy$k62-5(s2oqef7qp-1%cvj8@n4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["django-rest-api-crud-ah7f.onrender.com"]
 
 RAZORPAY_KEY_ID = os.getenv("RAZORPAY_KEY_ID")
 RAZORPAY_KEY_SECRET = os.getenv("RAZORPAY_KEY_SECRET")
