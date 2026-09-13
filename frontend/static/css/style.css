@@ -10,72 +10,416 @@
 
 
 /* =========================================================
-   STUDENT PAGE CSS
+   STUDENT MANAGEMENT DASHBOARD
    ========================================================= */
+
+.student-dashboard {
+    width: 100%;
+    max-width: 1250px;
+    margin: 0 auto;
+    padding: 35px 20px;
+}
+
+
+/* BODY */
 
 body {
     font-family: Arial, sans-serif;
     background: #f4f7fb;
-    padding: 40px;
 }
 
-.container {
-    max-width: 1000px;
-    margin: auto;
-}
 
-h1 {
-    text-align: center;
-    margin-bottom: 30px;
-}
+/* HEADER */
 
-.form-box {
-    background: white;
-    padding: 25px;
-    border-radius: 10px;
+.dashboard-header {
     display: flex;
-    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 30px;
 }
 
-.form-box input {
-    flex: 1;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+.dashboard-header h1 {
+    margin: 0;
+    font-size: 36px;
+    font-weight: 700;
+    color: #212529;
 }
 
-button {
-    padding: 12px 18px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+.dashboard-header p {
+    margin: 8px 0 0;
+    color: #6c757d;
+    font-size: 16px;
 }
 
-#addBtn {
-    background: #007bff;
+
+/* SKSHOP BUTTON */
+
+.skshop-btn {
+    display: inline-block;
+    text-decoration: none;
+
+    background: #0d6efd;
+    color: white;
+
+    padding: 11px 22px;
+
+    border-radius: 8px;
+
+    font-weight: 600;
+
+    transition: 0.2s;
+}
+
+.skshop-btn:hover {
+    background: #0b5ed7;
     color: white;
 }
 
-h2 {
-    margin-bottom: 15px;
-}
 
-table {
-    width: 100%;
+/* =========================================================
+   STUDENT CARD
+   ========================================================= */
+
+.student-card {
     background: white;
-    border-collapse: collapse;
+
+    border-radius: 14px;
+
+    padding: 28px;
+
+    margin-bottom: 25px;
+
+    box-shadow:
+        0 4px 18px rgba(0, 0, 0, 0.06);
 }
 
-th,
-td {
-    padding: 12px;
-    border: 1px solid #ddd;
+
+/* CARD TITLE */
+
+.card-title {
+    margin-bottom: 22px;
+}
+
+.card-title h2,
+.records-header h2 {
+    margin: 0;
+
+    color: #212529;
+
+    font-size: 24px;
+}
+
+.card-title p,
+.records-header p {
+    margin: 6px 0 0;
+
+    color: #6c757d;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   STUDENT FORM
+   ========================================================= */
+
+.student-form {
+    display: grid;
+
+    grid-template-columns:
+        1fr
+        1fr
+        1fr
+        auto;
+
+    gap: 15px;
+
+    align-items: end;
+}
+
+
+/* INPUT GROUP */
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group label {
+    margin-bottom: 7px;
+
+    color: #495057;
+
+    font-size: 14px;
+
+    font-weight: 600;
+}
+
+
+/* INPUT */
+
+.input-group input {
+    width: 100%;
+
+    padding: 12px 14px;
+
+    border: 1px solid #ced4da;
+
+    border-radius: 8px;
+
+    font-size: 15px;
+
+    outline: none;
+
+    background: white;
+}
+
+.input-group input:focus {
+    border-color: #86b7fe;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(13, 110, 253, 0.12);
+}
+
+
+/* BUTTON GROUP */
+
+.button-group {
+    display: flex;
+}
+
+
+/* ADD BUTTON */
+
+.add-btn {
+    border: none;
+
+    background: #0d6efd;
+
+    color: white;
+
+    padding: 12px 18px;
+
+    border-radius: 8px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+}
+
+.add-btn:hover {
+    background: #0b5ed7;
+}
+
+
+/* UPDATE BUTTON */
+
+.update-btn {
+    border: none;
+
+    background: #198754;
+
+    color: white;
+
+    padding: 12px 18px;
+
+    border-radius: 8px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+}
+
+.update-btn:hover {
+    background: #157347;
+}
+
+
+/* =========================================================
+   STUDENT RECORDS
+   ========================================================= */
+
+.records-header {
+    margin-bottom: 20px;
+}
+
+
+/* TABLE WRAPPER */
+
+.table-wrapper {
+    width: 100%;
+
+    overflow-x: auto;
+
+    border-radius: 10px;
+}
+
+
+/* TABLE */
+
+.student-table {
+    width: 100%;
+
+    min-width: 700px;
+
+    border-collapse: separate;
+
+    border-spacing: 0;
+}
+
+
+/* TABLE HEADER */
+
+.student-table thead th {
+    background: #e9f2ff;
+
+    color: #17365d;
+
+    padding: 15px 12px;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
     text-align: center;
+
+    border-top: 1px solid #ced4da;
+
+    border-bottom: 1px solid #ced4da;
 }
 
-th {
-    background: #eee;
+
+/* TABLE BODY */
+
+.student-table tbody td {
+    padding: 15px 12px;
+
+    text-align: center;
+
+    font-size: 15px;
+
+    border-bottom:
+        1px solid rgba(0, 0, 0, 0.08);
+}
+
+
+/* =========================================================
+   COLORFUL ROWS
+   ========================================================= */
+
+.student-table tbody tr:nth-child(8n + 1) {
+    background: #ffffff;
+}
+
+.student-table tbody tr:nth-child(8n + 2) {
+    background: #cfe2ff;
+}
+
+.student-table tbody tr:nth-child(8n + 3) {
+    background: #e2e3e5;
+}
+
+.student-table tbody tr:nth-child(8n + 4) {
+    background: #d1e7dd;
+}
+
+.student-table tbody tr:nth-child(8n + 5) {
+    background: #f8d7da;
+}
+
+.student-table tbody tr:nth-child(8n + 6) {
+    background: #fff3cd;
+}
+
+.student-table tbody tr:nth-child(8n + 7) {
+    background: #cff4fc;
+}
+
+.student-table tbody tr:nth-child(8n + 8) {
+    background: #f8f9fa;
+}
+
+
+/* HOVER */
+
+.student-table tbody tr {
+    transition: 0.2s;
+}
+
+.student-table tbody tr:hover {
+    filter: brightness(0.97);
+}
+
+
+/* =========================================================
+   PERCENTAGE BADGE
+   ========================================================= */
+
+.percentage-badge {
+    display: inline-block;
+
+    padding: 5px 12px;
+
+    border-radius: 20px;
+
+    background: #d1e7dd;
+
+    color: #087f23;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   EDIT BUTTON
+   ========================================================= */
+
+.edit-btn {
+    border: none;
+
+    background: #0d6efd;
+
+    color: white;
+
+    padding: 8px 14px;
+
+    border-radius: 6px;
+
+    cursor: pointer;
+
+    margin-right: 5px;
+}
+
+.edit-btn:hover {
+    background: #0b5ed7;
+}
+
+
+/* =========================================================
+   DELETE BUTTON
+   ========================================================= */
+
+.delete-btn {
+    border: none;
+
+    background: #dc3545;
+
+    color: white;
+
+    padding: 8px 14px;
+
+    border-radius: 6px;
+
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    background: #bb2d3b;
 }
 
 
@@ -85,21 +429,30 @@ th {
 
 .phone-container {
     max-width: 600px;
+
     margin: 60px auto;
+
     background: white;
+
     padding: 30px;
+
     border-radius: 10px;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+
+    box-shadow:
+        0 3px 12px rgba(0, 0, 0, 0.1);
 }
 
 .phone-container h2 {
     text-align: center;
+
     margin-bottom: 30px;
 }
 
 .phone-container label {
     display: block;
+
     margin-bottom: 8px;
+
     font-weight: bold;
 }
 
@@ -109,10 +462,15 @@ th {
 
 .phone-input {
     width: 100%;
+
     padding: 12px;
+
     border: 1px solid #ccc;
+
     border-radius: 5px;
+
     font-size: 16px;
+
     margin-bottom: 20px;
 }
 
@@ -123,39 +481,61 @@ th {
 
 .captcha-row {
     display: flex;
+
     align-items: center;
+
     gap: 10px;
+
     margin-bottom: 25px;
 }
 
 .captcha-code {
     width: 150px;
+
     height: 45px;
+
     background: #eeeeee;
+
     display: flex;
+
     align-items: center;
+
     justify-content: center;
+
     font-size: 22px;
+
     font-weight: bold;
+
     letter-spacing: 4px;
+
     font-family: monospace;
 }
 
 .refresh-btn {
     width: 45px;
+
     height: 45px;
+
     padding: 0;
+
     background: #4caf50;
+
     color: white;
+
     font-size: 25px;
 }
 
 .captcha-input {
     flex: 1;
+
     height: 45px;
+
     padding: 12px;
+
     border: 1px solid #ccc;
+
     border-radius: 5px;
+
     font-size: 16px;
 }
 
@@ -166,11 +546,17 @@ th {
 
 .send-btn {
     display: block;
+
     width: 150px;
+
     margin: auto;
+
     padding: 12px;
+
     background: #007bff;
+
     color: white;
+
     font-size: 17px;
 }
 
@@ -185,42 +571,62 @@ th {
 
 .register-box {
     background: white;
+
     width: 350px;
+
     padding: 30px;
+
     border-radius: 10px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+
+    box-shadow:
+        0 5px 20px rgba(0, 0, 0, 0.15);
 
     margin: 60px auto;
 }
 
 .register-box h1 {
     text-align: center;
+
     margin-bottom: 25px;
 }
 
 .register-box label {
     display: block;
+
     margin-top: 15px;
+
     margin-bottom: 5px;
 }
 
 .register-box input {
     width: 100%;
+
     padding: 10px;
+
     box-sizing: border-box;
+
     border: 1px solid #ccc;
+
     border-radius: 5px;
 }
 
 .register-box button {
     width: 100%;
+
     padding: 11px;
+
     margin-top: 25px;
+
     border: none;
+
     border-radius: 5px;
+
     background: #007bff;
+
     color: white;
+
     font-size: 16px;
+
     cursor: pointer;
 }
 
@@ -230,6 +636,7 @@ th {
 
 #registerMessage {
     text-align: center;
+
     margin-top: 15px;
 }
 
@@ -240,42 +647,62 @@ th {
 
 .login-box {
     background: white;
+
     width: 350px;
+
     padding: 30px;
+
     border-radius: 10px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+
+    box-shadow:
+        0 5px 20px rgba(0, 0, 0, 0.15);
 
     margin: 60px auto;
 }
 
 .login-box h1 {
     text-align: center;
+
     margin-bottom: 25px;
 }
 
 .login-box label {
     display: block;
+
     margin-top: 15px;
+
     margin-bottom: 5px;
 }
 
 .login-box input {
     width: 100%;
+
     padding: 10px;
+
     box-sizing: border-box;
+
     border: 1px solid #ccc;
+
     border-radius: 5px;
 }
 
 .login-box button {
     width: 100%;
+
     padding: 11px;
+
     margin-top: 25px;
+
     border: none;
+
     border-radius: 5px;
+
     background: #007bff;
+
     color: white;
+
     font-size: 16px;
+
     cursor: pointer;
 }
 
@@ -285,6 +712,7 @@ th {
 
 #loginMessage {
     text-align: center;
+
     margin-top: 15px;
 }
 
@@ -296,6 +724,7 @@ th {
 .login-box a,
 .register-box a {
     color: #007bff;
+
     text-decoration: none;
 }
 
@@ -317,14 +746,18 @@ th {
 
     .phone-container {
         width: 100%;
+
         margin: 30px auto;
+
         padding: 20px;
     }
 
     .register-box,
     .login-box {
         width: 100%;
+
         margin: 30px auto;
+
         padding: 22px;
     }
 
@@ -338,23 +771,82 @@ th {
 
 }
 
-/* =========================================
+
+/* =========================================================
+   STUDENT MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    .student-dashboard {
+        padding: 20px 12px;
+    }
+
+    .dashboard-header {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 15px;
+    }
+
+    .dashboard-header h1 {
+        font-size: 28px;
+    }
+
+    .student-card {
+        padding: 20px 15px;
+    }
+
+    .student-form {
+        grid-template-columns: 1fr;
+    }
+
+    .button-group {
+        width: 100%;
+    }
+
+    .add-btn,
+    .update-btn {
+        width: 100%;
+    }
+
+    .table-wrapper {
+        overflow-x: auto;
+    }
+
+    .student-table {
+        min-width: 700px;
+    }
+
+}
+
+
+/* =========================================================
    MODERN OTP VERIFICATION PAGE
-   ========================================= */
+   ========================================================= */
 
 .otp-page {
     min-height: 100vh;
+
     width: 100%;
+
     display: flex;
+
     align-items: center;
+
     justify-content: center;
+
     padding: 30px;
+
     box-sizing: border-box;
 
     background:
-        radial-gradient(circle at top left,
-        rgba(30, 136, 229, 0.10),
-        transparent 35%),
+        radial-gradient(
+            circle at top left,
+            rgba(30, 136, 229, 0.10),
+            transparent 35%
+        ),
         #f4f8fc;
 }
 
@@ -363,9 +855,11 @@ th {
 
 .otp-card {
     width: min(1050px, 100%);
+
     min-height: 600px;
 
     display: grid;
+
     grid-template-columns: 40% 60%;
 
     background: #ffffff;
@@ -385,15 +879,19 @@ th {
     position: relative;
 
     display: flex;
+
     flex-direction: column;
+
     justify-content: center;
 
     padding: 55px;
 
     background:
-        radial-gradient(circle at 75% 30%,
-        rgba(255,255,255,0.18),
-        transparent 30%),
+        radial-gradient(
+            circle at 75% 30%,
+            rgba(255,255,255,0.18),
+            transparent 30%
+        ),
         linear-gradient(
             145deg,
             #1595f5,
@@ -403,18 +901,19 @@ th {
     color: white;
 }
 
-
 .otp-left::after {
     content: "";
 
     position: absolute;
 
     width: 350px;
+
     height: 350px;
 
     border-radius: 50%;
 
     right: -180px;
+
     bottom: -160px;
 
     background: rgba(255,255,255,0.07);
@@ -425,10 +924,13 @@ th {
 
 .otp-icon {
     width: 110px;
+
     height: 110px;
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
     font-size: 55px;
@@ -442,13 +944,15 @@ th {
 
     margin-bottom: 45px;
 
-    animation: otpFloat 3s ease-in-out infinite;
+    animation:
+        otpFloat 3s ease-in-out infinite;
 }
 
 
 @keyframes otpFloat {
 
-    0%, 100% {
+    0%,
+    100% {
         transform: translateY(0);
     }
 
@@ -461,6 +965,7 @@ th {
 
 .otp-left h2 {
     font-size: 34px;
+
     line-height: 1.25;
 
     margin: 0 0 20px;
@@ -471,6 +976,7 @@ th {
 
 .otp-left p {
     font-size: 17px;
+
     line-height: 1.7;
 
     margin: 0;
@@ -483,7 +989,9 @@ th {
 
 .otp-right {
     display: flex;
+
     flex-direction: column;
+
     justify-content: center;
 
     padding: 55px 75px;
@@ -518,6 +1026,7 @@ th {
 
 .otp-inputs {
     display: flex;
+
     justify-content: center;
 
     gap: 14px;
@@ -528,6 +1037,7 @@ th {
 
 .otp-box {
     width: 58px;
+
     height: 65px;
 
     border: 2px solid #d7dee8;
@@ -539,6 +1049,7 @@ th {
     text-align: center;
 
     font-size: 28px;
+
     font-weight: 600;
 
     color: #126be6;
@@ -555,7 +1066,8 @@ th {
     border-color: #087cf0;
 
     box-shadow:
-        0 0 0 4px rgba(8,124,240,0.10);
+        0 0 0 4px
+        rgba(8,124,240,0.10);
 
     transform: translateY(-2px);
 }
@@ -572,21 +1084,24 @@ th {
 
     border-radius: 12px;
 
-    background: linear-gradient(
-        135deg,
-        #168bf4,
-        #0874e8
-    );
+    background:
+        linear-gradient(
+            135deg,
+            #168bf4,
+            #0874e8
+        );
 
     color: white;
 
     font-size: 19px;
+
     font-weight: 600;
 
     cursor: pointer;
 
     box-shadow:
-        0 8px 20px rgba(8,116,232,0.20);
+        0 8px 20px
+        rgba(8,116,232,0.20);
 
     transition: all 0.2s ease;
 }
@@ -603,7 +1118,8 @@ th {
     transform: translateY(-2px);
 
     box-shadow:
-        0 12px 25px rgba(8,116,232,0.28);
+        0 12px 25px
+        rgba(8,116,232,0.28);
 }
 
 
@@ -656,6 +1172,8 @@ th {
     color: #718096;
 
     font-size: 15px;
+
+    transition: all 0.2s ease;
 }
 
 
@@ -666,7 +1184,9 @@ th {
 }
 
 
-/* MOBILE */
+/* =========================================================
+   OTP MOBILE
+   ========================================================= */
 
 @media (max-width: 800px) {
 
@@ -698,6 +1218,7 @@ th {
 
     .otp-icon {
         width: 80px;
+
         height: 80px;
 
         font-size: 40px;
@@ -715,6 +1236,7 @@ th {
 
     .otp-subtitle {
         font-size: 14px;
+
         line-height: 1.5;
     }
 
@@ -724,6 +1246,7 @@ th {
 
     .otp-box {
         width: 45px;
+
         height: 55px;
 
         font-size: 23px;
@@ -731,33 +1254,54 @@ th {
 
 }
 
+
+/* =========================================================
+   RESEND ACTIVE
+   ========================================================= */
+
 .otp-timer {
     text-align: center;
+
     margin-top: 28px;
+
     color: #718096;
+
     font-size: 15px;
+
     transition: all 0.2s ease;
 }
 
+
 .otp-timer strong {
     color: #087cf0;
+
     font-size: 16px;
 }
 
+
 /* Jab Resend now aaye */
+
 .otp-timer.resend-active {
     cursor: pointer;
+
     color: #087cf0;
+
     font-weight: 600;
+
     padding: 10px 15px;
+
     border-radius: 10px;
+
     background: #f0f7ff;
 }
 
+
 .otp-timer.resend-active:hover {
     background: #e3f1ff;
+
     transform: translateY(-1px);
 }
+
 
 .otp-timer.resend-active strong {
     color: #087cf0;

@@ -78,7 +78,7 @@ def get_all(request):
    jdata=JSONRenderer().render(s.data)
    #print(jdata)
    #print(type(jdata))
-   return HttpResponse(jdata,content_type='appliction/json')
+   return HttpResponse(jdata,content_type='application/json')
 
 #delete student data
 @csrf_exempt
@@ -132,46 +132,102 @@ def phone_page(req):
 def otp_page(req):
     return render(req,'otp.html')
 
-# Send OTP
+# Send OTP# Send OTP
 def send_phone(request):
-
     if request.method == "POST":
 
         phone = request.POST.get("phone")
 
-        # Validation
         if not phone:
             return JsonResponse({
                 "success": False,
                 "message": "Phone number is required"
             })
 
-        # 6 digit OTP generate
-        otp = str(random.randint(100000, 999999))
-
-        otp_time = timezone.now()
-
-        # Phone number database mein save/update
         phone_obj, created = PhoneNumber.objects.get_or_create(
             phone=phone
         )
 
-        # OTP save
+        current_time = timezone.now()
+
+        # ---------------------------------
+        # Limit reach hone ke baad 2 minutes
+        # ---------------------------------
+        if phone_obj.otp_limit_reached_at:
+
+            seconds_passed = (
+                current_time - phone_obj.otp_limit_reached_at
+            ).total_seconds()
+
+            if seconds_passed < 120:
+                remaining = int(120 - seconds_passed)
+
+                return JsonResponse({
+                    "success": False,
+                    "message": f"OTP limit reached. Please try again after {remaining} seconds."
+                })
+
+            # 2 minutes complete -> reset limit
+            phone_obj.otp_resend_count = 0
+            phone_obj.otp_limit_reached_at = None
+            phone_obj.otp_last_sent_at = None
+            phone_obj.save()
+
+        # ---------------------------------
+        # Normal resend gap = 60 seconds
+        # ---------------------------------
+        if phone_obj.otp_last_sent_at:
+
+            seconds_passed = (
+                current_time - phone_obj.otp_last_sent_at
+            ).total_seconds()
+
+            if seconds_passed < 60:
+                remaining = int(60 - seconds_passed)
+
+                return JsonResponse({
+                    "success": False,
+                    "message": f"Please wait {remaining} seconds before resending OTP."
+                })
+
+        # ---------------------------------
+        # Maximum 2 OTP SMS
+        # ---------------------------------
+        if phone_obj.otp_resend_count >= 2:
+
+            # Limit reach hone ka time save
+            phone_obj.otp_limit_reached_at = current_time
+            phone_obj.save()
+
+            return JsonResponse({
+                "success": False,
+                "message": "OTP limit reached. Please try again after 2 minutes."
+            })
+
+        # ---------------------------------
+        # Generate 6 digit OTP
+        # ---------------------------------
+        otp = str(random.randint(100000, 999999))
+
         phone_obj.otp = otp
-        phone_obj.otp_created_at = otp_time
+        phone_obj.otp_created_at = current_time
+        phone_obj.otp_last_sent_at = current_time
         phone_obj.otp_attempts = 0
+
+        # OTP send count increase
+        phone_obj.otp_resend_count += 1
+
         phone_obj.save()
 
-        # Phone session mein save
         request.session["phone"] = phone
 
-        # Testing ke liye terminal mein OTP
+        # Testing ke liye terminal me OTP
         print("Phone Number:", phone)
         print("OTP:", otp)
 
         return JsonResponse({
             "success": True,
-            "message": "OTP generated successfully"
+            "message": "OTP sent successfully"
         })
 
     return JsonResponse({

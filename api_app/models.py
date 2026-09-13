@@ -11,8 +11,6 @@ class Student(models.Model):
     name = models.CharField(max_length=100)
     rno = models.IntegerField()
     per = models.FloatField()
-
-
 class PhoneNumber(models.Model):
 
     user = models.OneToOneField(
@@ -37,14 +35,26 @@ class PhoneNumber(models.Model):
 
     otp_attempts = models.IntegerField(default=0)
 
+    # OTP resend control
+    otp_resend_count = models.PositiveIntegerField(default=0)
+
+    otp_last_sent_at = models.DateTimeField(
+        null=True,
+        blank=True
+    )
+
+    # OTP limit reached time
+    otp_limit_reached_at = models.DateTimeField(
+        null=True,
+        blank=True
+    )
+
     created_at = models.DateTimeField(
         auto_now_add=True
     )
 
     def __str__(self):
         return self.phone
-
-
 
 class Profile(models.Model):
 

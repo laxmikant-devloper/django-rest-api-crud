@@ -3,29 +3,17 @@ const API_URL = "";
 let editId = null;
 
 
-// ======================================
+// =====================================
 // GET ALL STUDENTS
-// ======================================
+// =====================================
 
 function getStudents() {
 
-    fetch(`${API_URL}/getall`)
-        .then(response => {
-
-            if (!response.ok) {
-                throw new Error("Failed to get students");
-            }
-
-            return response.json();
-
-        })
-
+    fetch(API_URL + "/getall")
+        .then(response => response.json())
         .then(data => {
 
-            console.log("STUDENT DATA:", data);
-
-            const table =
-                document.getElementById("studentTable");
+            const table = document.getElementById("studentTable");
 
             table.innerHTML = "";
 
@@ -34,24 +22,36 @@ function getStudents() {
                 const row = `
                     <tr>
 
-                        <td>${student.id}</td>
+                        <td>
+                            ${student.id}
+                        </td>
 
-                        <td>${student.name}</td>
+                        <td>
+                            <strong>${student.name}</strong>
+                        </td>
 
-                        <td>${student.rno}</td>
+                        <td>
+                            ${student.rno}
+                        </td>
 
-                        <td>${student.per}</td>
+                        <td>
+                            <span class="percentage-badge">
+                                ${student.per}%
+                            </span>
+                        </td>
 
                         <td>
 
                             <button
+                                class="edit-btn"
                                 onclick="editStudent(${student.id})">
-                                Edit
+                                ✏️ Edit
                             </button>
 
                             <button
+                                class="delete-btn"
                                 onclick="deleteStudent(${student.id})">
-                                Delete
+                                🗑️ Delete
                             </button>
 
                         </td>
@@ -64,210 +64,129 @@ function getStudents() {
             });
 
         })
-
         .catch(error => {
-
-            console.error(
-                "Get Students Error:",
-                error
-            );
-
+            console.error("Error:", error);
         });
 }
 
 
-// ======================================
+// =====================================
 // ADD STUDENT
-// ======================================
+// =====================================
 
-function addStudent() {
+document.getElementById("addBtn").addEventListener("click", function () {
 
-    const name =
-        document.getElementById("name").value.trim();
-
-    const rno =
-        document.getElementById("rno").value;
-
-    const per =
-        document.getElementById("per").value;
+    const name = document.getElementById("name").value;
+    const rno = document.getElementById("rno").value;
+    const per = document.getElementById("per").value;
 
 
     if (!name || !rno || !per) {
 
-        alert("Please fill all fields.");
+        alert("Please fill all fields");
 
         return;
     }
 
 
     const data = {
-
         name: name,
-
-        rno: parseInt(rno),
-
-        per: parseFloat(per)
-
+        rno: Number(rno),
+        per: Number(per)
     };
 
 
-    fetch(`${API_URL}/insert`, {
+    fetch(API_URL + "/insert", {
 
         method: "POST",
 
         headers: {
-
-            "Content-Type":
-                "application/json"
-
+            "Content-Type": "application/json"
         },
 
         body: JSON.stringify(data)
 
     })
 
-    .then(response => {
+    .then(response => response.json())
+    .then(data => {
 
-        if (!response.ok) {
-            throw new Error("Add student failed");
-        }
+        alert("Student added successfully");
 
-        return response.json();
-
-    })
-
-    .then(result => {
-
-        console.log(
-            "ADD RESPONSE:",
-            result
-        );
-
-        alert(
-            "Student added successfully!"
-        );
-
-
-        document.getElementById(
-            "name"
-        ).value = "";
-
-        document.getElementById(
-            "rno"
-        ).value = "";
-
-        document.getElementById(
-            "per"
-        ).value = "";
-
+        clearForm();
 
         getStudents();
 
     })
-
     .catch(error => {
 
-        console.error(
-            "Add Student Error:",
-            error
-        );
+        console.error("Error:", error);
 
     });
 
-}
+});
 
 
-// ======================================
+// =====================================
 // EDIT STUDENT
-// ======================================
+// =====================================
 
 function editStudent(id) {
 
-    editId = id;
+    fetch(API_URL + "/getall")
 
-
-    fetch(`${API_URL}/getall`)
-
-        .then(response => {
-
-            if (!response.ok) {
-                throw new Error(
-                    "Failed to get student data"
-                );
-            }
-
-            return response.json();
-
-        })
+        .then(response => response.json())
 
         .then(data => {
 
-            const student =
-                data.find(
-                    student =>
-                        student.id === id
-                );
-
+            const student = data.find(item => item.id === id);
 
             if (!student) {
-
-                alert(
-                    "Student not found."
-                );
-
                 return;
             }
 
 
-            document.getElementById(
-                "name"
-            ).value = student.name;
+            document.getElementById("name").value = student.name;
+
+            document.getElementById("rno").value = student.rno;
+
+            document.getElementById("per").value = student.per;
 
 
-            document.getElementById(
-                "rno"
-            ).value = student.rno;
+            editId = id;
 
 
-            document.getElementById(
-                "per"
-            ).value = student.per;
+            document.getElementById("addBtn").style.display = "none";
 
-
-            document.getElementById(
-                "addBtn"
-            ).style.display = "none";
-
-
-            document.getElementById(
-                "updateBtn"
-            ).style.display = "inline-block";
+            document.getElementById("updateBtn").style.display = "block";
 
         })
 
         .catch(error => {
 
-            console.error(
-                "Edit Student Error:",
-                error
-            );
+            console.error("Error:", error);
 
         });
 
 }
 
 
-// ======================================
+// =====================================
 // UPDATE STUDENT
-// ======================================
+// =====================================
 
-function updateStudent() {
+document.getElementById("updateBtn").addEventListener("click", function () {
 
-    if (editId === null) {
+    const name = document.getElementById("name").value;
 
-        alert(
-            "Please select a student first."
-        );
+    const rno = document.getElementById("rno").value;
+
+    const per = document.getElementById("per").value;
+
+
+    if (!name || !rno || !per) {
+
+        alert("Please fill all fields");
 
         return;
     }
@@ -277,36 +196,22 @@ function updateStudent() {
 
         id: editId,
 
-        name:
-            document.getElementById(
-                "name"
-            ).value.trim(),
+        name: name,
 
-        rno:
-            parseInt(
-                document.getElementById(
-                    "rno"
-                ).value
-            ),
+        rno: Number(rno),
 
-        per:
-            parseFloat(
-                document.getElementById(
-                    "per"
-                ).value
-            )
+        per: Number(per)
 
     };
 
 
-    fetch(`${API_URL}/edit`, {
+    fetch(API_URL + "/edit", {
 
         method: "PUT",
 
         headers: {
 
-            "Content-Type":
-                "application/json"
+            "Content-Type": "application/json"
 
         },
 
@@ -314,57 +219,19 @@ function updateStudent() {
 
     })
 
-    .then(response => {
+    .then(response => response.json())
 
-        if (!response.ok) {
-            throw new Error(
-                "Update student failed"
-            );
-        }
+    .then(data => {
 
-        return response.json();
+        alert("Student updated successfully");
 
-    })
-
-    .then(result => {
-
-        console.log(
-            "UPDATE RESPONSE:",
-            result
-        );
-
-        alert(
-            "Student updated successfully!"
-        );
-
+        clearForm();
 
         editId = null;
 
+        document.getElementById("addBtn").style.display = "block";
 
-        document.getElementById(
-            "name"
-        ).value = "";
-
-        document.getElementById(
-            "rno"
-        ).value = "";
-
-        document.getElementById(
-            "per"
-        ).value = "";
-
-
-        document.getElementById(
-            "addBtn"
-        ).style.display =
-            "inline-block";
-
-
-        document.getElementById(
-            "updateBtn"
-        ).style.display =
-            "none";
-
+        document.getElementById("updateBtn").style.display = "none";
 
         getStudents();
 
@@ -372,37 +239,37 @@ function updateStudent() {
 
     .catch(error => {
 
-        console.error(
-            "Update Student Error:",
-            error
-        );
+        console.error("Error:", error);
 
     });
 
-}
+});
 
 
-// ======================================
+// =====================================
 // DELETE STUDENT
-// ======================================
+// =====================================
 
 function deleteStudent(id) {
 
+    if (!confirm("Are you sure you want to delete this student?")) {
+
+        return;
+    }
+
+
     const data = {
-
         id: id
-
     };
 
 
-    fetch(`${API_URL}/delete`, {
+    fetch(API_URL + "/delete", {
 
         method: "DELETE",
 
         headers: {
 
-            "Content-Type":
-                "application/json"
+            "Content-Type": "application/json"
 
         },
 
@@ -410,29 +277,11 @@ function deleteStudent(id) {
 
     })
 
-    .then(response => {
+    .then(response => response.json())
 
-        if (!response.ok) {
-            throw new Error(
-                "Delete student failed"
-            );
-        }
+    .then(data => {
 
-        return response.json();
-
-    })
-
-    .then(result => {
-
-        console.log(
-            "DELETE RESPONSE:",
-            result
-        );
-
-        alert(
-            "Student deleted successfully!"
-        );
-
+        alert("Student deleted successfully");
 
         getStudents();
 
@@ -440,38 +289,30 @@ function deleteStudent(id) {
 
     .catch(error => {
 
-        console.error(
-            "Delete Student Error:",
-            error
-        );
+        console.error("Error:", error);
 
     });
 
 }
 
 
-// ======================================
-// BUTTON EVENTS
-// ======================================
+// =====================================
+// CLEAR FORM
+// =====================================
 
-document
-    .getElementById("addBtn")
-    .addEventListener(
-        "click",
-        addStudent
-    );
+function clearForm() {
 
+    document.getElementById("name").value = "";
 
-document
-    .getElementById("updateBtn")
-    .addEventListener(
-        "click",
-        updateStudent
-    );
+    document.getElementById("rno").value = "";
+
+    document.getElementById("per").value = "";
+
+}
 
 
-// ======================================
-// PAGE LOAD
-// ======================================
+// =====================================
+// LOAD STUDENTS
+// =====================================
 
 getStudents();

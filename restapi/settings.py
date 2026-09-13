@@ -28,9 +28,14 @@ load_dotenv(BASE_DIR / ".env")
 SECRET_KEY = 'django-insecure-jx&9*qazx)%vi0p_%l8$*3qy$k62-5(s2oqef7qp-1%cvj8@n4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ["django-rest-api-crud-ah7f.onrender.com"]
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+    "[::1]",
+    "django-rest-api-crud-ah7f.onrender.com",
+]
 
 RAZORPAY_KEY_ID = os.getenv("RAZORPAY_KEY_ID")
 RAZORPAY_KEY_SECRET = os.getenv("RAZORPAY_KEY_SECRET")
@@ -101,11 +106,15 @@ WSGI_APPLICATION = 'restapi.wsgi.application'
 #     }
 # }
 
-
 DATABASES = {
-    'default': dj_database_url.config(
-        default='postgresql://localhost/postgres'
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'admin@123',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
 }
 # Password validation
 # https://docs.djangoproject.com/en/6.1/ref/settings/#auth-password-validators
