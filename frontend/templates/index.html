@@ -1,49 +1,67 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Management</title>
+{% load static %} 
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Student Management</title> 
+ 
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
-   <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
-<body>
+    <style>
+        .phone-btn {
+            display: inline-block;
+            margin: 15px 0;
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
 
-    <div class="container">
-
+        .phone-btn:hover {
+            background: #0056b3;
+        }
+    </style>
+</head> 
+<body> 
+ 
+    <div class="container"> 
+ 
         <h1>Student Management</h1>
 
-        <div class="form-box">
-            <input type="text" id="name" placeholder="Enter Name">
-            <input type="number" id="rno" placeholder="Enter Roll No">
-            <input type="number" id="per" placeholder="Enter Percentage">
-
-            <button id="addBtn">Add Student</button>
-            <button id="updateBtn" style="display: none;">Update Student</button>
-        </div>
-
-        <h2>Student Records</h2>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Roll No</th>
-                    <th>Percentage</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-
-            <tbody id="studentTable">
-            </tbody>
-        </table>
-
-    </div>
-
-    <script src="{% static 'js/student.js' %}"></script>
-
-</body>
+        <!-- SKShop Phone Page Button -->
+        <a href="/phone/" class="phone-btn">SKShop</a>
+ 
+        <div class="form-box"> 
+            <input type="text" id="name" placeholder="Enter Name"> 
+            <input type="number" id="rno" placeholder="Enter Roll No"> 
+            <input type="number" id="per" placeholder="Enter Percentage"> 
+ 
+            <button id="addBtn">Add Student</button> 
+            <button id="updateBtn" style="display: none;">Update Student</button> 
+        </div> 
+ 
+        <h2>Student Records</h2> 
+ 
+        <table> 
+            <thead> 
+                <tr> 
+                    <th>ID</th> 
+                    <th>Name</th> 
+                    <th>Roll No</th> 
+                    <th>Percentage</th> 
+                    <th>Action</th> 
+                </tr> 
+            </thead> 
+ 
+            <tbody id="studentTable"> 
+            </tbody> 
+        </table> 
+ 
+    </div> 
+ 
+    <script src="{% static 'js/student.js' %}"></script> 
+ 
+</body> 
 </html>
-

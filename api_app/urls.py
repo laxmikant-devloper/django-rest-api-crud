@@ -10,7 +10,7 @@ urlpatterns = [
     path('edit',views.edit),
 
 
-    path('phone/', views.phone_page),
+    path('phone/', views.phone_page, name='phone_page'),
     path('send-phone/', views.send_phone),
     path('otp/', views.otp_page),
     path('verify-otp', views.verify_otp),

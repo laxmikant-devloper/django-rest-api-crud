@@ -15,6 +15,7 @@ from datetime import timedelta
 
 from dotenv import load_dotenv
 import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,7 +28,7 @@ load_dotenv(BASE_DIR / ".env")
 SECRET_KEY = 'django-insecure-jx&9*qazx)%vi0p_%l8$*3qy$k62-5(s2oqef7qp-1%cvj8@n4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["django-rest-api-crud-ah7f.onrender.com"]
 
@@ -95,13 +96,11 @@ WSGI_APPLICATION = 'restapi.wsgi.application'
 #         'USER': 'root',
 #         'PASSWORD': 'root',
 #         'PORT': '3306',
-        
-
-
+       
 
 #     }
 # }
-import dj_database_url
+
 
 DATABASES = {
     'default': dj_database_url.config(
@@ -142,11 +141,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+
 STATICFILES_DIRS = [
     BASE_DIR / 'frontend' / 'static',
 ]
 
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
