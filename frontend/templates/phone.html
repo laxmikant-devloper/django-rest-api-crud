@@ -6,14 +6,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Phone Verification</title>
+    <title>Phone & Email Verification</title>
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
     <style>
-        /* =========================================
-           RESET
-        ========================================= */
 
         * {
             box-sizing: border-box;
@@ -25,13 +22,10 @@
         body {
             width: 100%;
             height: 100%;
-            overflow: hidden;
         }
 
         body {
             min-height: 100vh;
-            height: 100vh;
-
             font-family: Arial, Helvetica, sans-serif;
 
             background:
@@ -57,9 +51,9 @@
         }
 
 
-        /* =========================================
+        /* ================================
            MAIN WRAPPER
-        ========================================= */
+        ================================= */
 
         .verify-wrapper {
             width: 100%;
@@ -86,9 +80,9 @@
         }
 
 
-        /* =========================================
+        /* ================================
            LEFT PANEL
-        ========================================= */
+        ================================= */
 
         .verify-left {
             position: relative;
@@ -145,9 +139,9 @@
         }
 
 
-        /* =========================================
+        /* ================================
            BRAND
-        ========================================= */
+        ================================= */
 
         .brand {
             position: relative;
@@ -207,9 +201,9 @@
         }
 
 
-        /* =========================================
+        /* ================================
            LEFT CONTENT
-        ========================================= */
+        ================================= */
 
         .left-content {
             position: relative;
@@ -246,9 +240,9 @@
         }
 
 
-        /* =========================================
+        /* ================================
            PHONE ILLUSTRATION
-        ========================================= */
+        ================================= */
 
         .illustration {
             height: 190px;
@@ -367,29 +361,9 @@
         }
 
 
-        .otp-badge::after {
-            content: "";
-
-            position: absolute;
-
-            left: 14px;
-            bottom: -7px;
-
-            border-style: solid;
-
-            border-width: 7px 7px 0 0;
-
-            border-color:
-                #1687f8
-                transparent
-                transparent
-                transparent;
-        }
-
-
-        /* =========================================
+        /* ================================
            BENEFITS
-        ========================================= */
+        ================================= */
 
         .benefits {
             position: relative;
@@ -421,8 +395,6 @@
             align-items: center;
 
             gap: 12px;
-            
-           
         }
 
 
@@ -463,9 +435,9 @@
         }
 
 
-        /* =========================================
+        /* ================================
            RIGHT PANEL
-        ========================================= */
+        ================================= */
 
         .verify-right {
             padding: 42px 65px;
@@ -477,10 +449,6 @@
             justify-content: center;
         }
 
-
-        /* =========================================
-           SECURE BADGE
-        ========================================= */
 
         .secure {
             align-self: flex-end;
@@ -502,9 +470,9 @@
         }
 
 
-        /* =========================================
+        /* ================================
            TITLE
-        ========================================= */
+        ================================= */
 
         .verify-right h2 {
             font-size: 43px;
@@ -527,15 +495,15 @@
 
             color: #7185a3;
 
-            margin-bottom: 29px;
+            margin-bottom: 22px;
 
             line-height: 1.5;
         }
 
 
-        /* =========================================
+        /* ================================
            LABEL
-        ========================================= */
+        ================================= */
 
         .form-label {
             display: block;
@@ -547,6 +515,7 @@
             font-weight: 700;
 
             color: #17335c;
+
             margin-top: 10px;
         }
 
@@ -556,12 +525,12 @@
         }
 
 
-        /* =========================================
-           PHONE FIELD
-        ========================================= */
+        /* ================================
+           PHONE / EMAIL BOX
+        ================================= */
 
         .phone-box {
-            height: 58px;
+            height: 55px;
 
             border:
                 1px solid #d7e3f0;
@@ -618,7 +587,8 @@
         }
 
 
-        #phone {
+        #phone,
+        #email {
             flex: 1;
 
             height: 100%;
@@ -637,17 +607,18 @@
         }
 
 
-        #phone::placeholder {
+        #phone::placeholder,
+        #email::placeholder {
             color: #8b9ab0;
         }
 
 
-        /* =========================================
+        /* ================================
            CAPTCHA
-        ========================================= */
+        ================================= */
 
         .captcha-section {
-            margin-top: 24px;
+            margin-top: 20px;
         }
 
 
@@ -666,7 +637,7 @@
 
 
         .captcha-code {
-            height: 58px;
+            height: 55px;
 
             border-radius: 13px;
 
@@ -698,13 +669,9 @@
         }
 
 
-        /* =========================================
-           REFRESH
-        ========================================= */
-
         .refresh-btn {
             width: 60px;
-            height: 58px;
+            height: 55px;
 
             border: 0;
 
@@ -738,14 +705,10 @@
         }
 
 
-        /* =========================================
-           CAPTCHA INPUT
-        ========================================= */
-
         #captcha {
             width: 100%;
 
-            height: 58px;
+            height: 55px;
 
             border:
                 1px solid #d7e3f0;
@@ -784,16 +747,16 @@
         }
 
 
-        /* =========================================
+        /* ================================
            SEND BUTTON
-        ========================================= */
+        ================================= */
 
         .send-btn {
             width: 100%;
 
             height: 61px;
 
-            margin-top: 28px;
+            margin-top: 23px;
 
             border: 0;
 
@@ -836,9 +799,9 @@
         }
 
 
-        /* =========================================
+        /* ================================
            DIVIDER
-        ========================================= */
+        ================================= */
 
         .divider {
             display: flex;
@@ -847,7 +810,7 @@
 
             gap: 14px;
 
-            margin: 23px 0 16px;
+            margin: 20px 0 16px;
 
             color: #8999ad;
 
@@ -867,9 +830,9 @@
         }
 
 
-        /* =========================================
+        /* ================================
            LOGIN
-        ========================================= */
+        ================================= */
 
         .login-link {
             text-align: center;
@@ -889,70 +852,9 @@
         }
 
 
-        /* =========================================
-           DESKTOP HEIGHT FIX
-        ========================================= */
-
-        @media (max-height: 700px) {
-
-            body {
-                padding: 10px;
-            }
-
-            .verify-wrapper {
-                height: calc(100vh - 20px);
-                max-height: none;
-            }
-
-            .verify-left {
-                padding: 25px 35px;
-            }
-
-            .left-content {
-                margin-top: 20px;
-            }
-
-            .left-content h1 {
-                font-size: 29px;
-            }
-
-            .illustration {
-                height: 150px;
-            }
-
-            .phone {
-                transform: scale(.82) rotate(-7deg);
-            }
-
-            .otp-badge {
-                top: 25px;
-            }
-
-            .verify-right {
-                padding: 25px 55px;
-            }
-
-            .verify-right h2 {
-                font-size: 36px;
-            }
-
-            .subtitle {
-                margin-bottom: 20px;
-            }
-
-            .captcha-section {
-                margin-top: 18px;
-            }
-
-            .send-btn {
-                margin-top: 20px;
-            }
-        }
-
-
-        /* =========================================
-           TABLET
-        ========================================= */
+        /* ================================
+           MOBILE
+        ================================= */
 
         @media (max-width: 900px) {
 
@@ -1002,10 +904,6 @@
         }
 
 
-        /* =========================================
-           MOBILE
-        ========================================= */
-
         @media (max-width: 600px) {
 
             .verify-right {
@@ -1045,7 +943,6 @@
             }
         }
 
-
     </style>
 </head>
 
@@ -1053,18 +950,24 @@
 <body>
 
 <div class="verify-wrapper">
-    <!-- =====================================
+
+
+    <!-- ================================
          LEFT PANEL
-    ====================================== -->
+    ================================= -->
+
     <div class="verify-left">
 
         <!-- BRAND -->
 
         <div class="brand">
+
             <div class="brand-icon">
                 🛍️
             </div>
+
             <div>
+
                 <div class="brand-name">
                     SK<span>SHOP</span>
                 </div>
@@ -1089,8 +992,9 @@
             </h1>
 
             <p>
-                We'll send a secure OTP to your phone
-                number to keep your account safe and secure.
+                We'll send a secure OTP to your
+                phone number or email address
+                to keep your account safe and secure.
             </p>
 
         </div>
@@ -1102,7 +1006,8 @@
 
             <div class="phone">
 
-                <div class="phone-shield">                    ✓
+                <div class="phone-shield">
+                    ✓
                 </div>
 
             </div>
@@ -1117,7 +1022,6 @@
         <!-- BENEFITS -->
 
         <div class="benefits">
-
 
             <div class="benefit">
 
@@ -1174,25 +1078,23 @@
                     </div>
 
                     <div class="benefit-text">
-                        We never share your number
+                        We never share your details
                     </div>
 
                 </div>
 
             </div>
 
-
         </div>
 
     </div>
 
 
-    <!-- =====================================
+    <!-- ================================
          RIGHT PANEL
-    ====================================== -->
+    ================================= -->
 
     <div class="verify-right">
-
 
         <div class="secure">
             🔒 &nbsp; 100% Secure
@@ -1200,104 +1102,141 @@
 
 
         <h2>
-            Phone <span>Verification</span>
+            Account <span>Verification</span>
         </h2>
 
 
         <p class="subtitle">
-            Enter your phone number and solve the captcha
+            Enter your phone number and email address
             to continue.
         </p>
 
 
-        <!-- IMPORTANT:
-             Form ID same as your original
-        -->
+        <form id="phoneForm">
 
-    <form id="phoneForm">
-
-    {% csrf_token %}
-
-    <!-- ================= PHONE NUMBER ================= -->
-
-    <label
-        class="form-label"
-        for="phone">
-
-        Phone Number
-        <span class="required">*</span>
-
-    </label>
-
-    <div class="phone-box">
-
-        <div class="country">
-
-            <span>🇮🇳</span>
-            <span>+91</span>
-
-        </div>
-
-        <input
-            type="tel"
-            id="phone"
-            placeholder="Enter Phone Number"
-            maxlength="10"
-        >
-
-    </div>
+            {% csrf_token %}
 
 
+            <!-- ================= PHONE ================= -->
 
-    <!-- ================= CAPTCHA ================= -->
+            <label
+                class="form-label"
+                for="phone">
 
-    <label
-        class="form-label"
-        for="captcha">
+                Phone Number
+                <span class="required">*</span>
 
-        Captcha
-        <span class="required">*</span>
-
-    </label>
-
-    <div class="captcha-row">
-
-        <div
-            class="captcha-code"
-            id="captchaCode">
-        </div>
-
-        <button
-            type="button"
-            class="refresh-btn"
-            onclick="refreshCaptcha()"
-            title="Refresh Captcha">
-
-            ↻
-
-        </button>
-
-        <input
-            type="text"
-            id="captcha"
-            placeholder="Enter Captcha"
-        >
-
-    </div>
+            </label>
 
 
-    <!-- ================= SEND OTP ================= -->
+            <div class="phone-box">
 
-    <button
-        type="button"
-        class="send-btn"
-        onclick="sendData()">
+                <div class="country">
 
-        ✈ &nbsp; Send OTP
+                    <span>🇮🇳</span>
+                    <span>+91</span>
 
-    </button>
+                </div>
 
-</form>
+
+                <input
+                    type="tel"
+                    id="phone"
+                    placeholder="Enter Phone Number"
+                    maxlength="10"
+                >
+
+            </div>
+
+
+            <!-- ================= EMAIL ================= -->
+
+            <label
+                class="form-label"
+                for="email">
+
+                Email Address
+                <span class="required">*</span>
+
+            </label>
+
+
+            <div class="phone-box">
+
+                <div class="country">
+
+                    <span>📧</span>
+
+                </div>
+
+
+                <input
+                    type="email"
+                    id="email"
+                      name="email"
+                    placeholder="Enter Email Address"
+                >
+
+            </div>
+
+
+            <!-- ================= CAPTCHA ================= -->
+
+            <div class="captcha-section">
+
+                <label
+                    class="form-label"
+                    for="captcha">
+
+                    Captcha
+                    <span class="required">*</span>
+
+                </label>
+
+
+                <div class="captcha-row">
+
+                    <div
+                        class="captcha-code"
+                        id="captchaCode">
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="refresh-btn"
+                        onclick="refreshCaptcha()"
+                        title="Refresh Captcha">
+
+                        ↻
+
+                    </button>
+
+
+                    <input
+                        type="text"
+                        id="captcha"
+                        placeholder="Enter Captcha"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= SEND OTP ================= -->
+
+            <button
+                type="button"
+                class="send-btn"
+                onclick="sendData()">
+
+                ✈ &nbsp; Send OTP
+
+            </button>
+
+
+        </form>
 
 
         <!-- DIVIDER -->
@@ -1317,18 +1256,17 @@
 
         </a>
 
-
     </div>
 
 </div>
 
 
-<!-- =====================================
-     EXISTING PHONE JS
-     DON'T CHANGE
-====================================== -->
+<!-- ================================
+     PHONE JS
+================================= -->
 
-<script src="{% static 'js/phone.js' %}?v=11"></script>
+<script src="{% static 'js/phone.js' %}?v=12"></script>
 
 </body>
+
 </html>

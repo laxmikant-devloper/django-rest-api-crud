@@ -45,6 +45,9 @@ function sendData() {
     const phone =
         document.getElementById("phone").value.trim();
 
+    const email =
+        document.getElementById("email").value.trim();
+
     const enteredCaptcha =
         document.getElementById("captcha").value.trim();
 
@@ -63,6 +66,24 @@ function sendData() {
     if (!/^\d{10}$/.test(phone)) {
 
         alert("Please enter a valid 10 digit phone number");
+        return;
+    }
+
+
+    /* =====================================
+       EMAIL VALIDATION
+    ===================================== */
+
+    if (email === "") {
+
+        alert("Please enter email address");
+        return;
+    }
+
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+
+        alert("Please enter a valid email address");
         return;
     }
 
@@ -125,6 +146,12 @@ function sendData() {
     );
 
 
+    formData.append(
+        "email",
+        email
+    );
+
+
     /* =====================================
        SEND TO DJANGO
     ===================================== */
@@ -176,6 +203,16 @@ function sendData() {
             sessionStorage.setItem(
                 "phone",
                 phone
+            );
+
+
+            /* ==============================
+               SAVE EMAIL
+            ============================== */
+
+            sessionStorage.setItem(
+                "email",
+                email
             );
 
 

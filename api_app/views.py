@@ -9,6 +9,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 ENV_FILE = BASE_DIR / ".env"
 
 load_dotenv(ENV_FILE)
+from django.core.mail import send_mail
 
 
 from django.shortcuts import render,HttpResponse
@@ -132,17 +133,150 @@ def phone_page(req):
 def otp_page(req):
     return render(req,'otp.html')
 
-# Send OTP# Send OTP
+# # Send OTP# Send OTP
+# def send_phone(request):
+#     if request.method == "POST":
+
+#         phone = request.POST.get("phone")
+
+#         if not phone:
+#             return JsonResponse({
+#                 "success": False,
+#                 "message": "Phone number is required"
+#             })
+
+#         phone_obj, created = PhoneNumber.objects.get_or_create(
+#             phone=phone
+#         )
+
+#         current_time = timezone.now()
+
+#         # ---------------------------------
+#         # Limit reach hone ke baad 2 minutes
+#         # ---------------------------------
+#         if phone_obj.otp_limit_reached_at:
+
+#             seconds_passed = (
+#                 current_time - phone_obj.otp_limit_reached_at
+#             ).total_seconds()
+
+#             if seconds_passed < 120:
+#                 remaining = int(120 - seconds_passed)
+
+#                 return JsonResponse({
+#                     "success": False,
+#                     "message": f"OTP limit reached. Please try again after {remaining} seconds."
+#                 })
+
+#             # 2 minutes complete -> reset limit
+#             phone_obj.otp_resend_count = 0
+#             phone_obj.otp_limit_reached_at = None
+#             phone_obj.otp_last_sent_at = None
+#             phone_obj.save()
+
+#         # ---------------------------------
+#         # Normal resend gap = 60 seconds
+#         # ---------------------------------
+#         if phone_obj.otp_last_sent_at:
+
+#             seconds_passed = (
+#                 current_time - phone_obj.otp_last_sent_at
+#             ).total_seconds()
+
+#             if seconds_passed < 60:
+#                 remaining = int(60 - seconds_passed)
+
+#                 return JsonResponse({
+#                     "success": False,
+#                     "message": f"Please wait {remaining} seconds before resending OTP."
+#                 })
+
+#         # ---------------------------------
+#         # Maximum 2 OTP SMS
+#         # ---------------------------------
+#         if phone_obj.otp_resend_count >= 2:
+
+#             # Limit reach hone ka time save
+#             phone_obj.otp_limit_reached_at = current_time
+#             phone_obj.save()
+
+#             return JsonResponse({
+#                 "success": False,
+#                 "message": "OTP limit reached. Please try again after 2 minutes."
+#             })
+
+#         # ---------------------------------
+#         # Generate 6 digit OTP
+#         # ---------------------------------
+#         otp = str(random.randint(100000, 999999))
+
+#         phone_obj.otp = otp
+#         phone_obj.otp_created_at = current_time
+#         phone_obj.otp_last_sent_at = current_time
+#         phone_obj.otp_attempts = 0
+
+#         # OTP send count increase
+#         phone_obj.otp_resend_count += 1
+
+#         phone_obj.save()
+
+#         request.session["phone"] = phone
+
+#         # Testing ke liye terminal me OTP
+#         print("Phone Number:", phone)
+#         print("OTP:", otp)
+
+#         return JsonResponse({
+#             "success": True,
+#             "message": "OTP sent successfully"
+#         })
+
+#     return JsonResponse({
+#         "success": False,
+#         "message": "Only POST method allowed"
+#     })
+
+
 def send_phone(request):
+
     if request.method == "POST":
 
         phone = request.POST.get("phone")
+        email = request.POST.get("email")
+
+        # ---------------------------------
+        # Phone check
+        # ---------------------------------
 
         if not phone:
             return JsonResponse({
                 "success": False,
                 "message": "Phone number is required"
             })
+
+        # ---------------------------------
+        # Email check
+        # ---------------------------------
+
+        if not email:
+            return JsonResponse({
+                "success": False,
+                "message": "Email address is required"
+            })
+
+        # ---------------------------------
+        # Basic email validation
+        # ---------------------------------
+
+        if "@" not in email or "." not in email:
+            return JsonResponse({
+                "success": False,
+                "message": "Please enter a valid email address"
+            })
+
+        # ---------------------------------
+        # Get / Create Phone
+        # ---------------------------------
 
         phone_obj, created = PhoneNumber.objects.get_or_create(
             phone=phone
@@ -153,6 +287,7 @@ def send_phone(request):
         # ---------------------------------
         # Limit reach hone ke baad 2 minutes
         # ---------------------------------
+
         if phone_obj.otp_limit_reached_at:
 
             seconds_passed = (
@@ -160,83 +295,157 @@ def send_phone(request):
             ).total_seconds()
 
             if seconds_passed < 120:
-                remaining = int(120 - seconds_passed)
+
+                remaining = int(
+                    120 - seconds_passed
+                )
 
                 return JsonResponse({
                     "success": False,
-                    "message": f"OTP limit reached. Please try again after {remaining} seconds."
+                    "message":
+                        f"OTP limit reached. Please try again after {remaining} seconds."
                 })
 
-            # 2 minutes complete -> reset limit
+            # 2 minutes complete
+
             phone_obj.otp_resend_count = 0
             phone_obj.otp_limit_reached_at = None
             phone_obj.otp_last_sent_at = None
+
             phone_obj.save()
 
         # ---------------------------------
-        # Normal resend gap = 60 seconds
+        # Resend gap = 60 seconds
         # ---------------------------------
+
         if phone_obj.otp_last_sent_at:
 
             seconds_passed = (
-                current_time - phone_obj.otp_last_sent_at
+                current_time -
+                phone_obj.otp_last_sent_at
             ).total_seconds()
 
             if seconds_passed < 60:
-                remaining = int(60 - seconds_passed)
+
+                remaining = int(
+                    60 - seconds_passed
+                )
 
                 return JsonResponse({
                     "success": False,
-                    "message": f"Please wait {remaining} seconds before resending OTP."
+                    "message":
+                        f"Please wait {remaining} seconds before resending OTP."
                 })
 
         # ---------------------------------
-        # Maximum 2 OTP SMS
+        # Maximum 2 OTP
         # ---------------------------------
+
         if phone_obj.otp_resend_count >= 2:
 
-            # Limit reach hone ka time save
             phone_obj.otp_limit_reached_at = current_time
+
             phone_obj.save()
 
             return JsonResponse({
                 "success": False,
-                "message": "OTP limit reached. Please try again after 2 minutes."
+                "message":
+                    "OTP limit reached. Please try again after 2 minutes."
             })
 
         # ---------------------------------
-        # Generate 6 digit OTP
+        # Generate OTP
         # ---------------------------------
-        otp = str(random.randint(100000, 999999))
+
+        otp = str(
+            random.randint(100000, 999999)
+        )
 
         phone_obj.otp = otp
         phone_obj.otp_created_at = current_time
         phone_obj.otp_last_sent_at = current_time
         phone_obj.otp_attempts = 0
 
-        # OTP send count increase
         phone_obj.otp_resend_count += 1
 
         phone_obj.save()
 
-        request.session["phone"] = phone
+        # ---------------------------------
+        # Save phone + email in session
+        # ---------------------------------
 
-        # Testing ke liye terminal me OTP
+        request.session["phone"] = phone
+        request.session["email"] = email
+
+        # ---------------------------------
+        # Send OTP to Email
+        # ---------------------------------
+
+        try:
+
+            send_mail(
+
+                subject="SKShop OTP Verification",
+
+                message=f"""
+Hello,
+
+Your SKShop verification OTP is:
+
+{otp}
+
+This OTP is valid for 5 minutes.
+
+Please do not share this OTP with anyone.
+
+Thank you,
+SKShop Team
+""",
+
+                from_email=settings.DEFAULT_FROM_EMAIL,
+
+                recipient_list=[email],
+
+                fail_silently=False
+            )
+
+        except Exception as e:
+
+            print("Email Error:", e)
+
+            return JsonResponse({
+                "success": False,
+                "message":
+                    "Unable to send OTP to email. Please try again."
+            })
+
+        # ---------------------------------
+        # Testing
+        # ---------------------------------
+
         print("Phone Number:", phone)
+        print("Email:", email)
         print("OTP:", otp)
 
         return JsonResponse({
+
             "success": True,
-            "message": "OTP sent successfully"
+
+            "message":
+                "OTP sent successfully to your email"
+
         })
 
     return JsonResponse({
-        "success": False,
-        "message": "Only POST method allowed"
-    })
 
+        "success": False,
+
+        "message":
+            "Only POST method allowed"
+
+    })
 # Verify OTP
-def verify_otp(request):
+# def verify_otp(request):
 
     if request.method == "POST":
 
@@ -361,7 +570,231 @@ def verify_otp(request):
         "message": "Only POST method allowed"
     })
 
+def verify_otp(request):
 
+    if request.method == "POST":
+
+        phone = request.POST.get("phone")
+        otp = request.POST.get("otp")
+        email = request.POST.get("email")
+
+        # ---------------------------------
+        # Phone check
+        # ---------------------------------
+
+        phone_obj = PhoneNumber.objects.filter(
+            phone=phone
+        ).first()
+
+        if phone_obj is None:
+
+            return JsonResponse({
+                "success": False,
+                "message": "Phone number not found"
+            })
+
+        # ---------------------------------
+        # Attempt limit
+        # ---------------------------------
+
+        if phone_obj.otp_attempts >= 3:
+
+            return JsonResponse({
+                "success": False,
+                "message":
+                    "Too many wrong attempts. Please resend OTP."
+            })
+
+        # ---------------------------------
+        # OTP exists check
+        # ---------------------------------
+
+        if phone_obj.otp_created_at is None:
+
+            return JsonResponse({
+                "success": False,
+                "message":
+                    "OTP not found. Please resend OTP."
+            })
+
+        # ---------------------------------
+        # OTP expiry
+        # ---------------------------------
+
+        current_time = timezone.now()
+
+        otp_age = (
+            current_time -
+            phone_obj.otp_created_at
+        )
+
+        if otp_age > timedelta(minutes=5):
+
+            return JsonResponse({
+                "success": False,
+                "message":
+                    "OTP has expired. Please resend OTP."
+            })
+
+        # ---------------------------------
+        # Correct OTP
+        # ---------------------------------
+
+        if phone_obj.otp == otp:
+
+            # ---------------------------------
+            # User find/create
+            # ---------------------------------
+
+            user, created = User.objects.get_or_create(
+                username=phone
+            )
+
+            # ---------------------------------
+            # New user check
+            # ---------------------------------
+
+            if created:
+
+                new_user = True
+
+            elif user.first_name:
+
+                new_user = False
+
+            else:
+
+                new_user = True
+
+            # ---------------------------------
+            # Save email
+            # ---------------------------------
+
+            if email:
+
+                user.email = email
+                user.save()
+
+            # ---------------------------------
+            # Connect PhoneNumber with User
+            # ---------------------------------
+
+            phone_obj.user = user
+
+            phone_obj.otp = None
+            phone_obj.otp_created_at = None
+            phone_obj.otp_attempts = 0
+
+            phone_obj.save()
+
+            # ---------------------------------
+            # JWT
+            # ---------------------------------
+
+            refresh = RefreshToken.for_user(user)
+
+            # ---------------------------------
+            # Response
+            # ---------------------------------
+
+            response = JsonResponse({
+
+                "success": True,
+
+                "message":
+                    "OTP verified successfully",
+
+                "new_user":
+                    new_user
+
+            })
+
+            # ---------------------------------
+            # Access Token
+            # ---------------------------------
+
+            response.set_cookie(
+
+                "access_token",
+
+                str(refresh.access_token),
+
+                httponly=True,
+
+                secure=False,
+
+                samesite="Lax",
+
+                max_age=120,
+
+                path="/"
+
+            )
+
+            # ---------------------------------
+            # Refresh Token
+            # ---------------------------------
+
+            response.set_cookie(
+
+                "refresh_token",
+
+                str(refresh),
+
+                httponly=True,
+
+                secure=False,
+
+                samesite="Lax",
+
+                max_age=600,
+
+                path="/"
+
+            )
+
+            return response
+
+        # ---------------------------------
+        # Wrong OTP
+        # ---------------------------------
+
+        phone_obj.otp_attempts += 1
+
+        phone_obj.save()
+
+        remaining = (
+            3 - phone_obj.otp_attempts
+        )
+
+        if remaining > 0:
+
+            return JsonResponse({
+
+                "success": False,
+
+                "message":
+                    f"Invalid OTP. {remaining} attempts remaining."
+
+            })
+
+        return JsonResponse({
+
+            "success": False,
+
+            "message":
+                "Too many wrong attempts. Please resend OTP."
+
+        })
+
+    return JsonResponse({
+
+        "success": False,
+
+        "message":
+            "Only POST method allowed"
+
+    })
 
 def profile_page(request):
     return render(request, "profile.html")
