@@ -10,6 +10,8 @@ ENV_FILE = BASE_DIR / ".env"
 
 load_dotenv(ENV_FILE)
 from django.core.mail import send_mail
+import resend
+from django.conf import settings
 
 
 from django.shortcuts import render,HttpResponse
@@ -236,88 +238,97 @@ def otp_page(req):
 #         "message": "Only POST method allowed"
 #     })
 
-
 def send_phone(request):
 
-    if request.method == "POST":
+    if request.method != "POST":
+        return JsonResponse({
+            "success": False,
+            "message": "Only POST method allowed"
+        })
 
-        phone = request.POST.get("phone")
-        email = request.POST.get("email")
+    # ---------------------------------
+    # Get phone + email
+    # ---------------------------------
 
-        # ---------------------------------
-        # Phone check
-        # ---------------------------------
+    phone = request.POST.get("phone", "").strip()
+    email = request.POST.get("email", "").strip()
 
-        if not phone:
-            return JsonResponse({
-                "success": False,
-                "message": "Phone number is required"
-            })
+    # ---------------------------------
+    # Phone validation
+    # ---------------------------------
 
-        # ---------------------------------
-        # Email check
-        # ---------------------------------
+    if not phone:
+        return JsonResponse({
+            "success": False,
+            "message": "Phone number is required"
+        })
 
-        if not email:
-            return JsonResponse({
-                "success": False,
-                "message": "Email address is required"
-            })
+    if not phone.isdigit() or len(phone) != 10:
+        return JsonResponse({
+            "success": False,
+            "message": "Please enter a valid 10 digit phone number"
+        })
 
-        # ---------------------------------
-        # Basic email validation
-        # ---------------------------------
+    # ---------------------------------
+    # Email validation
+    # ---------------------------------
 
-        if "@" not in email or "." not in email:
-            return JsonResponse({
-                "success": False,
-                "message": "Please enter a valid email address"
-            })
+    if not email:
+        return JsonResponse({
+            "success": False,
+            "message": "Email address is required"
+        })
 
-        # ---------------------------------
-        # Get / Create Phone
-        # ---------------------------------
+    if "@" not in email or "." not in email:
+        return JsonResponse({
+            "success": False,
+            "message": "Please enter a valid email address"
+        })
 
-        phone_obj, created = PhoneNumber.objects.get_or_create(
-            phone=phone
-        )
+    # ---------------------------------
+    # Get / Create Phone
+    # ---------------------------------
 
-        current_time = timezone.now()
+    phone_obj, created = PhoneNumber.objects.get_or_create(
+        phone=phone
+    )
 
-        # ---------------------------------
-        # Generate OTP
-        # ---------------------------------
+    current_time = timezone.now()
 
-        otp = str(
-            random.randint(100000, 999999)
-        )
+    # ---------------------------------
+    # Generate OTP
+    # ---------------------------------
 
-        phone_obj.otp = otp
-        phone_obj.otp_created_at = current_time
-        phone_obj.otp_last_sent_at = current_time
-        phone_obj.otp_attempts = 0
+    otp = str(random.randint(100000, 999999))
 
-        # OTP resend count ab use nahi hoga
-        phone_obj.save()
+    phone_obj.otp = otp
+    phone_obj.otp_created_at = current_time
+    phone_obj.otp_last_sent_at = current_time
+    phone_obj.otp_attempts = 0
 
-        # ---------------------------------
-        # Save phone + email in session
-        # ---------------------------------
+    # Old resend-limit fields are not used
+    phone_obj.save()
 
-        request.session["phone"] = phone
-        request.session["email"] = email
+    # ---------------------------------
+    # Save phone + email in session
+    # ---------------------------------
 
-        # ---------------------------------
-        # Send OTP to Email
-        # ---------------------------------
+    request.session["phone"] = phone
+    request.session["email"] = email
 
-        try:
+    # ---------------------------------
+    # Send OTP using Resend
+    # ---------------------------------
 
-            send_mail(
+    try:
 
-                subject="SKShop OTP Verification",
+        resend.api_key = settings.RESEND_API_KEY
 
-                message=f"""
+        resend.Emails.send({
+            "from": "SKShop <onboarding@resend.dev>",
+            "to": [email],
+            "subject": "SKShop OTP Verification",
+            "text": f"""
 Hello,
 
 Your SKShop verification OTP is:
@@ -330,49 +341,29 @@ Please do not share this OTP with anyone.
 
 Thank you,
 SKShop Team
-""",
-
-                from_email=settings.DEFAULT_FROM_EMAIL,
-
-                recipient_list=[email],
-
-                fail_silently=False
-            )
-
-        except Exception as e:
-
-            print("Email Error:", e)
-
-            return JsonResponse({
-                "success": False,
-                "message":
-                    "Unable to send OTP to email. Please try again."
-            })
-
-        # ---------------------------------
-        # Testing
-        # ---------------------------------
-
-        print("Phone Number:", phone)
-        print("Email:", email)
-        print("OTP:", otp)
-
-        return JsonResponse({
-
-            "success": True,
-
-            "message":
-                "OTP sent successfully to your email"
-
+"""
         })
 
+    except Exception as e:
+
+        print("Resend Email Error:", e)
+
+        return JsonResponse({
+            "success": False,
+            "message": "Unable to send OTP to email. Please try again."
+        })
+
+    # ---------------------------------
+    # Testing
+    # ---------------------------------
+
+    print("Phone Number:", phone)
+    print("Email:", email)
+    print("OTP:", otp)
+
     return JsonResponse({
-
-        "success": False,
-
-        "message":
-            "Only POST method allowed"
-
+        "success": True,
+        "message": "OTP sent successfully to your email"
     })
 # Verify OTP
 # def verify_otp(request):
