@@ -285,75 +285,6 @@ def send_phone(request):
         current_time = timezone.now()
 
         # ---------------------------------
-        # Limit reach hone ke baad 2 minutes
-        # ---------------------------------
-
-        if phone_obj.otp_limit_reached_at:
-
-            seconds_passed = (
-                current_time - phone_obj.otp_limit_reached_at
-            ).total_seconds()
-
-            if seconds_passed < 120:
-
-                remaining = int(
-                    120 - seconds_passed
-                )
-
-                return JsonResponse({
-                    "success": False,
-                    "message":
-                        f"OTP limit reached. Please try again after {remaining} seconds."
-                })
-
-            # 2 minutes complete
-
-            phone_obj.otp_resend_count = 0
-            phone_obj.otp_limit_reached_at = None
-            phone_obj.otp_last_sent_at = None
-
-            phone_obj.save()
-
-        # ---------------------------------
-        # Resend gap = 60 seconds
-        # ---------------------------------
-
-        if phone_obj.otp_last_sent_at:
-
-            seconds_passed = (
-                current_time -
-                phone_obj.otp_last_sent_at
-            ).total_seconds()
-
-            if seconds_passed < 60:
-
-                remaining = int(
-                    60 - seconds_passed
-                )
-
-                return JsonResponse({
-                    "success": False,
-                    "message":
-                        f"Please wait {remaining} seconds before resending OTP."
-                })
-
-        # ---------------------------------
-        # Maximum 2 OTP
-        # ---------------------------------
-
-        if phone_obj.otp_resend_count >= 2:
-
-            phone_obj.otp_limit_reached_at = current_time
-
-            phone_obj.save()
-
-            return JsonResponse({
-                "success": False,
-                "message":
-                    "OTP limit reached. Please try again after 2 minutes."
-            })
-
-        # ---------------------------------
         # Generate OTP
         # ---------------------------------
 
@@ -366,8 +297,7 @@ def send_phone(request):
         phone_obj.otp_last_sent_at = current_time
         phone_obj.otp_attempts = 0
 
-        phone_obj.otp_resend_count += 1
-
+        # OTP resend count ab use nahi hoga
         phone_obj.save()
 
         # ---------------------------------
